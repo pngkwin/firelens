@@ -1,0 +1,1079 @@
+{
+  "format": "firelens-history-1",
+  "version": "eddf9e9148a2cc143b4680a7",
+  "implementation": {
+    "pipelineSha256": "f3322881f0128aee7427cd9dd34a214fa6780ec1ee123f2622485c3b7ce7f39e",
+    "normalizerSha256": "ca71c76fa607a4d6ddf36b4c8d3be006c9b5b38188257120f95f0f37f0e98bd2",
+    "h3Version": "4.5.0"
+  },
+  "config": {
+    "resolutions": [
+      4,
+      5,
+      6
+    ],
+    "defaultResolution": 5,
+    "excludeBasenames": [
+      "sample_viirs_snpp_071223.csv"
+    ],
+    "excludeReason": "NASA training sample retained unchanged; approved historical archives are the study sources."
+  },
+  "sources": [
+    {
+      "id": "15699bc144ed81611ca6387d",
+      "path": "DL_FIRE_M-C61_850214/fire_archive_M-C61_850214.csv",
+      "sha256": "4b726464ac6d7ae6444a597f6e0c448f57a19e07dcde1b06135ba13e2e5a0850",
+      "bytes": 547424,
+      "readme": {
+        "text": "To view Readme.txt please visit https://firms.modaps.eosdis.nasa.gov/download/Readme.txt\n",
+        "sha256": "850e5eb42fa71907f2b0c8049f1017b7cea7704119438386902e2ff803e7bfba"
+      },
+      "rows": 6827,
+      "accepted": 6827,
+      "rejected": 0,
+      "duplicates": 0,
+      "conflicts": 0,
+      "issues": [],
+      "missing": {},
+      "invalid": {},
+      "schema": [
+        "latitude",
+        "longitude",
+        "brightness",
+        "scan",
+        "track",
+        "acq_date",
+        "acq_time",
+        "satellite",
+        "instrument",
+        "confidence",
+        "version",
+        "bright_t31",
+        "frp",
+        "daynight",
+        "type"
+      ],
+      "distribution": [
+        {
+          "sensor": "MODIS",
+          "platform": "Aqua",
+          "version": "61.03",
+          "start": "2024-01-01",
+          "end": "2024-12-30",
+          "count": 3231
+        },
+        {
+          "sensor": "MODIS",
+          "platform": "Terra",
+          "version": "61.03",
+          "start": "2024-01-01",
+          "end": "2024-12-31",
+          "count": 3596
+        }
+      ],
+      "sourceAttributes": [
+        {
+          "version": "61.03",
+          "instrument": "MODIS",
+          "satellite": "Aqua",
+          "rows": 3231,
+          "duplicates": 0
+        },
+        {
+          "version": "61.03",
+          "instrument": "MODIS",
+          "satellite": "Terra",
+          "rows": 3596,
+          "duplicates": 0
+        }
+      ]
+    },
+    {
+      "id": "c3824817a050653078b80e41",
+      "path": "DL_FIRE_SV-C2_850215/fire_archive_SV-C2_850215.csv",
+      "sha256": "973fa7024c5969157209cf0d2c090b3e38d17fa54b2d5e781586c7e5b4c5373c",
+      "bytes": 3868772,
+      "readme": {
+        "text": "To view Readme.txt please visit https://firms.modaps.eosdis.nasa.gov/download/Readme.txt\n",
+        "sha256": "850e5eb42fa71907f2b0c8049f1017b7cea7704119438386902e2ff803e7bfba"
+      },
+      "rows": 47364,
+      "accepted": 47364,
+      "rejected": 0,
+      "duplicates": 0,
+      "conflicts": 0,
+      "issues": [],
+      "missing": {},
+      "invalid": {},
+      "schema": [
+        "latitude",
+        "longitude",
+        "brightness",
+        "scan",
+        "track",
+        "acq_date",
+        "acq_time",
+        "satellite",
+        "instrument",
+        "confidence",
+        "version",
+        "bright_t31",
+        "frp",
+        "daynight",
+        "type"
+      ],
+      "distribution": [
+        {
+          "sensor": "VIIRS",
+          "platform": "S-NPP",
+          "version": "2",
+          "start": "2024-01-01",
+          "end": "2024-12-31",
+          "count": 47364
+        }
+      ],
+      "sourceAttributes": [
+        {
+          "version": "2",
+          "instrument": "SNPP",
+          "satellite": "SNPP",
+          "rows": 47364,
+          "duplicates": 0
+        }
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "path": "sample_viirs_snpp_071223.csv",
+      "reason": "NASA training sample retained unchanged; approved historical archives are the study sources."
+    }
+  ],
+  "extent": {
+    "start": "2024-01-01",
+    "end": "2024-12-31",
+    "count": 54191
+  },
+  "distribution": [
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "version": "61.03",
+      "start": "2024-01-01",
+      "end": "2024-12-30",
+      "count": 3231
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "version": "61.03",
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "count": 3596
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "version": "2",
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "count": 47364
+    }
+  ],
+  "monthly": [
+    {
+      "period": "2024-01",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 304
+    },
+    {
+      "period": "2024-01",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 275
+    },
+    {
+      "period": "2024-01",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3159
+    },
+    {
+      "period": "2024-02",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 864
+    },
+    {
+      "period": "2024-02",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 574
+    },
+    {
+      "period": "2024-02",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 6744
+    },
+    {
+      "period": "2024-03",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 303
+    },
+    {
+      "period": "2024-03",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 449
+    },
+    {
+      "period": "2024-03",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3315
+    },
+    {
+      "period": "2024-04",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 182
+    },
+    {
+      "period": "2024-04",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 285
+    },
+    {
+      "period": "2024-04",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3661
+    },
+    {
+      "period": "2024-05",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 153
+    },
+    {
+      "period": "2024-05",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 166
+    },
+    {
+      "period": "2024-05",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3402
+    },
+    {
+      "period": "2024-06",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 142
+    },
+    {
+      "period": "2024-06",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 235
+    },
+    {
+      "period": "2024-06",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3537
+    },
+    {
+      "period": "2024-07",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 145
+    },
+    {
+      "period": "2024-07",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 228
+    },
+    {
+      "period": "2024-07",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 1994
+    },
+    {
+      "period": "2024-08",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 182
+    },
+    {
+      "period": "2024-08",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 248
+    },
+    {
+      "period": "2024-08",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 5011
+    },
+    {
+      "period": "2024-09",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 228
+    },
+    {
+      "period": "2024-09",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 361
+    },
+    {
+      "period": "2024-09",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 4161
+    },
+    {
+      "period": "2024-10",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 190
+    },
+    {
+      "period": "2024-10",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 303
+    },
+    {
+      "period": "2024-10",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 5136
+    },
+    {
+      "period": "2024-11",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 327
+    },
+    {
+      "period": "2024-11",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 207
+    },
+    {
+      "period": "2024-11",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3929
+    },
+    {
+      "period": "2024-12",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 211
+    },
+    {
+      "period": "2024-12",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 265
+    },
+    {
+      "period": "2024-12",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3315
+    }
+  ],
+  "yearly": [
+    {
+      "period": "2024",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 3231
+    },
+    {
+      "period": "2024",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 3596
+    },
+    {
+      "period": "2024",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 47364
+    }
+  ],
+  "partitions": [
+    {
+      "period": "2024-01",
+      "resolution": 4,
+      "file": "2024-01-h3-4.json.gz",
+      "rows": 1660,
+      "bytes": 7260,
+      "sha256": "bde48ebd53509d79789ed5f181dfa51992155ee1771f03ea38e30dfb9ec0723a",
+      "decodedSha256": "1c54eb985e8a8d97cfa3d0d32aaefc06d1f2a37bd0f6adc9636c61481f6861e7",
+      "decodedBytes": 263632,
+      "geometry": {
+        "file": "2024-01-h3-4-cells.json.gz",
+        "rows": 252,
+        "bytes": 7430,
+        "sha256": "3baa875a61efe8a8e0618066baf43690149ea40ead03ddb9c8a67ee282d009a5",
+        "decodedSha256": "b649b7e73636c1e1bb68ee71ce5bd9803d77d511f5bc97dbe2110ee0aeea0f70",
+        "decodedBytes": 29306
+      }
+    },
+    {
+      "period": "2024-01",
+      "resolution": 5,
+      "file": "2024-01-h3-5.json.gz",
+      "rows": 2066,
+      "bytes": 9316,
+      "sha256": "acd4e7a55e6448fae04abc7b8bc9bdbc3dab1c69f87c82c4e81f13a9dde55e40",
+      "decodedSha256": "83da156cfd55fc987c4e14d01d78bbc5dda9daa54d434909896895965532f10f",
+      "decodedBytes": 327882,
+      "geometry": {
+        "file": "2024-01-h3-5-cells.json.gz",
+        "rows": 693,
+        "bytes": 21038,
+        "sha256": "5493bce9d7e18c66e1c6ad902d5205502791abd68727bfe6b55df0c69fa07938",
+        "decodedSha256": "bc4cd1ff1ea201999e5f277318c6f4806d0d528011c3f8b06af0ed05ca5ccab5",
+        "decodedBytes": 80297
+      }
+    },
+    {
+      "period": "2024-01",
+      "resolution": 6,
+      "file": "2024-01-h3-6.json.gz",
+      "rows": 2357,
+      "bytes": 10982,
+      "sha256": "0138d42d2910d93429d9cf9173a3127ad63f2ffa36148d70d636591c9157aa72",
+      "decodedSha256": "342897a5b5bf9aa7816f8a824dd8dd67369e55f849c0653946e94dfc5d397547",
+      "decodedBytes": 373985,
+      "geometry": {
+        "file": "2024-01-h3-6-cells.json.gz",
+        "rows": 1021,
+        "bytes": 31318,
+        "sha256": "33d63e423de8e51ee7340f29a7647a27dfe3f59478bd032ed422ad779431da2a",
+        "decodedSha256": "3857a2ae58f8f9533af7dd18b38b4492bd5cb91aa7b8df28b51dff428d3e50db",
+        "decodedBytes": 118261
+      }
+    },
+    {
+      "period": "2024-02",
+      "resolution": 4,
+      "file": "2024-02-h3-4.json.gz",
+      "rows": 2120,
+      "bytes": 9041,
+      "sha256": "7f371ab1ef80bee6b4712a3b02d162de1b20424c987c2b93601ba67bdd5d8401",
+      "decodedSha256": "265359e0ee429e02625678fb4ff3e65919d05d17ab04a48330cdbd1c7ebc55c2",
+      "decodedBytes": 337152,
+      "geometry": {
+        "file": "2024-02-h3-4-cells.json.gz",
+        "rows": 286,
+        "bytes": 8423,
+        "sha256": "5547ebc3f8dc57b2f59c8e123567f6f84067fec9a1f6801cfa7f6e3d75daa1b5",
+        "decodedSha256": "bb7155c4db057a0d68fea2372bfbc5eaf856661ba8c7ad8fb45ef3a27d336071",
+        "decodedBytes": 33278
+      }
+    },
+    {
+      "period": "2024-02",
+      "resolution": 5,
+      "file": "2024-02-h3-5.json.gz",
+      "rows": 2730,
+      "bytes": 12149,
+      "sha256": "76c9c8c046d0b706b41d34f4fa57b16aa5076bff49ec9cc499f80daf4f055755",
+      "decodedSha256": "a10f7b7e4dcd4c7b03544391e0ba3124a2f6b7f5e195ab40193deae5260d2aeb",
+      "decodedBytes": 433952,
+      "geometry": {
+        "file": "2024-02-h3-5-cells.json.gz",
+        "rows": 887,
+        "bytes": 26768,
+        "sha256": "2d1b929cb2c524504a581a6808397da6e49c22bd83244f7f9e33144c31cc1785",
+        "decodedSha256": "b023a11976f78672eb409b6078017e219663a0d9139ec087be4488d697dbfb21",
+        "decodedBytes": 102828
+      }
+    },
+    {
+      "period": "2024-02",
+      "resolution": 6,
+      "file": "2024-02-h3-6.json.gz",
+      "rows": 3259,
+      "bytes": 15051,
+      "sha256": "e800854ac21554cbb5381830101bc84870d8a12c6aaf1ce5c693293e930e1988",
+      "decodedSha256": "a64acb459f256a4748ea131ceac07bdee23c361f4861438d198f75fc5ea9198b",
+      "decodedBytes": 517962,
+      "geometry": {
+        "file": "2024-02-h3-6-cells.json.gz",
+        "rows": 1468,
+        "bytes": 44757,
+        "sha256": "45ee201bf4ec124b0ec1ee61fe5e82ca6a56cbdfa13673776ce177c266bc2943",
+        "decodedSha256": "89a3d9260b193f728d1c6c7016649f7076181e509115fb6593708bb2e0b1bfd6",
+        "decodedBytes": 170019
+      }
+    },
+    {
+      "period": "2024-03",
+      "resolution": 4,
+      "file": "2024-03-h3-4.json.gz",
+      "rows": 1912,
+      "bytes": 8217,
+      "sha256": "16420d3d81ddba0d514b04f85ac2d16126799e02d735719ab581995e136edf8f",
+      "decodedSha256": "e5eee6a80ba430a703c82747e0c68930523ded23148d3feb0f58a10a05a4ac9f",
+      "decodedBytes": 303880,
+      "geometry": {
+        "file": "2024-03-h3-4-cells.json.gz",
+        "rows": 283,
+        "bytes": 8352,
+        "sha256": "6cce9119290655609d9bfeb0a62e64db6a4e363c242eadf9a2e69e136879eebc",
+        "decodedSha256": "d7de9371300de7a849dba9d30f8805de2e8bee4e9d9125031b8cc093265044e9",
+        "decodedBytes": 32916
+      }
+    },
+    {
+      "period": "2024-03",
+      "resolution": 5,
+      "file": "2024-03-h3-5.json.gz",
+      "rows": 2290,
+      "bytes": 10215,
+      "sha256": "c3425181772309da597e7eef302ff3471a4ed11db8c6734f8ae49612656f475c",
+      "decodedSha256": "d3b54bd02235ff8def82a78699baef6b01cce331cd0b5d93c238cca9a37d03ec",
+      "decodedBytes": 363801,
+      "geometry": {
+        "file": "2024-03-h3-5-cells.json.gz",
+        "rows": 803,
+        "bytes": 24391,
+        "sha256": "939dca4d53a3b8b6db044eacede9f98b0c043adab73aa3db984b5196e32fef4e",
+        "decodedSha256": "14b4fe80f239d992d5b69a8dd844381950173624de673aabdae977bac85e9e23",
+        "decodedBytes": 93041
+      }
+    },
+    {
+      "period": "2024-03",
+      "resolution": 6,
+      "file": "2024-03-h3-6.json.gz",
+      "rows": 2558,
+      "bytes": 11916,
+      "sha256": "d8b66247a7f7b1a0c8c5ce78223f8a8fb401b4b93b8ee203e6152dd60c4e3d5e",
+      "decodedSha256": "ef3ec548dc869db04bcdc3f7c0ce6a748dae3e4b2d0291321e9be4403dfad975",
+      "decodedBytes": 406311,
+      "geometry": {
+        "file": "2024-03-h3-6-cells.json.gz",
+        "rows": 1226,
+        "bytes": 37568,
+        "sha256": "e0c180d92da3aa39fd6151cf0680e6f3cfd561f1d79baa64d7299d2e5f32529e",
+        "decodedSha256": "0b22e21e407282af744fa356760d01a34832edab117ae6c1bd10e689d54651df",
+        "decodedBytes": 141945
+      }
+    },
+    {
+      "period": "2024-04",
+      "resolution": 4,
+      "file": "2024-04-h3-4.json.gz",
+      "rows": 1742,
+      "bytes": 7537,
+      "sha256": "e0f74ada9eb86e8319852749ac06636285cb4333ed87fb22d4e953e547cec004",
+      "decodedSha256": "7173109d9023a509d102d4aa0a6426d3edb83b7b2b30d5c64dc088f2238f10f2",
+      "decodedBytes": 276351,
+      "geometry": {
+        "file": "2024-04-h3-4-cells.json.gz",
+        "rows": 255,
+        "bytes": 7539,
+        "sha256": "127714036c2d3804fe5f44803733b5d21415549c11ee23f86b034111e276c870",
+        "decodedSha256": "2090940c44e3bcf804d19313575bc6443d10ca6c4df0c223929abbe1bcc1b042",
+        "decodedBytes": 29661
+      }
+    },
+    {
+      "period": "2024-04",
+      "resolution": 5,
+      "file": "2024-04-h3-5.json.gz",
+      "rows": 2202,
+      "bytes": 9767,
+      "sha256": "69f718507125bbcefd391497ec96a906b807c56a74d41ba9f13a4eafb8c8917e",
+      "decodedSha256": "d59a7a25d159c8eed4c21ff6e0d12012da46e68ed6db5045f8120491dd1bdd44",
+      "decodedBytes": 349082,
+      "geometry": {
+        "file": "2024-04-h3-5-cells.json.gz",
+        "rows": 681,
+        "bytes": 20787,
+        "sha256": "2467f735fec379fa8ca30c82e43d1b5b1c891953d318aa9212d218db26c2532d",
+        "decodedSha256": "38b2850e9f2a53e6c8e9c54970429dc4489082b66eb8aeb1eee43b40a022b225",
+        "decodedBytes": 78925
+      }
+    },
+    {
+      "period": "2024-04",
+      "resolution": 6,
+      "file": "2024-04-h3-6.json.gz",
+      "rows": 2520,
+      "bytes": 11528,
+      "sha256": "40bc39153d5abe0ba3222c29151abd185a4a03d269d78ec874fba16850720c28",
+      "decodedSha256": "716e16b9d81a716792655e70423b8157f0abbad1df3c43e2df612a1c85deaa45",
+      "decodedBytes": 399397,
+      "geometry": {
+        "file": "2024-04-h3-6-cells.json.gz",
+        "rows": 1003,
+        "bytes": 30825,
+        "sha256": "b55b2ca99f422aa41f266d4af81d9dc0d57e37b31c6c8c59b8fc33ec394aadd5",
+        "decodedSha256": "85e84ace08daf8ba03974787a9373ea4538d2b536ddc7c5b08993f1e5c06c668",
+        "decodedBytes": 116159
+      }
+    },
+    {
+      "period": "2024-05",
+      "resolution": 4,
+      "file": "2024-05-h3-4.json.gz",
+      "rows": 1448,
+      "bytes": 6509,
+      "sha256": "8731c72a3e38bb8cb4916ee5a9bee2db8a0e0cfe9dfb42898df2c7f1c635cbce",
+      "decodedSha256": "829b30227819a2afca2264d56514ad47346ef2cbff6e862cf720eb50585b1a0a",
+      "decodedBytes": 229639,
+      "geometry": {
+        "file": "2024-05-h3-4-cells.json.gz",
+        "rows": 229,
+        "bytes": 6812,
+        "sha256": "b81b89ea627d881c0f6a056b46f97ae52505f8faeca831fe7eccce57e0290aae",
+        "decodedSha256": "7b2651f4abdb90025fb93b0d999a38e2b65da549472674fed3c47a1792104dfb",
+        "decodedBytes": 26653
+      }
+    },
+    {
+      "period": "2024-05",
+      "resolution": 5,
+      "file": "2024-05-h3-5.json.gz",
+      "rows": 1848,
+      "bytes": 8478,
+      "sha256": "e06e8a9f22afb95e8f56c9bb6cd3a2034e3a510fc67e336b820334431759aea1",
+      "decodedSha256": "59cafdd18f255729b492dd4fef306d05a1a78a1b403239f37c380e52a14045ef",
+      "decodedBytes": 292862,
+      "geometry": {
+        "file": "2024-05-h3-5-cells.json.gz",
+        "rows": 534,
+        "bytes": 16349,
+        "sha256": "b713812b7c3bfcdfaa88501d435b0ee93a5c333878b5e4e19f3fd912f641baed",
+        "decodedSha256": "96fede59c7bf7559a173ee70db8640fd5681348a22887ba19f9795ba4a472765",
+        "decodedBytes": 61963
+      }
+    },
+    {
+      "period": "2024-05",
+      "resolution": 6,
+      "file": "2024-05-h3-6.json.gz",
+      "rows": 2178,
+      "bytes": 10165,
+      "sha256": "ea47229a3dd570af33b14a4d399b9ad93e3daa2110b8fe9ef3c028f9c4f4035b",
+      "decodedSha256": "1aa788dccb57c464b65f8b85ee2e5b706a9418cf58de5331b8b5e2bd1a6fb7a2",
+      "decodedBytes": 345040,
+      "geometry": {
+        "file": "2024-05-h3-6-cells.json.gz",
+        "rows": 808,
+        "bytes": 24896,
+        "sha256": "8ff57d582a3dc63d37f618343c40637d74a63f02a1fa76e450e579cbe3aa5195",
+        "decodedSha256": "e2b269e9ce3e4bd25f54582133d5e233f26eee6655a7dccfe4f6f72b3352c382",
+        "decodedBytes": 93707
+      }
+    },
+    {
+      "period": "2024-06",
+      "resolution": 4,
+      "file": "2024-06-h3-4.json.gz",
+      "rows": 1735,
+      "bytes": 7539,
+      "sha256": "744f8973e8d9bab469050f0eceff9d2ca69fc380797bffac2595d326f89da183",
+      "decodedSha256": "ccbfa909ec7814b6ca6776d9e0406f5e05d8f019eb95517ef955c74e91d5d8de",
+      "decodedBytes": 275153,
+      "geometry": {
+        "file": "2024-06-h3-4-cells.json.gz",
+        "rows": 243,
+        "bytes": 7196,
+        "sha256": "e815517f04897f4eb8521bf87e6a1c4821ceb4afdbdbe363726dad7ad63467e8",
+        "decodedSha256": "c0de1ad52d5b9514405763f22ff2610b1589af1b83752c64bed3e65662c473e9",
+        "decodedBytes": 28276
+      }
+    },
+    {
+      "period": "2024-06",
+      "resolution": 5,
+      "file": "2024-06-h3-5.json.gz",
+      "rows": 2178,
+      "bytes": 9742,
+      "sha256": "dd52d12b6a70b2065544e4669818836785a0187848b3e473536d5bd5d1ab3abe",
+      "decodedSha256": "15a32d793d6f66a9d1c66e7fd076ab8807cc6b0b70e30d3cf2a9a17d3ee9ba1f",
+      "decodedBytes": 345179,
+      "geometry": {
+        "file": "2024-06-h3-5-cells.json.gz",
+        "rows": 588,
+        "bytes": 17955,
+        "sha256": "ae579798f49d78b466afa9682c325e71fc9d03c6287ad665cd53110ffe4a0cb3",
+        "decodedSha256": "5fcfc54160faf43bfdbf91a29c2b16039fcac21d75ac92a168e8e7bfea51c218",
+        "decodedBytes": 68157
+      }
+    },
+    {
+      "period": "2024-06",
+      "resolution": 6,
+      "file": "2024-06-h3-6.json.gz",
+      "rows": 2486,
+      "bytes": 11501,
+      "sha256": "f719c01005cd47e2cb935d0662fe05692fc8f0e04b16a7834b7009b2aee4c1e8",
+      "decodedSha256": "8265f40214ad3faa7c64611a970a7db05a1d03d56ce998d9a9407e88ed6a0139",
+      "decodedBytes": 393894,
+      "geometry": {
+        "file": "2024-06-h3-6-cells.json.gz",
+        "rows": 854,
+        "bytes": 26276,
+        "sha256": "9486a4247ed898003358b08b7bb0cc2fc297e19436c4538194203dd5d774646a",
+        "decodedSha256": "a4d94c8b921ce09f63304bd57d380122f267d5d041f9ae9eb499eca2b8161f58",
+        "decodedBytes": 98952
+      }
+    },
+    {
+      "period": "2024-07",
+      "resolution": 4,
+      "file": "2024-07-h3-4.json.gz",
+      "rows": 1210,
+      "bytes": 5404,
+      "sha256": "d4775ea3a3a74cbaad7c27f2c16b5e679c9b95e12eff5daa0e1c33fc49e31c4c",
+      "decodedSha256": "44a0e9a6a7953c9723404cd351cf6a7c0db344bc5ccc9c351327bf327ce18437",
+      "decodedBytes": 192087,
+      "geometry": {
+        "file": "2024-07-h3-4-cells.json.gz",
+        "rows": 231,
+        "bytes": 6806,
+        "sha256": "a8b6a11cb294495ff4a2197984c777e041356b4990c43bf761efe99c029b76f8",
+        "decodedSha256": "468f23ae1a821e3f4c50631e2b79734e7fdf6d8c7855b707f0de29ea80ae3563",
+        "decodedBytes": 26875
+      }
+    },
+    {
+      "period": "2024-07",
+      "resolution": 5,
+      "file": "2024-07-h3-5.json.gz",
+      "rows": 1491,
+      "bytes": 6755,
+      "sha256": "eb64de68271eb3de9c99e9c0b367bfb264fd3cb1779f24346fad47430555b8fc",
+      "decodedSha256": "01c52cf0e8dd6d431739a57a0c83559490d44e08a4800f8c5b4ebbb4c666ae66",
+      "decodedBytes": 236555,
+      "geometry": {
+        "file": "2024-07-h3-5-cells.json.gz",
+        "rows": 489,
+        "bytes": 15031,
+        "sha256": "21b2f4f14929ee1972bb4a8128b25a303727f7d183867944b82471911c0d3b43",
+        "decodedSha256": "ad07bcf0bdf1f361fd175679828a951e5f6597b97d3318818d805c4d9c044163",
+        "decodedBytes": 56708
+      }
+    },
+    {
+      "period": "2024-07",
+      "resolution": 6,
+      "file": "2024-07-h3-6.json.gz",
+      "rows": 1655,
+      "bytes": 7814,
+      "sha256": "f70282dbbedaed7f31cc0334cd14551470237e1823ebae5561e631746904c2af",
+      "decodedSha256": "f636f21cacc286fb2555376128452e58f32a24b91218c9be45aaf87d95f45f91",
+      "decodedBytes": 262517,
+      "geometry": {
+        "file": "2024-07-h3-6-cells.json.gz",
+        "rows": 682,
+        "bytes": 21131,
+        "sha256": "55af6375ff1ef85287864fdbbbe662865f4b6aefaa883807431cbea00eab2bc9",
+        "decodedSha256": "1ab629f93c2af18da3f1dd3d5dcb7ff1f043f002541155bf318e481e48eef5f6",
+        "decodedBytes": 79047
+      }
+    },
+    {
+      "period": "2024-08",
+      "resolution": 4,
+      "file": "2024-08-h3-4.json.gz",
+      "rows": 2301,
+      "bytes": 9872,
+      "sha256": "ba671dbe8563ce5c33c75aee11cc4e32c8ed02b9c396e0706c5952ebbf53f6de",
+      "decodedSha256": "5f05f00b2111ddab30dd5e49bf9be462d11817e471f67ab11f6392fa4d1ebe55",
+      "decodedBytes": 364657,
+      "geometry": {
+        "file": "2024-08-h3-4-cells.json.gz",
+        "rows": 264,
+        "bytes": 7803,
+        "sha256": "b81bdb8a30d77748259407c92e0296faa0cc0f1c01f2ae41e2e0c3929feeafce",
+        "decodedSha256": "bc082fc104f39722a7c807e4150a2af221430d13681af0340221a5b7c6344ff6",
+        "decodedBytes": 30703
+      }
+    },
+    {
+      "period": "2024-08",
+      "resolution": 5,
+      "file": "2024-08-h3-5.json.gz",
+      "rows": 2890,
+      "bytes": 12689,
+      "sha256": "d7e8bce940aabaf9d3f50a1f44b29b81799cf37764d18eb4e7baa40d24d34aef",
+      "decodedSha256": "edf55fa8f9f5940390606dd41930fc3195a31d4e3b4af8fba0f0f1c45d1d70cd",
+      "decodedBytes": 457725,
+      "geometry": {
+        "file": "2024-08-h3-5-cells.json.gz",
+        "rows": 639,
+        "bytes": 19491,
+        "sha256": "0928885800818daf7f315b04c90646dd636b0792600725e41ff8b6e1560624be",
+        "decodedSha256": "d2ef54066ab0751c06a4dadf63eb69877a6c39cd00ae71068ff241c15768c1c5",
+        "decodedBytes": 74064
+      }
+    },
+    {
+      "period": "2024-08",
+      "resolution": 6,
+      "file": "2024-08-h3-6.json.gz",
+      "rows": 3255,
+      "bytes": 14817,
+      "sha256": "798e61cc3971e2c27f1772ea68bcee53c5f7aaa67509cef5e740e4432f5559f0",
+      "decodedSha256": "04093989cbd0a2f226aa619f20865feb990148b2a36d2890ec5b9e61a5a12936",
+      "decodedBytes": 515451,
+      "geometry": {
+        "file": "2024-08-h3-6-cells.json.gz",
+        "rows": 967,
+        "bytes": 29828,
+        "sha256": "dae6269fd1d15a9b516cf11c22400cfabd84d562944012ea598698cbfab090da",
+        "decodedSha256": "7760b211fd8a079c9123accd264fa99c142216805da244f0a985c34dcdf4c508",
+        "decodedBytes": 112054
+      }
+    },
+    {
+      "period": "2024-09",
+      "resolution": 4,
+      "file": "2024-09-h3-4.json.gz",
+      "rows": 2117,
+      "bytes": 9044,
+      "sha256": "e153a4c19c5a4ec0ec07e5f3be51f06390335e2917bef4edd9cf585a85e72d00",
+      "decodedSha256": "3e99ac9554bba476c62baa9fc64a29193123c7c5bdba892d34607ef6bf9e3658",
+      "decodedBytes": 335907,
+      "geometry": {
+        "file": "2024-09-h3-4-cells.json.gz",
+        "rows": 261,
+        "bytes": 7716,
+        "sha256": "97f43471a0e18f8c759f175fbb61eeb0a090e470b4c7f96a5344612c43bcec7c",
+        "decodedSha256": "9181f6d24e2a225db23f0f2d0e0037f12d26168b3aadc682e9f1ab353fd86ccf",
+        "decodedBytes": 30364
+      }
+    },
+    {
+      "period": "2024-09",
+      "resolution": 5,
+      "file": "2024-09-h3-5.json.gz",
+      "rows": 2639,
+      "bytes": 11713,
+      "sha256": "3e964cc3c993e47076aa697a043489e94069cc11a643071fc09cc9ed7fe45119",
+      "decodedSha256": "10ee2ec7d801c5083fedf86e133ccdec0154c77505d70863949fc22283d502c0",
+      "decodedBytes": 418436,
+      "geometry": {
+        "file": "2024-09-h3-5-cells.json.gz",
+        "rows": 701,
+        "bytes": 21340,
+        "sha256": "69da97b19c2401937d548a57e8d6a960ab4aa4c523c55f162b775099dbaf4293",
+        "decodedSha256": "c1265e23a7955c6a6f38349870abc63a67bfc32a63e402793070acba46ab213b",
+        "decodedBytes": 81264
+      }
+    },
+    {
+      "period": "2024-09",
+      "resolution": 6,
+      "file": "2024-09-h3-6.json.gz",
+      "rows": 2940,
+      "bytes": 13525,
+      "sha256": "9d83286837bd0706317dc1eeab1012a44dec3e7508a38abdbb0a81f0dfaee508",
+      "decodedSha256": "596bf1cab2e3235e9b3fc3b1a22747766d15cc5de07c84cb95df7a0272eb2d86",
+      "decodedBytes": 466085,
+      "geometry": {
+        "file": "2024-09-h3-6-cells.json.gz",
+        "rows": 1085,
+        "bytes": 33289,
+        "sha256": "237d016e988797a047f1749748d06cef0590b5d995d64a2e27617a2e03b16fbc",
+        "decodedSha256": "986e9bb985f987fab5adaa8b74bc53fb078ac2b3a27ab0921a8aed2ecd423260",
+        "decodedBytes": 125745
+      }
+    },
+    {
+      "period": "2024-10",
+      "resolution": 4,
+      "file": "2024-10-h3-4.json.gz",
+      "rows": 2257,
+      "bytes": 9711,
+      "sha256": "38b2171ff5897680c14e4181a3e08a0f3d62c16efc576ef602c1cceb7092c0b9",
+      "decodedSha256": "19abf17429b1807b2a22773f48e3d8ff4c978951fd325e1db2241d5c109953cb",
+      "decodedBytes": 357903,
+      "geometry": {
+        "file": "2024-10-h3-4-cells.json.gz",
+        "rows": 237,
+        "bytes": 7032,
+        "sha256": "47059309c55839dab984cf28b1b1accf9ea74d3fefcd8374d1c06664c5d194e4",
+        "decodedSha256": "dccb20236bcb78acd74f5af1214989ddfb7eb640a1ab4a3bcb15cb4fa21ecb2c",
+        "decodedBytes": 27575
+      }
+    },
+    {
+      "period": "2024-10",
+      "resolution": 5,
+      "file": "2024-10-h3-5.json.gz",
+      "rows": 2987,
+      "bytes": 13087,
+      "sha256": "0f4aa7530ad6c09c8a87334af9a42067a774d42cc1760f544cc3dd4adbe1c5ff",
+      "decodedSha256": "404c195506c203f5c21091b36c6fd776e718a90c090e7607fa8245a4e1ce766b",
+      "decodedBytes": 473274,
+      "geometry": {
+        "file": "2024-10-h3-5-cells.json.gz",
+        "rows": 601,
+        "bytes": 18326,
+        "sha256": "19994067ab24689febdf55216622263cb256c73a1a12bdfb41e1a01994050d82",
+        "decodedSha256": "4a6973eff7f23de617ed2f688e51e48d300e64f4944c61fe4630e580091d64cf",
+        "decodedBytes": 69666
+      }
+    },
+    {
+      "period": "2024-10",
+      "resolution": 6,
+      "file": "2024-10-h3-6.json.gz",
+      "rows": 3514,
+      "bytes": 15768,
+      "sha256": "98224e3051f5ab5abd062831366de09e6aab2835916e8ed75e82d0ff3707949a",
+      "decodedSha256": "28138092e60e3fc3694df9dcf732302242ab383c91dafb0097e6cc7b09c37449",
+      "decodedBytes": 556600,
+      "geometry": {
+        "file": "2024-10-h3-6-cells.json.gz",
+        "rows": 954,
+        "bytes": 29383,
+        "sha256": "321d5a8d3d14b414966eba73793aef534e9e03a00de1f0790940a9f60d11bcb9",
+        "decodedSha256": "c575efb1c8fe62f39eb102e407186436673a090015218565ccf398220192701c",
+        "decodedBytes": 110592
+      }
+    },
+    {
+      "period": "2024-11",
+      "resolution": 4,
+      "file": "2024-11-h3-4.json.gz",
+      "rows": 2012,
+      "bytes": 8497,
+      "sha256": "eb37b0ebab1e2a1bc5c2436294a3e260c447966ca48966c7b9b97e7c7c26f884",
+      "decodedSha256": "f2c5d57ecf0dab6236985dcee84893d2667d98515cf4e7ef1fa79efa26951cab",
+      "decodedBytes": 319094,
+      "geometry": {
+        "file": "2024-11-h3-4-cells.json.gz",
+        "rows": 239,
+        "bytes": 7068,
+        "sha256": "d3f5ff3335ea4f6f77db08e1ba48f73ddc485e4cf9a07a1dd1edc657e587fb60",
+        "decodedSha256": "d660234418f38574801ce73d09bbd2e19a6e96a039b5d4eaf5eadcfa0cf497b0",
+        "decodedBytes": 27788
+      }
+    },
+    {
+      "period": "2024-11",
+      "resolution": 5,
+      "file": "2024-11-h3-5.json.gz",
+      "rows": 2508,
+      "bytes": 11027,
+      "sha256": "3b2101b58849145df8fabe0232a065e2f0e19c5e8324af933da8df2e45477047",
+      "decodedSha256": "dcd290aaadd215fd2afb1041690261f9464efe1f767b3a3284648f23445957db",
+      "decodedBytes": 397521,
+      "geometry": {
+        "file": "2024-11-h3-5-cells.json.gz",
+        "rows": 717,
+        "bytes": 21721,
+        "sha256": "d0866ea0fe27d307a07021fedd272d5d9e24e273b4f69c3b7bb5b908453e8b48",
+        "decodedSha256": "2a1812a32cd6fd432df181a369aef2b058fbcaa23e55aae1cc7445122954bc67",
+        "decodedBytes": 83077
+      }
+    },
+    {
+      "period": "2024-11",
+      "resolution": 6,
+      "file": "2024-11-h3-6.json.gz",
+      "rows": 2806,
+      "bytes": 12869,
+      "sha256": "1d9b4b7563b3d5470102a9db911e5f6915018c848625e1f58f1717feb37cbeba",
+      "decodedSha256": "f6421e91da8d2f34f9c1b0f57e77c6cd88311520ff1262141322e4aeea146706",
+      "decodedBytes": 444728,
+      "geometry": {
+        "file": "2024-11-h3-6-cells.json.gz",
+        "rows": 1150,
+        "bytes": 35263,
+        "sha256": "9f870f8eec5a3fc5e58a40196a5797c4fef0e63f5dbbf5e844a8b0d01c723d61",
+        "decodedSha256": "654e985bbfbf18c8c7440b58a237459984b7bab761f3fcc5467244d34c3f0a50",
+        "decodedBytes": 133155
+      }
+    },
+    {
+      "period": "2024-12",
+      "resolution": 4,
+      "file": "2024-12-h3-4.json.gz",
+      "rows": 1795,
+      "bytes": 7655,
+      "sha256": "e6180e859bbc0f873e48c4c97a39eb0537aba95e05addf416fef15bda1b32098",
+      "decodedSha256": "7593a59938818b0f33856bf10f0c0ae893940104bfd4190fb0ee583fa3db5712",
+      "decodedBytes": 284807,
+      "geometry": {
+        "file": "2024-12-h3-4-cells.json.gz",
+        "rows": 241,
+        "bytes": 7149,
+        "sha256": "6308784273e165493eead91128bb1c2156d0d13536663eeed456caed4d466f9f",
+        "decodedSha256": "e95b3e39c8c6b329056736354a44c90b0780514f4f5a2e02286c985f6fe1ae11",
+        "decodedBytes": 28027
+      }
+    },
+    {
+      "period": "2024-12",
+      "resolution": 5,
+      "file": "2024-12-h3-5.json.gz",
+      "rows": 2206,
+      "bytes": 9797,
+      "sha256": "41ae9033662182971ec3cd78172ae3e5ffa79424d55965c8ebdd12ea17098adb",
+      "decodedSha256": "c14f105861580a6a0496beefaac8e86cb836764d1f90b13ab743dd00b37a89cd",
+      "decodedBytes": 349815,
+      "geometry": {
+        "file": "2024-12-h3-5-cells.json.gz",
+        "rows": 683,
+        "bytes": 20787,
+        "sha256": "41fbd38e22de62aff536cb5614a7f03b789a19eed944c8c83e78368112771a6c",
+        "decodedSha256": "77f3cfcf55b4dbf45262082d2cd0f3a10f269b945f54b6f3cafa2ccbb96973ed",
+        "decodedBytes": 79133
+      }
+    },
+    {
+      "period": "2024-12",
+      "resolution": 6,
+      "file": "2024-12-h3-6.json.gz",
+      "rows": 2469,
+      "bytes": 11417,
+      "sha256": "007d2fcfd1ef5b029393952392a610222ec3f3c52378b495251cbfc820ab4296",
+      "decodedSha256": "371366374447b1a24bb879049482e1f17f1fdcfd84c48537431b9089b8a032e8",
+      "decodedBytes": 391466,
+      "geometry": {
+        "file": "2024-12-h3-6-cells.json.gz",
+        "rows": 1056,
+        "bytes": 32454,
+        "sha256": "b5b8848931c3f6231182ff2525c39f1c4fbee97a61a25235e3e294219d10cd15",
+        "decodedSha256": "7d7a0740f4f476d01ce1f34cdb4cb5bea656c42590d7320113795f8f8cf097cf",
+        "decodedBytes": 122274
+      }
+    }
+  ],
+  "provenance": "First file in relative-path byte order wins by sensor|platform|UTC timestamp|latitude|longitude, including across versions. All valid source rows and duplicate attributes remain in the local SQLite provenance table; accepted attribution and full source metadata accompany aggregates.",
+  "coverage": "Record extents are not satellite observation coverage. Zero loaded detections is not absence of fire. All supplied type codes are retained. Confidence values remain sensor-specific.",
+  "spatial": "H3 direct point-to-cell indexing at each resolution. Unequal cell areas are supplied in km². Bounds queries on cell centers are approximate; exact queries require point records in the local SQLite database.",
+  "points": {
+    "availableInBrowser": false,
+    "localDatabase": true,
+    "query": "node scripts/history/query.mjs --database <benchmark.database> --start YYYY-MM-DD --end YYYY-MM-DD --bounds west,south,east,north"
+  }
+}

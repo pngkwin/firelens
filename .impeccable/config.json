@@ -1,0 +1,27 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/chronology.html"
+        ],
+        "createdAt": "2026-11-15T01:04:23.077Z",
+        "reason": "Agent-authored direction candidate: warm mineral ground intentionally derives from stratigraphic chronology publications; this is an unselected composition sketch, not a user-confirmed product palette."
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-11-15T01:51:08.530Z",
+        "reason": "Agent verified src/styles.css: primary navigation buttons explicitly have border-radius: 0; the 3px bottom rule is the active-page underline, not a rounded card accent."
+      }
+    ]
+  }
+}

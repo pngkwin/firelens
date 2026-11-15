@@ -1,0 +1,50 @@
+{
+  "name": "firelens",
+  "version": "0.1.0",
+  "private": true,
+  "engines": { "node": ">=22.18.0" },
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "data:prepare": "node scripts/prepare-data.mjs",
+    "history:prepare": "node scripts/history/prepare.mjs",
+    "history:test": "node --test scripts/history/pipeline.test.mjs",
+    "history:analyze": "node scripts/history/analyze.mjs",
+    "history:verify": "node scripts/history/verify.mjs",
+    "predev": "npm run data:verify",
+    "prebuild": "npm run data:verify && npm run history:verify",
+    "data:bundle": "node scripts/bundle-data.mjs",
+    "data:verify": "node scripts/verify-demo.mjs",
+    "build:clean": "node scripts/clean-build.mjs",
+    "pretest:e2e": "npm run build"
+  },
+  "dependencies": {
+    "@fontsource/source-sans-3": "^5.2.8",
+    "@tailwindcss/vite": "^4.1.0",
+    "h3-js": "^4.5.0",
+    "lucide-react": "^0.468.0",
+    "maplibre-gl": "^6.18.0",
+    "papaparse": "^5.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^3.0.0",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^24.0.0",
+    "@types/papaparse": "^5.3.16",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "prettier": "^3.10.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.0",
+    "vitest": "^5.1.0"
+  }
+}

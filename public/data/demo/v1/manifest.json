@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "bundleVersion": "2024-archives-v1",
+  "description": "Complete user-provided 2024 FIRMS MODIS Terra/Aqua and VIIRS S-NPP archive CSVs; no sample substitution.",
+  "recordCount": 54191,
+  "limitations": "Raw detection records, not harmonized. Geographic scope is the original supplied archive subset; record extents are not observation coverage.",
+  "files": [
+    {
+      "name": "fire_archive_M-C61_850214.csv",
+      "path": "data/raw/DL_FIRE_M-C61_850214/fire_archive_M-C61_850214.csv",
+      "url": "/data/demo/v1/fire_archive_M-C61_850214.csv.gz",
+      "source": "https://firms.modaps.eosdis.nasa.gov/download/",
+      "origin": "User-supplied approved NASA FIRMS archive download; preserved original CSV",
+      "hash": "4b726464ac6d7ae6444a597f6e0c448f57a19e07dcde1b06135ba13e2e5a0850",
+      "bytes": 547424,
+      "inputRows": 6827,
+      "records": 6827,
+      "duplicates": 0,
+      "rejected": 0,
+      "sensors": [
+        "MODIS"
+      ],
+      "satellites": [
+        "Terra",
+        "Aqua"
+      ],
+      "versions": [
+        "61.03"
+      ],
+      "rawInstruments": [
+        "MODIS"
+      ],
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "bounds": {
+        "west": -106.375,
+        "south": 25.9043,
+        "east": -93.5621,
+        "north": 36.493
+      },
+      "fields": [
+        "latitude",
+        "longitude",
+        "brightness",
+        "scan",
+        "track",
+        "acq_date",
+        "acq_time",
+        "satellite",
+        "instrument",
+        "confidence",
+        "version",
+        "bright_t31",
+        "frp",
+        "daynight",
+        "type"
+      ],
+      "inspectedAt": "2026-11-15T02:00:24.299Z",
+      "platformCounts": {
+        "Terra": 3596,
+        "Aqua": 3231
+      },
+      "monthlyCounts": {
+        "2024-01": 579,
+        "2024-02": 1438,
+        "2024-03": 752,
+        "2024-04": 467,
+        "2024-05": 319,
+        "2024-06": 377,
+        "2024-07": 373,
+        "2024-08": 430,
+        "2024-09": 589,
+        "2024-10": 493,
+        "2024-11": 534,
+        "2024-12": 476
+      },
+      "encoding": "gzip",
+      "compressedBytes": 124796,
+      "compressedHash": "2ee91e10c0db920b4b60607dfdd4f36d1bce4958f789f1b56b0ea47079261226"
+    },
+    {
+      "name": "fire_archive_SV-C2_850215.csv",
+      "path": "data/raw/DL_FIRE_SV-C2_850215/fire_archive_SV-C2_850215.csv",
+      "url": "/data/demo/v1/fire_archive_SV-C2_850215.csv.gz",
+      "source": "https://firms.modaps.eosdis.nasa.gov/download/",
+      "origin": "User-supplied approved NASA FIRMS archive download; preserved original CSV",
+      "hash": "973fa7024c5969157209cf0d2c090b3e38d17fa54b2d5e781586c7e5b4c5373c",
+      "bytes": 3868772,
+      "inputRows": 47364,
+      "records": 47364,
+      "duplicates": 0,
+      "rejected": 0,
+      "sensors": [
+        "VIIRS"
+      ],
+      "satellites": [
+        "S-NPP"
+      ],
+      "versions": [
+        "2"
+      ],
+      "rawInstruments": [
+        "SNPP"
+      ],
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "bounds": {
+        "west": -106.58707,
+        "south": 25.90648,
+        "east": -93.56567,
+        "north": 36.48934
+      },
+      "fields": [
+        "latitude",
+        "longitude",
+        "brightness",
+        "scan",
+        "track",
+        "acq_date",
+        "acq_time",
+        "satellite",
+        "instrument",
+        "confidence",
+        "version",
+        "bright_t31",
+        "frp",
+        "daynight",
+        "type"
+      ],
+      "inspectedAt": "2026-11-15T02:00:24.846Z",
+      "platformCounts": {
+        "S-NPP": 47364
+      },
+      "monthlyCounts": {
+        "2024-01": 3159,
+        "2024-02": 6744,
+        "2024-03": 3315,
+        "2024-04": 3661,
+        "2024-05": 3402,
+        "2024-06": 3537,
+        "2024-07": 1994,
+        "2024-08": 5011,
+        "2024-09": 4161,
+        "2024-10": 5136,
+        "2024-11": 3929,
+        "2024-12": 3315
+      },
+      "encoding": "gzip",
+      "compressedBytes": 875564,
+      "compressedHash": "ce2b7e4e6f8c8dab2a4f62a9a2651494e9316f52795133e754ee941d8472db80"
+    }
+  ]
+}

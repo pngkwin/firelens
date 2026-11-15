@@ -1,0 +1,969 @@
+{
+  "format": "firelens-sensor-analysis-1",
+  "version": "eddf9e9148a2cc143b4680a7",
+  "scope": {
+    "start": "2024-01-01",
+    "end": "2024-12-31",
+    "count": 54191,
+    "overlap": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "spatial": "All retained archive points; no additional geographic restriction",
+    "types": "All source type codes retained; includes non-vegetation thermal anomalies"
+  },
+  "monthly": [
+    {
+      "period": "2024-01",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 304
+    },
+    {
+      "period": "2024-01",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 275
+    },
+    {
+      "period": "2024-01",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3159
+    },
+    {
+      "period": "2024-02",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 864
+    },
+    {
+      "period": "2024-02",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 574
+    },
+    {
+      "period": "2024-02",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 6744
+    },
+    {
+      "period": "2024-03",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 303
+    },
+    {
+      "period": "2024-03",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 449
+    },
+    {
+      "period": "2024-03",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3315
+    },
+    {
+      "period": "2024-04",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 182
+    },
+    {
+      "period": "2024-04",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 285
+    },
+    {
+      "period": "2024-04",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3661
+    },
+    {
+      "period": "2024-05",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 153
+    },
+    {
+      "period": "2024-05",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 166
+    },
+    {
+      "period": "2024-05",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3402
+    },
+    {
+      "period": "2024-06",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 142
+    },
+    {
+      "period": "2024-06",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 235
+    },
+    {
+      "period": "2024-06",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3537
+    },
+    {
+      "period": "2024-07",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 145
+    },
+    {
+      "period": "2024-07",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 228
+    },
+    {
+      "period": "2024-07",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 1994
+    },
+    {
+      "period": "2024-08",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 182
+    },
+    {
+      "period": "2024-08",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 248
+    },
+    {
+      "period": "2024-08",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 5011
+    },
+    {
+      "period": "2024-09",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 228
+    },
+    {
+      "period": "2024-09",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 361
+    },
+    {
+      "period": "2024-09",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 4161
+    },
+    {
+      "period": "2024-10",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 190
+    },
+    {
+      "period": "2024-10",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 303
+    },
+    {
+      "period": "2024-10",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 5136
+    },
+    {
+      "period": "2024-11",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 327
+    },
+    {
+      "period": "2024-11",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 207
+    },
+    {
+      "period": "2024-11",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3929
+    },
+    {
+      "period": "2024-12",
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "count": 211
+    },
+    {
+      "period": "2024-12",
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "count": 265
+    },
+    {
+      "period": "2024-12",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "count": 3315
+    }
+  ],
+  "daynight": [
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "daynight": "D",
+      "count": 2945
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "daynight": "N",
+      "count": 286
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "daynight": "D",
+      "count": 2974
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "daynight": "N",
+      "count": 622
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "daynight": "D",
+      "count": 18104
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "daynight": "N",
+      "count": 29260
+    }
+  ],
+  "utcHour": [
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "hour": "08",
+      "count": 105
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "hour": "09",
+      "count": 180
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "hour": "10",
+      "count": 1
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "hour": "19",
+      "count": 799
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "hour": "20",
+      "count": 2081
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Aqua",
+      "hour": "21",
+      "count": 65
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "hour": "02",
+      "count": 2
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "hour": "03",
+      "count": 256
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "hour": "04",
+      "count": 359
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "hour": "05",
+      "count": 5
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "hour": "15",
+      "count": 66
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "hour": "16",
+      "count": 2352
+    },
+    {
+      "sensor": "MODIS",
+      "platform": "Terra",
+      "hour": "17",
+      "count": 556
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "hour": "07",
+      "count": 9676
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "hour": "08",
+      "count": 13971
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "hour": "09",
+      "count": 5613
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "hour": "18",
+      "count": 2821
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "hour": "19",
+      "count": 11175
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "hour": "20",
+      "count": 4104
+    },
+    {
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "hour": "21",
+      "count": 4
+    }
+  ],
+  "types": [
+    {
+      "sensor": "MODIS",
+      "type": 0,
+      "count": 6486
+    },
+    {
+      "sensor": "MODIS",
+      "type": 2,
+      "count": 336
+    },
+    {
+      "sensor": "MODIS",
+      "type": 3,
+      "count": 5
+    },
+    {
+      "sensor": "VIIRS",
+      "type": 0,
+      "count": 33111
+    },
+    {
+      "sensor": "VIIRS",
+      "type": 2,
+      "count": 14014
+    },
+    {
+      "sensor": "VIIRS",
+      "type": 3,
+      "count": 239
+    }
+  ],
+  "monthlyOccupiedCells": [
+    {
+      "period": "2024-01",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 154
+    },
+    {
+      "period": "2024-01",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 261
+    },
+    {
+      "period": "2024-01",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 321
+    },
+    {
+      "period": "2024-01",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 240
+    },
+    {
+      "period": "2024-01",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 639
+    },
+    {
+      "period": "2024-01",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 909
+    },
+    {
+      "period": "2024-02",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 222
+    },
+    {
+      "period": "2024-02",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 455
+    },
+    {
+      "period": "2024-02",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 643
+    },
+    {
+      "period": "2024-02",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 269
+    },
+    {
+      "period": "2024-02",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 788
+    },
+    {
+      "period": "2024-02",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 1251
+    },
+    {
+      "period": "2024-03",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 189
+    },
+    {
+      "period": "2024-03",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 354
+    },
+    {
+      "period": "2024-03",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 447
+    },
+    {
+      "period": "2024-03",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 274
+    },
+    {
+      "period": "2024-03",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 712
+    },
+    {
+      "period": "2024-03",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 1034
+    },
+    {
+      "period": "2024-04",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 144
+    },
+    {
+      "period": "2024-04",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 222
+    },
+    {
+      "period": "2024-04",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 257
+    },
+    {
+      "period": "2024-04",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 248
+    },
+    {
+      "period": "2024-04",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 637
+    },
+    {
+      "period": "2024-04",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 923
+    },
+    {
+      "period": "2024-05",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 117
+    },
+    {
+      "period": "2024-05",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 163
+    },
+    {
+      "period": "2024-05",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 190
+    },
+    {
+      "period": "2024-05",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 220
+    },
+    {
+      "period": "2024-05",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 489
+    },
+    {
+      "period": "2024-05",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 738
+    },
+    {
+      "period": "2024-06",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 124
+    },
+    {
+      "period": "2024-06",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 178
+    },
+    {
+      "period": "2024-06",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 207
+    },
+    {
+      "period": "2024-06",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 233
+    },
+    {
+      "period": "2024-06",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 530
+    },
+    {
+      "period": "2024-06",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 759
+    },
+    {
+      "period": "2024-07",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 127
+    },
+    {
+      "period": "2024-07",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 178
+    },
+    {
+      "period": "2024-07",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 204
+    },
+    {
+      "period": "2024-07",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 207
+    },
+    {
+      "period": "2024-07",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 404
+    },
+    {
+      "period": "2024-07",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 564
+    },
+    {
+      "period": "2024-08",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 134
+    },
+    {
+      "period": "2024-08",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 189
+    },
+    {
+      "period": "2024-08",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 222
+    },
+    {
+      "period": "2024-08",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 254
+    },
+    {
+      "period": "2024-08",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 594
+    },
+    {
+      "period": "2024-08",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 895
+    },
+    {
+      "period": "2024-09",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 155
+    },
+    {
+      "period": "2024-09",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 247
+    },
+    {
+      "period": "2024-09",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 312
+    },
+    {
+      "period": "2024-09",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 255
+    },
+    {
+      "period": "2024-09",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 645
+    },
+    {
+      "period": "2024-09",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 974
+    },
+    {
+      "period": "2024-10",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 128
+    },
+    {
+      "period": "2024-10",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 190
+    },
+    {
+      "period": "2024-10",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 225
+    },
+    {
+      "period": "2024-10",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 225
+    },
+    {
+      "period": "2024-10",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 566
+    },
+    {
+      "period": "2024-10",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 888
+    },
+    {
+      "period": "2024-11",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 147
+    },
+    {
+      "period": "2024-11",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 247
+    },
+    {
+      "period": "2024-11",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 306
+    },
+    {
+      "period": "2024-11",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 229
+    },
+    {
+      "period": "2024-11",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 680
+    },
+    {
+      "period": "2024-11",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 1059
+    },
+    {
+      "period": "2024-12",
+      "sensor": "MODIS",
+      "resolution": 4,
+      "cells": 144
+    },
+    {
+      "period": "2024-12",
+      "sensor": "MODIS",
+      "resolution": 5,
+      "cells": 242
+    },
+    {
+      "period": "2024-12",
+      "sensor": "MODIS",
+      "resolution": 6,
+      "cells": 296
+    },
+    {
+      "period": "2024-12",
+      "sensor": "VIIRS",
+      "resolution": 4,
+      "cells": 233
+    },
+    {
+      "period": "2024-12",
+      "sensor": "VIIRS",
+      "resolution": 5,
+      "cells": 638
+    },
+    {
+      "period": "2024-12",
+      "sensor": "VIIRS",
+      "resolution": 6,
+      "cells": 952
+    }
+  ],
+  "scales": [
+    {
+      "resolution": 4,
+      "unit": "day",
+      "unionBins": 17445,
+      "MODIS": 3708,
+      "VIIRS": 16173,
+      "both": 2436,
+      "MODISonly": 1272,
+      "VIIRSonly": 13737,
+      "jaccard": 0.13963886500429923
+    },
+    {
+      "resolution": 4,
+      "unit": "month",
+      "unionBins": 3021,
+      "MODIS": 1785,
+      "VIIRS": 2887,
+      "both": 1651,
+      "MODISonly": 134,
+      "VIIRSonly": 1236,
+      "jaccard": 0.5465077788811652
+    },
+    {
+      "resolution": 4,
+      "unit": "year",
+      "unionBins": 367,
+      "MODIS": 324,
+      "VIIRS": 364,
+      "both": 321,
+      "MODISonly": 3,
+      "VIIRSonly": 43,
+      "jaccard": 0.8746594005449592
+    },
+    {
+      "resolution": 5,
+      "unit": "day",
+      "unionBins": 23696,
+      "MODIS": 4139,
+      "VIIRS": 21940,
+      "both": 2383,
+      "MODISonly": 1756,
+      "VIIRSonly": 19557,
+      "jaccard": 0.10056549628629305
+    },
+    {
+      "resolution": 5,
+      "unit": "month",
+      "unionBins": 8016,
+      "MODIS": 2926,
+      "VIIRS": 7322,
+      "both": 2232,
+      "MODISonly": 694,
+      "VIIRSonly": 5090,
+      "jaccard": 0.27844311377245506
+    },
+    {
+      "resolution": 5,
+      "unit": "year",
+      "unionBins": 1878,
+      "MODIS": 1316,
+      "VIIRS": 1796,
+      "both": 1234,
+      "MODISonly": 82,
+      "VIIRSonly": 562,
+      "jaccard": 0.6570820021299254
+    },
+    {
+      "resolution": 6,
+      "unit": "day",
+      "unionBins": 27824,
+      "MODIS": 4554,
+      "VIIRS": 25661,
+      "both": 2391,
+      "MODISonly": 2163,
+      "VIIRSonly": 23270,
+      "jaccard": 0.08593300747556067
+    },
+    {
+      "resolution": 6,
+      "unit": "month",
+      "unionBins": 12274,
+      "MODIS": 3630,
+      "VIIRS": 10946,
+      "both": 2302,
+      "MODISonly": 1328,
+      "VIIRSonly": 8644,
+      "jaccard": 0.1875509206452664
+    },
+    {
+      "resolution": 6,
+      "unit": "year",
+      "unionBins": 5860,
+      "MODIS": 2641,
+      "VIIRS": 5293,
+      "both": 2074,
+      "MODISonly": 567,
+      "VIIRSonly": 3219,
+      "jaccard": 0.3539249146757679
+    }
+  ],
+  "proximity": {
+    "toleranceKm": 2,
+    "toleranceMinutes": 30,
+    "pairs": 6677,
+    "MODISwithCandidate": 1113,
+    "VIIRSwithCandidate": 2830,
+    "definition": "Many-to-many cross-sensor point pairs within 2 km spherical great-circle distance and 30 minutes acquisition UTC. Candidates, not independently verified same-fire matches; counts depend on chosen tolerances."
+  },
+  "interpretation": "Cell/time-bin co-occupancy is not acquisition-time matching, missed-fire rate, accuracy, coverage, or harmonization. Only shared record-date extent is compared. The archive footprint and observation opportunities are not established by point extents. One year cannot validate historical anomalies or cross-decade calibration."
+}

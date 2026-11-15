@@ -1,0 +1,476 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T02:02:06.664468+00:00",
+  "title": "Design System: FireLens",
+  "extensions": {
+    "colorMeta": {
+      "forest": {
+        "role": "primary",
+        "displayName": "Forest",
+        "tonalRamp": [
+          "oklch(15% 0.0140 177.79)",
+          "oklch(26% 0.0302 177.79)",
+          "oklch(38% 0.0419 177.79)",
+          "oklch(50% 0.0465 177.79)",
+          "oklch(62% 0.0465 177.79)",
+          "oklch(74% 0.0372 177.79)",
+          "oklch(86% 0.0209 177.79)",
+          "oklch(95% 0.0074 177.79)"
+        ]
+      },
+      "forest-hover": {
+        "role": "primary",
+        "displayName": "Forest Hover",
+        "tonalRamp": [
+          "oklch(15% 0.0184 174.92)",
+          "oklch(26% 0.0399 174.92)",
+          "oklch(38% 0.0553 174.92)",
+          "oklch(50% 0.0615 174.92)",
+          "oklch(62% 0.0615 174.92)",
+          "oklch(74% 0.0492 174.92)",
+          "oklch(86% 0.0277 174.92)",
+          "oklch(95% 0.0098 174.92)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Observation Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0112 173.64)",
+          "oklch(26% 0.0242 173.64)",
+          "oklch(38% 0.0335 173.64)",
+          "oklch(50% 0.0372 173.64)",
+          "oklch(62% 0.0372 173.64)",
+          "oklch(74% 0.0298 173.64)",
+          "oklch(86% 0.0167 173.64)",
+          "oklch(95% 0.0060 173.64)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Green Gray",
+        "tonalRamp": [
+          "oklch(15% 0.0081 169.02)",
+          "oklch(26% 0.0176 169.02)",
+          "oklch(38% 0.0243 169.02)",
+          "oklch(50% 0.0270 169.02)",
+          "oklch(62% 0.0270 169.02)",
+          "oklch(74% 0.0216 169.02)",
+          "oklch(86% 0.0122 169.02)",
+          "oklch(95% 0.0043 169.02)"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Cool Field",
+        "tonalRamp": [
+          "oklch(15% 0.0012 157.18)",
+          "oklch(26% 0.0027 157.18)",
+          "oklch(38% 0.0037 157.18)",
+          "oklch(50% 0.0041 157.18)",
+          "oklch(62% 0.0041 157.18)",
+          "oklch(74% 0.0033 157.18)",
+          "oklch(86% 0.0019 157.18)",
+          "oklch(95% 0.0007 157.18)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15% 0.0038 156.98)",
+          "oklch(26% 0.0082 156.98)",
+          "oklch(38% 0.0113 156.98)",
+          "oklch(50% 0.0126 156.98)",
+          "oklch(62% 0.0126 156.98)",
+          "oklch(74% 0.0101 156.98)",
+          "oklch(86% 0.0057 156.98)",
+          "oklch(95% 0.0020 156.98)"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Soft",
+        "tonalRamp": [
+          "oklch(15% 0.0025 157.09)",
+          "oklch(26% 0.0054 157.09)",
+          "oklch(38% 0.0074 157.09)",
+          "oklch(50% 0.0083 157.09)",
+          "oklch(62% 0.0083 157.09)",
+          "oklch(74% 0.0066 157.09)",
+          "oklch(86% 0.0037 157.09)",
+          "oklch(95% 0.0013 157.09)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "White Analytical Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(50% 0.0000 89.88)",
+          "oklch(62% 0.0000 89.88)",
+          "oklch(74% 0.0000 89.88)",
+          "oklch(86% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "selection": {
+        "role": "neutral",
+        "displayName": "Selection",
+        "tonalRamp": [
+          "oklch(15% 0.0060 154.88)",
+          "oklch(26% 0.0130 154.88)",
+          "oklch(38% 0.0180 154.88)",
+          "oklch(50% 0.0200 154.88)",
+          "oklch(62% 0.0200 154.88)",
+          "oklch(74% 0.0160 154.88)",
+          "oklch(86% 0.0090 154.88)",
+          "oklch(95% 0.0032 154.88)"
+        ]
+      },
+      "fire": {
+        "role": "secondary",
+        "displayName": "Fire Orange",
+        "tonalRamp": [
+          "oklch(15% 0.0443 41.03)",
+          "oklch(26% 0.0959 41.03)",
+          "oklch(38% 0.1328 41.03)",
+          "oklch(50% 0.1475 41.03)",
+          "oklch(62% 0.1475 41.03)",
+          "oklch(74% 0.1180 41.03)",
+          "oklch(86% 0.0664 41.03)",
+          "oklch(95% 0.0236 41.03)"
+        ]
+      },
+      "viirs": {
+        "role": "secondary",
+        "displayName": "VIIRS Blue",
+        "tonalRamp": [
+          "oklch(15% 0.0253 232.09)",
+          "oklch(26% 0.0548 232.09)",
+          "oklch(38% 0.0759 232.09)",
+          "oklch(50% 0.0843 232.09)",
+          "oklch(62% 0.0843 232.09)",
+          "oklch(74% 0.0674 232.09)",
+          "oklch(86% 0.0379 232.09)",
+          "oklch(95% 0.0135 232.09)"
+        ]
+      },
+      "warning": {
+        "role": "secondary",
+        "displayName": "Warning",
+        "tonalRamp": [
+          "oklch(15% 0.0352 38.02)",
+          "oklch(26% 0.0763 38.02)",
+          "oklch(38% 0.1056 38.02)",
+          "oklch(50% 0.1173 38.02)",
+          "oklch(62% 0.1173 38.02)",
+          "oklch(74% 0.0939 38.02)",
+          "oklch(86% 0.0528 38.02)",
+          "oklch(95% 0.0188 38.02)"
+        ]
+      },
+      "error-bg": {
+        "role": "secondary",
+        "displayName": "Error Bg",
+        "tonalRamp": [
+          "oklch(15% 0.0052 44.81)",
+          "oklch(26% 0.0112 44.81)",
+          "oklch(38% 0.0155 44.81)",
+          "oklch(50% 0.0172 44.81)",
+          "oklch(62% 0.0172 44.81)",
+          "oklch(74% 0.0137 44.81)",
+          "oklch(86% 0.0077 44.81)",
+          "oklch(95% 0.0027 44.81)"
+        ]
+      },
+      "heat1": {
+        "role": "secondary",
+        "displayName": "Heat1",
+        "tonalRamp": [
+          "oklch(15% 0.0098 67.42)",
+          "oklch(26% 0.0212 67.42)",
+          "oklch(38% 0.0294 67.42)",
+          "oklch(50% 0.0327 67.42)",
+          "oklch(62% 0.0327 67.42)",
+          "oklch(74% 0.0261 67.42)",
+          "oklch(86% 0.0147 67.42)",
+          "oklch(95% 0.0052 67.42)"
+        ]
+      },
+      "heat2": {
+        "role": "secondary",
+        "displayName": "Heat2",
+        "tonalRamp": [
+          "oklch(15% 0.0231 64.60)",
+          "oklch(26% 0.0500 64.60)",
+          "oklch(38% 0.0692 64.60)",
+          "oklch(50% 0.0769 64.60)",
+          "oklch(62% 0.0769 64.60)",
+          "oklch(74% 0.0615 64.60)",
+          "oklch(86% 0.0346 64.60)",
+          "oklch(95% 0.0123 64.60)"
+        ]
+      },
+      "heat3": {
+        "role": "secondary",
+        "displayName": "Heat3",
+        "tonalRamp": [
+          "oklch(15% 0.0329 58.30)",
+          "oklch(26% 0.0713 58.30)",
+          "oklch(38% 0.0987 58.30)",
+          "oklch(50% 0.1097 58.30)",
+          "oklch(62% 0.1097 58.30)",
+          "oklch(74% 0.0877 58.30)",
+          "oklch(86% 0.0494 58.30)",
+          "oklch(95% 0.0175 58.30)"
+        ]
+      },
+      "heat4": {
+        "role": "secondary",
+        "displayName": "Heat4",
+        "tonalRamp": [
+          "oklch(15% 0.0404 48.90)",
+          "oklch(26% 0.0874 48.90)",
+          "oklch(38% 0.1211 48.90)",
+          "oklch(50% 0.1345 48.90)",
+          "oklch(62% 0.1345 48.90)",
+          "oklch(74% 0.1076 48.90)",
+          "oklch(86% 0.0605 48.90)",
+          "oklch(95% 0.0215 48.90)"
+        ]
+      },
+      "heat5": {
+        "role": "secondary",
+        "displayName": "Heat5",
+        "tonalRamp": [
+          "oklch(15% 0.0415 40.91)",
+          "oklch(26% 0.0899 40.91)",
+          "oklch(38% 0.1244 40.91)",
+          "oklch(50% 0.1382 40.91)",
+          "oklch(62% 0.1382 40.91)",
+          "oklch(74% 0.1106 40.91)",
+          "oklch(86% 0.0622 40.91)",
+          "oklch(95% 0.0221 40.91)"
+        ]
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "Control Border",
+        "tonalRamp": [
+          "oklch(15% 0.0072 157.48)",
+          "oklch(26% 0.0156 157.48)",
+          "oklch(38% 0.0216 157.48)",
+          "oklch(50% 0.0240 157.48)",
+          "oklch(62% 0.0240 157.48)",
+          "oklch(74% 0.0192 157.48)",
+          "oklch(86% 0.0108 157.48)",
+          "oklch(95% 0.0038 157.48)"
+        ]
+      },
+      "nav-text": {
+        "role": "neutral",
+        "displayName": "Nav Text",
+        "tonalRamp": [
+          "oklch(15% 0.0079 161.85)",
+          "oklch(26% 0.0170 161.85)",
+          "oklch(38% 0.0236 161.85)",
+          "oklch(50% 0.0262 161.85)",
+          "oklch(62% 0.0262 161.85)",
+          "oklch(74% 0.0209 161.85)",
+          "oklch(86% 0.0118 161.85)",
+          "oklch(95% 0.0042 161.85)"
+        ]
+      },
+      "nav-active": {
+        "role": "neutral",
+        "displayName": "Nav Active",
+        "tonalRamp": [
+          "oklch(15% 0.0322 56.13)",
+          "oklch(26% 0.0698 56.13)",
+          "oklch(38% 0.0966 56.13)",
+          "oklch(50% 0.1073 56.13)",
+          "oklch(62% 0.1073 56.13)",
+          "oklch(74% 0.0859 56.13)",
+          "oklch(86% 0.0483 56.13)",
+          "oklch(95% 0.0172 56.13)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Workspace page heading."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Primary section heading."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Subsection heading."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Standard reading."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Compact field label."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Standard action."
+      },
+      "measurement": {
+        "displayName": "Measurement",
+        "purpose": "Comparison count; tabular numerals."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "button-state",
+        "value": "background-color 0.15s ease-out, color 0.15s ease-out",
+        "purpose": "Button response; removed by prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1500px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1200px"
+      },
+      {
+        "name": "stacked",
+        "value": "960px"
+      },
+      {
+        "name": "mobile",
+        "value": "620px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Established action variant from the application stylesheet.",
+      "html": "<button class=\"ds-button-primary\">Import data</button>",
+      "css": ".ds-button-primary{font-family:\"Source Sans 3\",sans-serif;font-size:.9rem;font-weight:500;line-height:1.25;border-radius:5px;min-height:38px;padding:9px 14px;cursor:pointer;transition:background-color .15s ease-out,color .15s ease-out;background:var(--forest);color:var(--surface);border:1px solid var(--forest);}.ds-button-primary:hover:not(:disabled){background:var(--forest-hover);}.ds-button-primary:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}.ds-button-primary:disabled{opacity:.5;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Established action variant from the application stylesheet.",
+      "html": "<button class=\"ds-button-secondary\">Import data</button>",
+      "css": ".ds-button-secondary{font-family:\"Source Sans 3\",sans-serif;font-size:.9rem;font-weight:500;line-height:1.25;border-radius:5px;min-height:38px;padding:9px 14px;cursor:pointer;transition:background-color .15s ease-out,color .15s ease-out;background:var(--surface);color:var(--forest);border:1px solid #b7c8bd;}.ds-button-secondary:hover:not(:disabled){background:var(--soft);}.ds-button-secondary:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}.ds-button-secondary:disabled{opacity:.5;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none;}}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Established action variant from the application stylesheet.",
+      "html": "<button class=\"ds-button-quiet\">Import data</button>",
+      "css": ".ds-button-quiet{font-family:\"Source Sans 3\",sans-serif;font-size:.9rem;font-weight:500;line-height:1.25;border-radius:5px;min-height:38px;padding:9px 14px;cursor:pointer;transition:background-color .15s ease-out,color .15s ease-out;background:transparent;color:var(--muted);border:1px solid transparent;}.ds-button-quiet:hover:not(:disabled){background:var(--soft);}.ds-button-quiet:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}.ds-button-quiet:disabled{opacity:.5;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-quiet{transition:none;}}"
+    },
+    {
+      "name": "Header Import Button",
+      "kind": "button",
+      "refersTo": "button-header-import",
+      "description": "Established action variant from the application stylesheet.",
+      "html": "<button class=\"ds-button-header-import\">Import data</button>",
+      "css": ".ds-button-header-import{font-family:\"Source Sans 3\",sans-serif;font-size:.9rem;font-weight:500;line-height:1.25;border-radius:5px;min-height:38px;padding:9px 14px;cursor:pointer;transition:background-color .15s ease-out,color .15s ease-out;background:#e4eee7;color:var(--forest);border:1px solid transparent;}.ds-button-header-import:hover:not(:disabled){background:var(--surface);}.ds-button-header-import:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}.ds-button-header-import:disabled{opacity:.5;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-header-import{transition:none;}}"
+    },
+    {
+      "name": "Text Action",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Inline source inspection or selection clearing.",
+      "html": "<button class=\"ds-text\">Inspect sources</button>",
+      "css": ".ds-text{font-family:\"Source Sans 3\",sans-serif;background:none;border:0;color:var(--forest);font-size:.85rem;font-weight:600;padding:6px 0;cursor:pointer}.ds-text:hover{text-decoration:underline;text-underline-offset:3px}.ds-text:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}"
+    },
+    {
+      "name": "Labeled Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Compact label above a white analytical field.",
+      "html": "<label class=\"ds-field\">Start date<input class=\"ds-input\" type=\"date\" value=\"2024-01-01\"></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-family:\"Source Sans 3\",sans-serif;font-size:.78rem;font-weight:600}.ds-input{font-family:inherit;font-size:.875rem;font-weight:400;border:1px solid #b7c8bd;border-radius:5px;background:var(--surface);color:var(--ink);padding:8px 10px;min-height:38px}.ds-input:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Forest shell with warm current-page marker.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><button aria-current=\"page\">Workspace</button><button>Datasets</button></nav>",
+      "css": ".ds-nav{display:flex;gap:24px;background:var(--forest);padding:0 20px;min-height:68px}.ds-nav button{font-family:\"Source Sans 3\",sans-serif;font-size:.925rem;background:none;border:0;border-radius:0;border-bottom:3px solid transparent;color:#c5d9ce;padding:0 2px;cursor:pointer}.ds-nav button:hover{color:#fff}.ds-nav button[aria-current=\"page\"]{color:#fff;border-bottom-color:#eda673}.ds-nav button:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}"
+    },
+    {
+      "name": "Selected Scope",
+      "kind": "chip",
+      "refersTo": "selection-chip",
+      "description": "Compact selected month or region with clear affordance.",
+      "html": "<span class=\"ds-chip\">Jan 2024<button aria-label=\"Clear selected month\">\u00d7</button></span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid #aac3b5;background:var(--selection);color:var(--forest);padding:3px 8px;font-family:\"Source Sans 3\",sans-serif;font-size:.8rem}.ds-chip button{border:0;background:transparent;color:inherit;cursor:pointer;padding:0 3px}.ds-chip button:hover{background:var(--soft)}.ds-chip button:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}"
+    },
+    {
+      "name": "Monthly Heat Cells",
+      "kind": "custom",
+      "refersTo": "heat-cell",
+      "description": "Count, zero, and unavailable extent remain distinct.",
+      "html": "<div class=\"ds-cells\"><button class=\"ds-heat\">124</button><button class=\"ds-zero\">0</button><button class=\"ds-unknown\" disabled aria-label=\"Outside loaded record extent\">\u2014</button></div>",
+      "css": ".ds-cells{display:flex;gap:4px}.ds-cells button{font-family:\"Source Sans 3\",sans-serif;font-size:.68rem;font-weight:600;font-variant-numeric:tabular-nums;min-height:37px;min-width:48px;padding:5px 0;border:1px solid transparent;border-radius:3px;cursor:pointer}.ds-heat{background:var(--heat3);color:#542710}.ds-zero{background:#f4f7f5;color:var(--muted);border-color:var(--line)!important}.ds-unknown{background:var(--soft);color:var(--muted);cursor:not-allowed!important}.ds-cells button:hover:not(:disabled){border-color:var(--forest);outline:1px solid var(--forest)}.ds-cells button:focus-visible{outline:3px solid var(--viirs);outline-offset:3px;}"
+    },
+    {
+      "name": "Analytical Region",
+      "kind": "custom",
+      "refersTo": "analytical-surface",
+      "description": "Flat contiguous analytical surface, rather than a raised card.",
+      "html": "<section class=\"ds-region\"><h2>Detection history</h2><p>Raw observations \u00b7 MODIS and VIIRS</p></section>",
+      "css": ".ds-region{font-family:\"Source Sans 3\",sans-serif;background:var(--surface);color:var(--ink);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 22px;border-radius:0}.ds-region h2{font-size:1.1rem;font-weight:600;line-height:1.3;margin:0}.ds-region p{font-size:.8rem;line-height:1.5;color:var(--muted);margin:5px 0 0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Research Atlas",
+    "overview": "Research Atlas is the visual north star: a modern scientific research platform with a refined cartographic aesthetic. Cool analytical surfaces and subtle forest greens give observations a calm setting; warm orange marks fire activity, and blue distinguishes VIIRS.\n\nThe interface is observation-focused, precise, and restrained. Elegant humanist typography, meaningful visualizations, and deliberate spacing support inquiry. The confirmed anti-references are beige palettes, decorative elements, generic card collections, and dense controls.",
+    "keyCharacteristics": [
+      "Observation-focused structure",
+      "Refined cartographic aesthetic",
+      "Cool green analytical surfaces and warm orange fire activity",
+      "Precise spacing, tabular measurements, and restrained controls"
+    ],
+    "rules": [
+      {
+        "name": "The Semantic Color Rule",
+        "body": "Keep forest for the application shell and selection, orange for fire observations, and blue for VIIRS identity. Use text and shape alongside color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Separate analytical regions with tonal contrast and fine rules; do not add decorative shadows or floating card treatments.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the established forest shell, cool backgrounds, and white analytical surfaces.",
+      "Do preserve explicit labels, tabular measurements, legends, and visible keyboard focus.",
+      "Do distinguish zero observations from unavailable record extent in every visualization.",
+      "Do keep geographic and historical instruments visually balanced when they appear together.",
+      "Do use responsive stacking and local table scrolling to retain readable measurements."
+    ],
+    "donts": [
+      "Don't introduce beige backgrounds, ornamental imagery, or decorative effects.",
+      "Don't break the workspace into a generic collection of raised cards.",
+      "Don't compress controls or type to fit a desktop composition onto a phone.",
+      "Don't imply that raw counts are harmonized measurements or that zero proves no fire."
+    ]
+  }
+}

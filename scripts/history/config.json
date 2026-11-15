@@ -1,0 +1,6 @@
+{
+  "resolutions": [4, 5, 6],
+  "defaultResolution": 5,
+  "excludeBasenames": ["sample_viirs_snpp_071223.csv"],
+  "excludeReason": "NASA training sample retained unchanged; approved historical archives are the study sources."
+}
