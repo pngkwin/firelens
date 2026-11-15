@@ -10,6 +10,7 @@ import { AoiPanel, aoiLabel } from "./AoiPanel";
 import { ExportPanel } from "./ExportPanel";
 import { DoyHeatmap } from "./DoyHeatmap";
 import { EarlyWarning } from "./EarlyWarning";
+import { EventsPanel } from "./EventsPanel";
 import { criticalPeriods, dailyClimatology } from "../data/v2/earlyWarning";
 import { fmt } from "./colors";
 import { SelectField } from "./SelectField";
@@ -90,6 +91,7 @@ export function FireCalendar() {
               <TrendPanel months={data.months} scale={state.scale} from={from} to={to} />
             </Suspense>
           </div>
+          <EventsPanel events={data.events} note={data.eventsNote} months={data.months} scale={state.scale} dataEnd={data.dataEnd!} progress={data.progress} onFocus={(m) => set({ focus: m })} />
           <DoyHeatmap days={data.days} scale={state.scale} from={from} to={to} progress={data.progress} coverStart={coverStart} dataEnd={data.dataEnd!} periods={periods} />
           <ExportPanel data={data} region={state.region} aoi={state.aoi} aoiName={presetsName} from={from} to={to} scale={state.scale} />
           <MethodNote data={data} />

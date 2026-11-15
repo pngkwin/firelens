@@ -168,6 +168,7 @@ emit("overview.json.gz", { v: 2, region: regionId, kind: "overview", res: OVERVI
 // ---- daily shards per year + region daily totals ----------------------------
 const days = [];
 const regionDaily = [];
+const zoneDailyRows = [];
 const years = [...new Set(complete.map((m) => m.slice(0, 4)))].sort();
 for (const year of years) {
   const ym = complete.filter((m) => m.startsWith(year));
@@ -193,6 +194,10 @@ for (const year of years) {
     const ci = new Map(cells.map((c, i) => [c, i]));
     const wire = rows.map((r) => toWire(r, ci.get(r.cell), dayIdx.get(r.period))).sort((a, b) => a[1] - b[1] || a[0] - b[0]);
     emit(`daily/${shard}/${year}.json.gz`, { v: 2, region: regionId, kind: "daily", res: 5, shard, periods: yearDays, cells, rows: wire });
+    // zone-daily: this shard's per-day totals (res-1 zone x day)
+    const perDay = new Map();
+    for (const w of wire) { const d = yearDays[w[1]]; if (!perDay.has(d)) perDay.set(d, []); perDay.get(d).push(fromWire(w)); }
+    for (const [d, rs] of perDay) zoneDailyRows.push({ shard, day: d, total: sumRows(rs) });
   }
   for (const d of yearDays) {
     const total = sumRows(rowsByDay.get(d).map((r) => fromWire(toWire(r, -1, 0))));
@@ -201,6 +206,14 @@ for (const year of years) {
   }
 }
 emit("region-daily.json.gz", { v: 2, region: regionId, kind: "daily", res: 5, shard: "region", periods: days, cells: [], rows: regionDaily });
+
+// ---- zone daily: res-1 zones x day (daily values for large areas without cell shards)
+{
+  const zones = [...new Set(zoneDailyRows.map((r) => r.shard))].sort();
+  const zi = new Map(zones.map((z, i) => [z, i])), di = new Map(days.map((d, i) => [d, i]));
+  const rows = zoneDailyRows.map(({ shard, day, total: t }) => [zi.get(shard), di.get(day), t.day, t.night, t.any, t.det, t.frp.map((v) => Math.round(v * 10) / 10)]).sort((a, b) => a[1] - b[1] || a[0] - b[0]);
+  emit("zone-daily.json.gz", { v: 2, region: regionId, kind: "daily", res: SHARD_RES, shard: "zones", periods: days, cells: zones, rows });
+}
 
 // ---- manifest ----------------------------------------------------------------
 const codeHash = (p) => sha(readFileSync(join(ROOT, p)));

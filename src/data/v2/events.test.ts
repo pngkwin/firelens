@@ -52,3 +52,33 @@ describe("fire episodes", () => {
     expect(r.largestPast.map((e) => e.size)).toEqual([20, 2]);
   });
 });
+
+// Real data: California's largest episodes must be the 2020/2021 megafire seasons.
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { createBundle } from "./bundle";
+import { makeAoiTest } from "./aoi";
+import { cellCentre } from "./series";
+const ROOT = resolve(import.meta.dirname, "../../..");
+const fileFetch = (async (url: string) => {
+  const p = join(ROOT, "public", String(url));
+  return existsSync(p) ? new Response(readFileSync(p) as Uint8Array<ArrayBuffer>) : new Response("missing", { status: 404 });
+}) as typeof fetch;
+
+describe("fire episodes on the published bundle", () => {
+  it("California: the largest past episodes are the 2020 and 2021 megafires, clustering in < 3 s", async () => {
+    const b = createBundle("us", { fetchImpl: fileFetch });
+    const m = await b.manifest();
+    const presets = JSON.parse(readFileSync(join(ROOT, "public/data/presets/us.json"), "utf8")).items as Array<{ id: string; polys: never }>;
+    const keep = makeAoiTest(presets.find((p) => p.id === "us-06")!.polys);
+    const zones = (await b.partition("aoi/us-06.json.gz")).cells;
+    const parts = await Promise.all(m.files.filter((f) => f.path.startsWith("daily/") && zones.includes(f.path.split("/")[1])).map((f) => b.partition(f.path)));
+    const t = performance.now();
+    const ev = buildEvents(parts, (c) => keep(...cellCentre(c)));
+    const ms = performance.now() - t;
+    const top = rankEvents(ev, "raw-all", new Map(), m.planEnd, 7).largestPast.slice(0, 3);
+    console.log(`California: ${ev.length} episodes in ${ms.toFixed(0)} ms; top: ${top.map((e) => `${e.start}..${e.end} (${e.size}, ${e.cells} cells)`).join("; ")}`);
+    expect(top.every((e) => e.start.startsWith("2020") || e.start.startsWith("2021"))).toBe(true);
+    expect(ms).toBeLessThan(3000);
+  });
+});

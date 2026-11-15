@@ -1,7 +1,7 @@
 {
  "method": "fcd-harmonize-v2",
  "region": "iberia",
- "inputManifestSha256": "8609e17164f17ffb3cb46f70a9fa7459650b772e6b40468972f3779522f8d0af",
+ "inputManifestSha256": "b1ab0c84f6e36b59720b1ed99a14531dfead847dc72fbe77a00ab559fb5457a4",
  "trainingYears": [
   2012,
   2021

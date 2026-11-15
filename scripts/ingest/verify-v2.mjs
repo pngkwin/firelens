@@ -77,6 +77,14 @@ for (const id of regions) {
     for (const w of zm.rows) zs.set(w[1], addHist(zs.get(w[1]) ?? [], w[4]));
     for (const w of rm.rows) if (!eqHist(zs.get(w[1]) ?? [], w[4])) fail(`${id} ${rm.periods[w[1]]}: zone-monthly != region total`);
   }
+  // 6d. zone daily (res-1 zones x day) sums to region daily
+  const zd = parts.get("zone-daily.json.gz");
+  if (!zd) fail(`${id} missing zone-daily`);
+  else {
+    const zs = new Map();
+    for (const w of zd.rows) { const d = zd.periods[w[1]]; zs.set(d, addHist(zs.get(d) ?? [], w[4])); }
+    for (const w of rd.rows) if (!eqHist(zs.get(rd.periods[w[1]]) ?? [], w[4])) fail(`${id} ${rd.periods[w[1]]}: zone-daily != region daily`);
+  }
   // 6c. cell index lists exactly each monthly shard's cells
   const ci = parts.get("cells.json.gz");
   if (!ci) fail(`${id} missing cells index`);

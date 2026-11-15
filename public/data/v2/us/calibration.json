@@ -1,7 +1,7 @@
 {
  "method": "fcd-harmonize-v2",
  "region": "us",
- "inputManifestSha256": "ac84315b5e4a81e96836ef9dab043284dba05eed1023cc526beb1c80bb22cf12",
+ "inputManifestSha256": "98b2e43b1e326cc912f259f5f734fec31eff8bb501ebc1dc2e22e8c73277e0d0",
  "trainingYears": [
   2012,
   2021

@@ -136,3 +136,22 @@ test("bounding-box form and invalid URL settings", async ({ page }) => {
   await ready(page);
   await expect(page.locator(".fc-current")).toContainText("res-5 cells with data");
 });
+
+test("fire episodes: whole region asks for an area; a state ranks current vs past episodes", async ({ page }) => {
+  await offline(page);
+  await page.goto("/");
+  await ready(page);
+  const panel = page.locator(".fc-events");
+  await expect(panel).toContainText("Choose an area", { timeout: 60000 });
+  await page.goto("/?r=us&aoi=preset:us-06");
+  await ready(page);
+  await expect(panel.getByRole("heading", { name: "Largest past episodes in this area" })).toBeVisible({ timeout: 90000 });
+  await expect(panel.getByRole("heading", { name: /Active in the last 7 days \(since 2026-11-08\)/ })).toBeVisible();
+  const past = panel.locator("table").filter({ has: page.locator("caption", { hasText: "Ten largest past fire episodes" }) });
+  await expect(past.locator("tbody tr")).toHaveCount(10);
+  await expect(past.locator("tbody tr").first().locator("td").nth(1)).toContainText(/^202[01]-/);
+  // Selecting an episode opens its peak month in the calendar
+  await past.locator("tbody tr").first().getByRole("button").click();
+  await expect(page).toHaveURL(/focus=202[01]-\d\d/);
+  await expect(page.getByRole("heading", { name: /20(20|21) vs other years/ })).toBeVisible();
+});

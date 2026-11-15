@@ -4617,7 +4617,7 @@
   "scripts/ingest/plan.mjs": "9a76df6ebdf8db8fbf1bb8af3e27f25d5981688adca0175992289ae56abc4cce",
   "scripts/ingest/aggregate-core.mjs": "750cd15cbe405552040e8d69ce398e3e96a8b1dc73a314836ce1e1f296c2b2db",
   "scripts/ingest/aggregate.mjs": "e3d935fb574c90dfb2e2d39472cd019b1a26fdd13a1daf94afe3e331a5be9c8f",
-  "scripts/ingest/publish.mjs": "96635544b99e4092af691a48d5e86a486a051746dc1220211487d8d576091a10",
+  "scripts/ingest/publish.mjs": "e15e63006353224a2c92009f089fc7b49412e7677ec75b6140795f2965bf7294",
   "src/data/v2/codec.ts": "51a9602c08c74325d473122a7958dce5821366aaccbc4e70d41d4ed1a750203a"
  },
  "files": [
@@ -11816,6 +11816,13 @@
    "sha256": "2e6146dd47eb4fd6617b59c7ee5884d9c569ab6669175541d7c7cac0519d698d",
    "decodedSha256": "4609d7cd60a67412ea096c09955037125a0f05ae4efee552b664df42280060af",
    "rows": 313
+  },
+  {
+   "path": "zone-daily.json.gz",
+   "bytes": 3772832,
+   "sha256": "f4259bd66a51a8468d4cbec305c63a24c6bec8e3613025d612ad7f900f790ed1",
+   "decodedSha256": "5eb49b7ce9b2ea62c081317f6653ddb83db228574337b24b80e24b964da7d848",
+   "rows": 166327
   },
   {
    "path": "zone-monthly.json.gz",
