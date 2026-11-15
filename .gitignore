@@ -13,3 +13,6 @@ public/data/*.csv
 data/processed/
 data/raw/firms-api/
 data/raw/firms-archive/
+
+# agent worktrees
+.claude/worktrees/
