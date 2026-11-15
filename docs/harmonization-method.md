@@ -8,12 +8,14 @@ This supersedes the "research plan" status of `harmonization-methodology.md` for
 
 ## Products
 
-| Product | Definition | Label in UI/exports |
+| Product | Definition | Label in UI (scale selector, `src/data/v2/analysis.ts` `SCALES`) and exports |
 |---|---|---|
-| Raw, per platform | Fire-cell-days detected by one platform (Terra, Aqua, S-NPP, NOAA-20, NOAA-21) | "Raw · <platform>" |
-| Raw, any sensor | Fire-cell-days detected by **any** platform (union of masks; never a sum of detections) | "Raw · any sensor (not harmonized)" |
-| **Harmonized, MODIS-equivalent** (primary) | Estimated Terra∪Aqua fire-cell-days as the stable-orbit MODIS pair would record them | "Harmonized · MODIS-equivalent" + per-month period class |
-| Harmonized, VIIRS-level (secondary toggle) | The S-NPP-scale VIIRS reference series (any-time); before VIIRS, MODIS-equivalent × the training ratio V*/MODIS for that month of year (estimated, interval not quantified) | "VIIRS-level (harmonized, S-NPP scale)" |
+| **Harmonized, MODIS-equivalent** (primary) | Estimated Terra∪Aqua fire-cell-days as the stable-orbit MODIS pair would record them | "MODIS-equivalent hotspots (harmonized, ~1 km fire-cell-days)"; monthly CSV `modis_eq_*` columns with `period_class` and `modis_eq_source` per row |
+| Harmonized, VIIRS-level (secondary scale) | The S-NPP-scale VIIRS reference series (any-time); before VIIRS, MODIS-equivalent × the training ratio V*/MODIS for that month of year (estimated, interval not quantified) | "VIIRS-level (harmonized, S-NPP scale, ~1 km fire-cell-days)"; CSV `viirs_level_fire_cell_days`, `viirs_level_estimated` |
+| Raw, any sensor | Fire-cell-days detected by **any** platform (union of masks; never a sum of detections) | "Raw fire-cell-days: any sensor"; CSV `raw_any_sensor` |
+| Raw, per sensor | Fire-cell-days detected by MODIS (Terra ∪ Aqua) or by VIIRS (any platform) | "Raw fire-cell-days: MODIS (Terra ∪ Aqua)", "Raw fire-cell-days: VIIRS (any platform)"; CSV `raw_modis`, `raw_viirs` |
+| Raw, per platform | Fire-cell-days detected by one platform (Terra, Aqua, S-NPP, NOAA-20, NOAA-21) | Not a UI scale; CSV `raw_terra`, `raw_aqua`, `raw_snpp`, `raw_noaa20`, `raw_noaa21` |
+| Raw hotspots | FIRMS detections (pixels) after region clip and static mask, per sensor; never added across sensors | "Raw hotspots detected: MODIS (1 km pixels, Terra + Aqua)", "Raw hotspots detected: VIIRS (375 m pixels, all platforms)"; CSV `detections_<platform>` |
 
 ## Unit: fire-cell-day
 
@@ -40,7 +42,7 @@ Calibration is fitted separately for day and night cell-days and recombined with
 4. **Period classes** (shown per month, in the legend and in every export row):
    - `terra-only-estimated` 2000-11 – 2002-06
    - `modis-observed` 2002-07 – 2021-12 (MODIS-only before 2012-01-20)
-   - `viirs-estimated` 2022-01 – present: k · V\*. Observed MODIS for these months stays visible in the raw view and in the drift diagnostic.
+   - `viirs-estimated` 2022-01 – present: the selected estimator applied to V\* (US: stratified ratio k · V\* per zone and overpass; Iberia: quantile mapping). Observed MODIS for these months stays visible in the raw view and in the drift diagnostic.
 5. **Uncertainty.** Estimated months carry a 90 % multiplicative interval: the 5th–95th percentiles of observed / predicted over the **held-out** (leave-one-year-out) predictions of the selected method; Terra-only months use the same construction on the Terra scaling. Coverage is itself measured out-of-sample (each year's residuals tested against quantiles computed without that year) and reported. For AOIs smaller than the region a Poisson sampling term 1.645·√estimate widens both bounds. Observed months carry no model interval. Annual totals sum the monthly bounds (conservative: errors assumed fully correlated).
 6. **Daily values.** A day's MODIS-equivalent = the month's estimate × the day's share of the month's reference series (observed MODIS, Terra, or the month's VIIRS reference platform). Days therefore always sum to the monthly value. Partial current months are compared with other years month-to-date (days 1..D).
 

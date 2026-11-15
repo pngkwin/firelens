@@ -118,7 +118,7 @@ Generated 2026-11-15 from `public/data/v2/iberia` (313 months, 0 incomplete) wit
 
 **Zone scale:** only 14 zone-years ≥ 500; median |annual error| 14.0 % (zone coefficients) vs 12.6 % (region-only). No benefit from zone stratification at this sample size.
 
-**Interval:** ×[0.708, 1.254], out-of-sample coverage 87.4 % — about 3× wider than the US.
+**Interval (v1, stratified ratio, in-sample construction):** ×[0.708, 1.254], coverage 87.4 % — about 3× wider than the US. The published v2 interval is in the table below (×[0.763, 1.316], out-of-sample coverage 88.2 %).
 
 **Terra-only:** MAE 46, r = 0.995, bias −0.3 %. **Cross-calibration:** NOAA-20 0.956, NOAA-21 0.994.
 
