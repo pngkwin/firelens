@@ -7,7 +7,7 @@ test("historical research uses authentic partitions, shared filters and separate
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   const started = Date.now();
-  await page.goto("/");
+  await page.goto("/#workspace");
   await expect(page.getByText("2 datasets loaded")).toBeVisible({
     timeout: 90000,
   });
@@ -95,7 +95,7 @@ test("historical research uses authentic partitions, shared filters and separate
       () => document.documentElement.scrollWidth <= innerWidth + 1,
     ),
   ).toBe(true);
-  await page.getByRole("button", { name: "Workspace", exact: true }).click();
+  await page.getByRole("button", { name: "CSV workspace", exact: true }).click();
   await expect(
     page.getByRole("heading", {
       name: "Burning activity calendar",
@@ -124,7 +124,7 @@ test("historical partition integrity failure is visible and does not break loade
   await page.route("**/data/history/**/*.json.gz", (route) =>
     route.fulfill({ status: 200, body: "[]", contentType: "application/json" }),
   );
-  await page.goto("/");
+  await page.goto("/#workspace");
   await expect(page.getByText("2 datasets loaded")).toBeVisible({
     timeout: 90000,
   });
@@ -135,6 +135,6 @@ test("historical partition integrity failure is visible and does not break loade
     .getByRole("button", { name: "Query historical aggregates" })
     .click();
   await expect(page.getByRole("alert")).toContainText("integrity");
-  await page.getByRole("button", { name: "Workspace", exact: true }).click();
+  await page.getByRole("button", { name: "CSV workspace", exact: true }).click();
   await expect(page.getByText("54,191 records in focus")).toBeVisible();
 });

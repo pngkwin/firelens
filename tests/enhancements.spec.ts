@@ -14,7 +14,7 @@ test("explicit gzip delivery also loads both verified source streams", async ({
       ),
     }),
   );
-  await page.goto("/");
+  await page.goto("/#workspace");
   await expect(page.getByText("2 datasets loaded")).toBeVisible({timeout:90000});
   await expect(page.getByText("54,191 records in focus")).toBeVisible();
 });
@@ -25,7 +25,7 @@ test("production bundle, monthly comparisons, filtered CSV downloads and calenda
   fs.mkdirSync(".impeccable/review", { recursive: true });
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/#workspace");
   await expect(page.getByText("2 datasets loaded")).toBeVisible({timeout:90000});
   await expect(page.getByText("54,191 records in focus")).toBeVisible();
   await expect(page.locator(".map-canvas")).toHaveAttribute(

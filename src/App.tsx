@@ -19,6 +19,12 @@ import { Methods } from "./components/Methods";
 import { loadDemoFile, type DemoManifest } from "./data/demo";
 import { ExportPanel } from "./components/ExportPanel";
 import { ActivitySummary } from "./components/ActivitySummary";
+import { FireCalendar } from "./fire/FireCalendar";
+type View = "calendar" | "workspace" | "datasets" | "methods";
+const viewFromHash = (): View => {
+  const h = window.location.hash.slice(1);
+  return h === "workspace" || h === "datasets" || h === "methods" ? h : "calendar";
+};
 const FireMap = lazy(() =>
   import("./components/FireMap").then((m) => ({ default: m.FireMap })),
 );
@@ -29,9 +35,17 @@ export default function App() {
   const { datasets, setDatasets, filters } = useStudy();
   const datasetRef = useRef<Dataset[]>([]);
   const started = useRef(false);
-  const [view, setView] = useState<"workspace" | "datasets" | "methods">(
-    "workspace",
-  );
+  const [view, setViewState] = useState<View>(viewFromHash);
+  const setView = (v: View) => {
+    setViewState(v);
+    const url = `${window.location.pathname}${window.location.search}${v === "calendar" ? "" : "#" + v}`;
+    window.history.replaceState(null, "", url);
+  };
+  useEffect(() => {
+    const onHash = () => setViewState(viewFromHash());
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
   const [importOpen, setImportOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -72,7 +86,8 @@ export default function App() {
     setBusy(false);
   }
   useEffect(() => {
-    if (started.current) return;
+    // The v1 CSV demo is only needed by the CSV workspace views.
+    if (view === "calendar" || started.current) return;
     started.current = true;
     void (async () => {
       busyRef.current = true;
@@ -129,7 +144,7 @@ export default function App() {
         setBusy(false);
       }
     })();
-  }, [setDatasets]);
+  }, [setDatasets, view]);
   useEffect(() => {
     if (importOpen)
       importRegion.current?.scrollIntoView({
@@ -146,7 +161,9 @@ export default function App() {
     );
   }
   const title =
-    view === "workspace"
+    view === "calendar"
+      ? "Harmonized fire calendar"
+      : view === "workspace"
       ? "Research workspace"
       : view === "datasets"
         ? "Datasets"
@@ -159,15 +176,18 @@ export default function App() {
       <header className="app-header">
         <a
           className="brand"
-          href="#workspace"
-          onClick={() => setView("workspace")}
-          aria-label="FireLens workspace"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setView("calendar");
+          }}
+          aria-label="FireLens fire calendar"
         >
           <Focus size={25} />
           <span>FireLens</span>
         </a>
         <nav aria-label="Primary">
-          {(["workspace", "datasets", "methods"] as const).map((v) => (
+          {(["calendar", "workspace", "datasets", "methods"] as const).map((v) => (
             <button
               key={v}
               onClick={() => setView(v)}
@@ -175,14 +195,16 @@ export default function App() {
             >
               {v === "methods"
                 ? "Methods & provenance"
-                : v === "workspace"
-                  ? "Workspace"
-                  : "Datasets"}
+                : v === "calendar"
+                  ? "Fire calendar"
+                  : v === "workspace"
+                    ? "CSV workspace"
+                    : "Datasets"}
             </button>
           ))}
         </nav>
         <span className="header-purpose">Satellite fire intelligence</span>
-        <div className="header-actions">
+        <div className="header-actions" hidden={view === "calendar"}>
           <button
             className="button header-import"
             aria-label="Export results"
@@ -213,14 +235,16 @@ export default function App() {
           <div>
             <h1>{title}</h1>
             <p>
-              {view === "workspace"
+              {view === "calendar"
+                ? "MODIS + VIIRS burning activity since November 2000, on one harmonized scale."
+                : view === "workspace"
                 ? "Explore the fire record. Understand the observation."
                 : view === "datasets"
                   ? "Keep every observation connected to its origin."
                   : "Know what these observations can—and cannot—tell you."}
             </p>
           </div>
-          <div className="dataset-status">
+          <div className="dataset-status" hidden={view === "calendar"}>
             <span className={busy ? "status-dot loading" : "status-dot"} />
             {busy
               ? "Validating observations"
@@ -269,7 +293,9 @@ export default function App() {
             </button>
           </div>
         )}
-        {view === "workspace" ? (
+        {view === "calendar" ? (
+          <FireCalendar />
+        ) : view === "workspace" ? (
           <>
             <StudyControls />
             <ActivitySummary />
@@ -365,7 +391,11 @@ export default function App() {
       </main>
       <footer className="app-footer">
         <span>FireLens · NASA FIRMS observation explorer</span>
-        <span>Exploratory research · No validated harmonization applied</span>
+        <span>
+          {view === "calendar"
+            ? "Harmonized calendar: method fcd-harmonize-v2, validated by held-out years (see docs)"
+            : "CSV workspace: raw sensors, no harmonization applied"}
+        </span>
       </footer>
     </>
   );

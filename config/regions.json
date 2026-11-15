@@ -1,0 +1,129 @@
+{
+  "$comment": "Study regions. Each region is ingested as a set of FIRMS area-API boxes [west,south,east,north] (WGS84, no antimeridian crossing inside one box). Boxes are acquisition footprints, not political boundaries; AOI queries clip later. Add a region here, then run ingest:download -- --region <id>.",
+  "regions": [
+    {
+      "id": "us",
+      "name": "United States (contiguous, Alaska, Hawaii)",
+      "boxes": [
+        {
+          "id": "conus",
+          "bbox": [
+            -125,
+            24,
+            -66,
+            50
+          ]
+        },
+        {
+          "id": "alaska",
+          "bbox": [
+            -180,
+            51,
+            -129,
+            72
+          ]
+        },
+        {
+          "id": "aleutians-w",
+          "bbox": [
+            172,
+            51,
+            180,
+            56
+          ]
+        },
+        {
+          "id": "hawaii",
+          "bbox": [
+            -161,
+            18,
+            -154,
+            23
+          ]
+        }
+      ],
+      "clip": {
+        "atlas": "us-atlas/nation-10m.json",
+        "object": "nation",
+        "source": "US Census Bureau cartographic boundary (1:10M) via us-atlas@3"
+      }
+    },
+    {
+      "id": "iberia",
+      "name": "Iberian Peninsula (Spain, Portugal)",
+      "boxes": [
+        {
+          "id": "iberia",
+          "bbox": [
+            -10,
+            36,
+            4,
+            44
+          ]
+        }
+      ],
+      "clip": {
+        "atlas": "world-atlas/countries-50m.json",
+        "object": "countries",
+        "ids": [
+          "724",
+          "620"
+        ],
+        "source": "Natural Earth 1:50M via world-atlas@2 (Spain 724, Portugal 620)"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "MODIS_SP",
+      "sensor": "MODIS",
+      "kind": "SP"
+    },
+    {
+      "id": "MODIS_NRT",
+      "sensor": "MODIS",
+      "kind": "NRT",
+      "after": "MODIS_SP"
+    },
+    {
+      "id": "VIIRS_SNPP_SP",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "kind": "SP"
+    },
+    {
+      "id": "VIIRS_SNPP_NRT",
+      "sensor": "VIIRS",
+      "platform": "S-NPP",
+      "kind": "NRT",
+      "after": "VIIRS_SNPP_SP",
+      "endOfProduction": "2026-11-02"
+    },
+    {
+      "id": "VIIRS_NOAA20_SP",
+      "sensor": "VIIRS",
+      "platform": "NOAA-20",
+      "kind": "SP"
+    },
+    {
+      "id": "VIIRS_NOAA20_NRT",
+      "sensor": "VIIRS",
+      "platform": "NOAA-20",
+      "kind": "NRT",
+      "after": "VIIRS_NOAA20_SP"
+    },
+    {
+      "id": "VIIRS_NOAA21_SP",
+      "sensor": "VIIRS",
+      "platform": "NOAA-21",
+      "kind": "SP"
+    },
+    {
+      "id": "VIIRS_NOAA21_NRT",
+      "sensor": "VIIRS",
+      "platform": "NOAA-21",
+      "kind": "NRT",
+      "after": "VIIRS_NOAA21_SP"
+    }
+  ]
+}

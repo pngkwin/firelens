@@ -2,7 +2,9 @@
   "name": "firelens",
   "version": "0.1.0",
   "private": true,
-  "engines": { "node": ">=22.18.0" },
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
@@ -16,15 +18,26 @@
     "history:analyze": "node scripts/history/analyze.mjs",
     "history:verify": "node scripts/history/verify.mjs",
     "predev": "npm run data:verify",
-    "prebuild": "npm run data:verify && npm run history:verify",
+    "prebuild": "npm run data:verify && npm run history:verify && npm run ingest:verify",
     "data:bundle": "node scripts/bundle-data.mjs",
     "data:verify": "node scripts/verify-demo.mjs",
     "build:clean": "node scripts/clean-build.mjs",
-    "pretest:e2e": "npm run build"
+    "pretest:e2e": "npm run build",
+    "ingest:download": "node scripts/ingest/download.mjs",
+    "ingest:supervise": "node scripts/ingest/supervise.mjs",
+    "ingest:aggregate": "node scripts/ingest/aggregate.mjs",
+    "ingest:publish": "node scripts/ingest/publish.mjs",
+    "ingest:verify": "node scripts/ingest/verify-v2.mjs",
+    "ingest:test": "node --test scripts/ingest/plan.test.mjs scripts/ingest/aggregate-core.test.mjs",
+    "convex:region-data": "node scripts/convex/build-region-data.mjs",
+    "convex:set-key": "node scripts/convex/set-firms-key.mjs",
+    "convex:push": "convex dev --once",
+    "convex:pull": "convex run pull:pullAll"
   },
   "dependencies": {
     "@fontsource/source-sans-3": "^5.2.8",
     "@tailwindcss/vite": "^4.1.0",
+    "convex": "1.49.0",
     "h3-js": "^4.5.0",
     "lucide-react": "^0.468.0",
     "maplibre-gl": "^6.18.0",
@@ -32,16 +45,22 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^3.0.0",
-    "tailwindcss": "^4.1.0"
+    "tailwindcss": "^4.1.0",
+    "topojson-client": "^3.1.0",
+    "us-atlas": "^3.0.1",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@edge-runtime/vm": "5.0.0",
     "@playwright/test": "^1.56.0",
     "@types/geojson": "^7946.0.16",
     "@types/node": "^24.0.0",
     "@types/papaparse": "^5.3.16",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/topojson-client": "^3.1.5",
     "@vitejs/plugin-react": "^5.0.0",
+    "convex-test": "0.0.66",
     "prettier": "^3.10.1",
     "typescript": "~5.9.3",
     "vite": "^7.2.0",

@@ -29,7 +29,7 @@ const all = [...m, ...v];
 test("unavailable sensor dates appear as unknown rather than zero", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/#workspace");
   await expect(page.getByText("2 datasets loaded")).toBeVisible({timeout:90000});
   await page.getByRole("button", { name: "Datasets", exact: true }).click();
   await page
@@ -44,8 +44,8 @@ test("unavailable sensor dates appear as unknown rather than zero", async ({
     page.getByRole("heading", { name: "No datasets loaded" }),
   ).toBeVisible();
   const subset = (path: string, month: string) => {
-    const [header, ...rows] = fs
-      .readFileSync(path, "utf8")
+    // Hash-verified v1 demo copy of the original archive (data/raw is not always present).
+    const [header, ...rows] = readSource(path)
       .trim()
       .split(/\r?\n/);
     return Buffer.from(
@@ -73,7 +73,7 @@ test("unavailable sensor dates appear as unknown rather than zero", async ({
   ]);
   await expect(page.getByText("2 datasets loaded")).toBeVisible({timeout:90000});
   await page.getByRole("button", { name: "Close import panel" }).click();
-  await page.getByRole("button", { name: "Workspace", exact: true }).click();
+  await page.getByRole("button", { name: "CSV workspace", exact: true }).click();
   await expect(
     page.getByText(
       "Load both instruments with overlapping record dates to compare.",
@@ -121,7 +121,7 @@ test("authentic archives drive linked filters, calendar, inspection, and provena
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/#workspace");
   await expect(page.getByText("2 datasets loaded")).toBeVisible({timeout:90000});
   await expect(page.getByText("54,191 records in focus")).toBeVisible();
   await expect(page.locator(".comparison-count").nth(0)).toHaveText("6,827");
@@ -250,7 +250,7 @@ test("authentic archives drive linked filters, calendar, inspection, and provena
   await expect(
     page.getByRole("heading", { name: "Reading the observation record" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Workspace", exact: true }).click();
+  await page.getByRole("button", { name: "CSV workspace", exact: true }).click();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator(".map-canvas")).toHaveAttribute(
     "aria-busy",
@@ -273,7 +273,7 @@ test("authentic archives drive linked filters, calendar, inspection, and provena
 test("real map hotspot selection, region drawing, removal and successful reimport", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/#workspace");
   await expect(page.getByText("2 datasets loaded")).toBeVisible({timeout:90000});
   await page.getByLabel("Sensor filter").selectOption("MODIS");
   await page
@@ -353,6 +353,6 @@ test("real map hotspot selection, region drawing, removal and successful reimpor
   await expect(page.locator(".dataset-entry")).toHaveCount(2);
   await expect(page.getByText("2 datasets loaded")).toBeVisible({timeout:90000});
   await page.getByRole("button", { name: "Close import panel" }).click();
-  await page.getByRole("button", { name: "Workspace", exact: true }).click();
+  await page.getByRole("button", { name: "CSV workspace", exact: true }).click();
   await expect(page.getByText("54,191 records in focus")).toBeVisible();
 });

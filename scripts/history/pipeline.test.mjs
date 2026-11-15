@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { DatabaseSync } from 'node:sqlite';
 import { spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { latLngToCell } from 'h3-js';
 import { preprocess, shaFile } from './pipeline.mjs';
 const config={resolutions:[4,5,6],defaultResolution:5,excludeBasenames:['sample_viirs_snpp_071223.csv']};
@@ -68,7 +69,10 @@ test('multi-year streaming, source metadata, duplicates, invalid rows, UTC, plat
   assert.equal(a.manifest.version,b.manifest.version);
   for(const [file,sha] of hashes)assert.equal(await shaFile(join(out,b.manifest.version,file)),sha,file);
 });
-test('real NASA archive aggregates reconcile at all resolutions without training sample',async()=>{
+// The original 2024 archive CSVs are user-supplied and gitignored; skip (not fail) when absent.
+const realArchives=['data/raw/DL_FIRE_M-C61_850214/fire_archive_M-C61_850214.csv','data/raw/DL_FIRE_SV-C2_850215/fire_archive_SV-C2_850215.csv'];
+const haveRealArchives=realArchives.every(f=>existsSync(f));
+test('real NASA archive aggregates reconcile at all resolutions without training sample',{skip:haveRealArchives?false:'original 2024 archive CSVs not present in data/raw'},async()=>{
   const root=await mkdtemp(join(tmpdir(),'firelens-real-'));
   const {manifest}=await preprocess({rawRoot:'data/raw',outputRoot:join(root,'out'),workRoot:join(root,'work'),config});
   assert.equal(manifest.extent.count,54191);

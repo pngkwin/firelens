@@ -1,0 +1,5384 @@
+{
+ "v": 2,
+ "region": {
+  "id": "iberia",
+  "name": "Iberian Peninsula (Spain, Portugal)",
+  "boxes": [
+   {
+    "id": "iberia",
+    "bbox": [
+     -10,
+     36,
+     4,
+     44
+    ]
+   }
+  ]
+ },
+ "product": {
+  "unit": "fire-cell-day",
+  "definition": "One H3 resolution-8 cell (~0.74 km²) on one UTC day with at least one active-fire detection. Histograms count cell-days by the exact set of platforms that detected fire there; an any-sensor count is a union, never a sum of detections.",
+  "fineResolution": 8,
+  "coarseResolution": 5,
+  "shardResolution": 1,
+  "platforms": [
+   "Terra",
+   "Aqua",
+   "S-NPP",
+   "NOAA-20",
+   "NOAA-21"
+  ],
+  "platformBits": {
+   "Terra": 1,
+   "Aqua": 2,
+   "S-NPP": 4,
+   "NOAA-20": 8,
+   "NOAA-21": 16
+  },
+  "staticSourceMask": {
+   "rule": "res-8 cells with >= 3 science-quality detections of FIRMS type 1 (volcano), 2 (other static land source) or 3 (offshore), making up >= 50% of the cell's detections across all SP sources and years",
+   "cells": 575,
+   "filesScanned": 3808
+  },
+  "zeroMeaning": "A zero is no matching records in the loaded data, never evidence that no fire occurred.",
+  "clip": {
+   "atlas": "world-atlas/countries-50m.json",
+   "object": "countries",
+   "ids": [
+    "724",
+    "620"
+   ],
+   "source": "Natural Earth 1:50M via world-atlas@2 (Spain 724, Portugal 620)",
+   "rule": "A detection belongs to the region iff the centre of its H3 res-7 cell (~5.2 km²) lies inside the boundary polygon; applied identically to archive and API rows."
+  },
+  "areaCaveat": "Region totals are clipped to the boundary polygon (coastal generalization of the boundary data applies). AOI queries include whole res-5 cells whose centres fall inside the AOI."
+ },
+ "sources": {
+  "MODIS_SP": {
+   "id": "MODIS_SP",
+   "sensor": "MODIS",
+   "kind": "SP",
+   "available": {
+    "min": "2000-11-01",
+    "max": "2026-08-31"
+   }
+  },
+  "MODIS_NRT": {
+   "id": "MODIS_NRT",
+   "sensor": "MODIS",
+   "kind": "NRT",
+   "after": "MODIS_SP",
+   "available": {
+    "min": "2026-09-01",
+    "max": "2026-11-15"
+   }
+  },
+  "VIIRS_SNPP_SP": {
+   "id": "VIIRS_SNPP_SP",
+   "sensor": "VIIRS",
+   "platform": "S-NPP",
+   "kind": "SP",
+   "available": {
+    "min": "2012-01-20",
+    "max": "2026-07-31"
+   }
+  },
+  "VIIRS_SNPP_NRT": {
+   "id": "VIIRS_SNPP_NRT",
+   "sensor": "VIIRS",
+   "platform": "S-NPP",
+   "kind": "NRT",
+   "after": "VIIRS_SNPP_SP",
+   "endOfProduction": "2026-11-02",
+   "available": {
+    "min": "2026-08-01",
+    "max": "2026-11-02"
+   }
+  },
+  "VIIRS_NOAA20_SP": {
+   "id": "VIIRS_NOAA20_SP",
+   "sensor": "VIIRS",
+   "platform": "NOAA-20",
+   "kind": "SP",
+   "available": {
+    "min": "2018-04-01",
+    "max": "2026-07-31"
+   }
+  },
+  "VIIRS_NOAA20_NRT": {
+   "id": "VIIRS_NOAA20_NRT",
+   "sensor": "VIIRS",
+   "platform": "NOAA-20",
+   "kind": "NRT",
+   "after": "VIIRS_NOAA20_SP",
+   "available": {
+    "min": "2026-08-01",
+    "max": "2026-11-15"
+   }
+  },
+  "VIIRS_NOAA21_SP": {
+   "id": "VIIRS_NOAA21_SP",
+   "sensor": "VIIRS",
+   "platform": "NOAA-21",
+   "kind": "SP",
+   "available": {
+    "min": "2023-03-01",
+    "max": "2026-07-31"
+   }
+  },
+  "VIIRS_NOAA21_NRT": {
+   "id": "VIIRS_NOAA21_NRT",
+   "sensor": "VIIRS",
+   "platform": "NOAA-21",
+   "kind": "NRT",
+   "after": "VIIRS_NOAA21_SP",
+   "available": {
+    "min": "2024-01-17",
+    "max": "2026-11-15"
+   }
+  }
+ },
+ "planEnd": "2026-11-14",
+ "archive": null,
+ "months": {
+  "2000-11": {
+   "status": "complete",
+   "detections": 97,
+   "excludedStatic": 6,
+   "outsideRegion": 1,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 97,
+   "detectionsBySource": {
+    "MODIS_SP": 104
+   }
+  },
+  "2000-12": {
+   "status": "complete",
+   "detections": 23,
+   "excludedStatic": 5,
+   "outsideRegion": 1,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 23,
+   "detectionsBySource": {
+    "MODIS_SP": 29
+   }
+  },
+  "2001-01": {
+   "status": "complete",
+   "detections": 9,
+   "excludedStatic": 8,
+   "outsideRegion": 0,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 9,
+   "detectionsBySource": {
+    "MODIS_SP": 17
+   }
+  },
+  "2001-02": {
+   "status": "complete",
+   "detections": 128,
+   "excludedStatic": 13,
+   "outsideRegion": 10,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 127,
+   "detectionsBySource": {
+    "MODIS_SP": 151
+   }
+  },
+  "2001-03": {
+   "status": "complete",
+   "detections": 64,
+   "excludedStatic": 10,
+   "outsideRegion": 15,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 62,
+   "detectionsBySource": {
+    "MODIS_SP": 89
+   }
+  },
+  "2001-04": {
+   "status": "complete",
+   "detections": 405,
+   "excludedStatic": 38,
+   "outsideRegion": 10,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 397,
+   "detectionsBySource": {
+    "MODIS_SP": 453
+   }
+  },
+  "2001-05": {
+   "status": "complete",
+   "detections": 112,
+   "excludedStatic": 30,
+   "outsideRegion": 4,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 112,
+   "detectionsBySource": {
+    "MODIS_SP": 146
+   }
+  },
+  "2001-06": {
+   "status": "complete",
+   "detections": 60,
+   "excludedStatic": 20,
+   "outsideRegion": 6,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 59,
+   "detectionsBySource": {
+    "MODIS_SP": 86
+   }
+  },
+  "2001-07": {
+   "status": "complete",
+   "detections": 345,
+   "excludedStatic": 33,
+   "outsideRegion": 170,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 331,
+   "detectionsBySource": {
+    "MODIS_SP": 548
+   }
+  },
+  "2001-08": {
+   "status": "complete",
+   "detections": 735,
+   "excludedStatic": 22,
+   "outsideRegion": 93,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 707,
+   "detectionsBySource": {
+    "MODIS_SP": 850
+   }
+  },
+  "2001-09": {
+   "status": "complete",
+   "detections": 1654,
+   "excludedStatic": 34,
+   "outsideRegion": 62,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1577,
+   "detectionsBySource": {
+    "MODIS_SP": 1750
+   }
+  },
+  "2001-10": {
+   "status": "complete",
+   "detections": 291,
+   "excludedStatic": 21,
+   "outsideRegion": 24,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 286,
+   "detectionsBySource": {
+    "MODIS_SP": 336
+   }
+  },
+  "2001-11": {
+   "status": "complete",
+   "detections": 365,
+   "excludedStatic": 15,
+   "outsideRegion": 5,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 361,
+   "detectionsBySource": {
+    "MODIS_SP": 385
+   }
+  },
+  "2001-12": {
+   "status": "complete",
+   "detections": 477,
+   "excludedStatic": 10,
+   "outsideRegion": 1,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 452,
+   "detectionsBySource": {
+    "MODIS_SP": 488
+   }
+  },
+  "2002-01": {
+   "status": "complete",
+   "detections": 63,
+   "excludedStatic": 9,
+   "outsideRegion": 57,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 63,
+   "detectionsBySource": {
+    "MODIS_SP": 129
+   }
+  },
+  "2002-02": {
+   "status": "complete",
+   "detections": 322,
+   "excludedStatic": 16,
+   "outsideRegion": 61,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 317,
+   "detectionsBySource": {
+    "MODIS_SP": 399
+   }
+  },
+  "2002-03": {
+   "status": "complete",
+   "detections": 106,
+   "excludedStatic": 14,
+   "outsideRegion": 16,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 106,
+   "detectionsBySource": {
+    "MODIS_SP": 136
+   }
+  },
+  "2002-04": {
+   "status": "complete",
+   "detections": 368,
+   "excludedStatic": 39,
+   "outsideRegion": 9,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 360,
+   "detectionsBySource": {
+    "MODIS_SP": 416
+   }
+  },
+  "2002-05": {
+   "status": "complete",
+   "detections": 87,
+   "excludedStatic": 34,
+   "outsideRegion": 5,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 87,
+   "detectionsBySource": {
+    "MODIS_SP": 126
+   }
+  },
+  "2002-06": {
+   "status": "complete",
+   "detections": 294,
+   "excludedStatic": 48,
+   "outsideRegion": 50,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 283,
+   "detectionsBySource": {
+    "MODIS_SP": 392
+   }
+  },
+  "2002-07": {
+   "status": "complete",
+   "detections": 1829,
+   "excludedStatic": 62,
+   "outsideRegion": 156,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1710,
+   "detectionsBySource": {
+    "MODIS_SP": 2047
+   }
+  },
+  "2002-08": {
+   "status": "complete",
+   "detections": 1959,
+   "excludedStatic": 38,
+   "outsideRegion": 46,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1822,
+   "detectionsBySource": {
+    "MODIS_SP": 2043
+   }
+  },
+  "2002-09": {
+   "status": "complete",
+   "detections": 1261,
+   "excludedStatic": 47,
+   "outsideRegion": 36,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1208,
+   "detectionsBySource": {
+    "MODIS_SP": 1344
+   }
+  },
+  "2002-10": {
+   "status": "complete",
+   "detections": 775,
+   "excludedStatic": 34,
+   "outsideRegion": 37,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 761,
+   "detectionsBySource": {
+    "MODIS_SP": 846
+   }
+  },
+  "2002-11": {
+   "status": "complete",
+   "detections": 316,
+   "excludedStatic": 21,
+   "outsideRegion": 4,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 309,
+   "detectionsBySource": {
+    "MODIS_SP": 341
+   }
+  },
+  "2002-12": {
+   "status": "complete",
+   "detections": 26,
+   "excludedStatic": 6,
+   "outsideRegion": 0,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 26,
+   "detectionsBySource": {
+    "MODIS_SP": 32
+   }
+  },
+  "2003-01": {
+   "status": "complete",
+   "detections": 116,
+   "excludedStatic": 4,
+   "outsideRegion": 3,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 115,
+   "detectionsBySource": {
+    "MODIS_SP": 123
+   }
+  },
+  "2003-02": {
+   "status": "complete",
+   "detections": 129,
+   "excludedStatic": 10,
+   "outsideRegion": 6,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 126,
+   "detectionsBySource": {
+    "MODIS_SP": 145
+   }
+  },
+  "2003-03": {
+   "status": "complete",
+   "detections": 836,
+   "excludedStatic": 40,
+   "outsideRegion": 170,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 801,
+   "detectionsBySource": {
+    "MODIS_SP": 1046
+   }
+  },
+  "2003-04": {
+   "status": "complete",
+   "detections": 492,
+   "excludedStatic": 61,
+   "outsideRegion": 19,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 470,
+   "detectionsBySource": {
+    "MODIS_SP": 572
+   }
+  },
+  "2003-05": {
+   "status": "complete",
+   "detections": 373,
+   "excludedStatic": 104,
+   "outsideRegion": 1,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 355,
+   "detectionsBySource": {
+    "MODIS_SP": 478
+   }
+  },
+  "2003-06": {
+   "status": "complete",
+   "detections": 645,
+   "excludedStatic": 73,
+   "outsideRegion": 21,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 606,
+   "detectionsBySource": {
+    "MODIS_SP": 739
+   }
+  },
+  "2003-07": {
+   "status": "complete",
+   "detections": 1419,
+   "excludedStatic": 68,
+   "outsideRegion": 113,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1281,
+   "detectionsBySource": {
+    "MODIS_SP": 1600
+   }
+  },
+  "2003-08": {
+   "status": "complete",
+   "detections": 5681,
+   "excludedStatic": 43,
+   "outsideRegion": 125,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 5046,
+   "detectionsBySource": {
+    "MODIS_SP": 5849
+   }
+  },
+  "2003-09": {
+   "status": "complete",
+   "detections": 2467,
+   "excludedStatic": 40,
+   "outsideRegion": 66,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2205,
+   "detectionsBySource": {
+    "MODIS_SP": 2573
+   }
+  },
+  "2003-10": {
+   "status": "complete",
+   "detections": 731,
+   "excludedStatic": 21,
+   "outsideRegion": 23,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 710,
+   "detectionsBySource": {
+    "MODIS_SP": 775
+   }
+  },
+  "2003-11": {
+   "status": "complete",
+   "detections": 156,
+   "excludedStatic": 19,
+   "outsideRegion": 4,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 155,
+   "detectionsBySource": {
+    "MODIS_SP": 179
+   }
+  },
+  "2003-12": {
+   "status": "complete",
+   "detections": 56,
+   "excludedStatic": 14,
+   "outsideRegion": 0,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 55,
+   "detectionsBySource": {
+    "MODIS_SP": 70
+   }
+  },
+  "2004-01": {
+   "status": "complete",
+   "detections": 105,
+   "excludedStatic": 12,
+   "outsideRegion": 4,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 103,
+   "detectionsBySource": {
+    "MODIS_SP": 121
+   }
+  },
+  "2004-02": {
+   "status": "complete",
+   "detections": 498,
+   "excludedStatic": 23,
+   "outsideRegion": 86,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 474,
+   "detectionsBySource": {
+    "MODIS_SP": 607
+   }
+  },
+  "2004-03": {
+   "status": "complete",
+   "detections": 403,
+   "excludedStatic": 18,
+   "outsideRegion": 86,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 391,
+   "detectionsBySource": {
+    "MODIS_SP": 507
+   }
+  },
+  "2004-04": {
+   "status": "complete",
+   "detections": 527,
+   "excludedStatic": 76,
+   "outsideRegion": 14,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 508,
+   "detectionsBySource": {
+    "MODIS_SP": 617
+   }
+  },
+  "2004-05": {
+   "status": "complete",
+   "detections": 262,
+   "excludedStatic": 101,
+   "outsideRegion": 3,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 257,
+   "detectionsBySource": {
+    "MODIS_SP": 366
+   }
+  },
+  "2004-06": {
+   "status": "complete",
+   "detections": 829,
+   "excludedStatic": 138,
+   "outsideRegion": 22,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 787,
+   "detectionsBySource": {
+    "MODIS_SP": 989
+   }
+  },
+  "2004-07": {
+   "status": "complete",
+   "detections": 2825,
+   "excludedStatic": 65,
+   "outsideRegion": 174,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2580,
+   "detectionsBySource": {
+    "MODIS_SP": 3064
+   }
+  },
+  "2004-08": {
+   "status": "complete",
+   "detections": 904,
+   "excludedStatic": 48,
+   "outsideRegion": 250,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 829,
+   "detectionsBySource": {
+    "MODIS_SP": 1202
+   }
+  },
+  "2004-09": {
+   "status": "complete",
+   "detections": 1838,
+   "excludedStatic": 32,
+   "outsideRegion": 124,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1781,
+   "detectionsBySource": {
+    "MODIS_SP": 1994
+   }
+  },
+  "2004-10": {
+   "status": "complete",
+   "detections": 1228,
+   "excludedStatic": 12,
+   "outsideRegion": 221,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1191,
+   "detectionsBySource": {
+    "MODIS_SP": 1461
+   }
+  },
+  "2004-11": {
+   "status": "complete",
+   "detections": 748,
+   "excludedStatic": 7,
+   "outsideRegion": 6,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 733,
+   "detectionsBySource": {
+    "MODIS_SP": 761
+   }
+  },
+  "2004-12": {
+   "status": "complete",
+   "detections": 154,
+   "excludedStatic": 18,
+   "outsideRegion": 1,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 148,
+   "detectionsBySource": {
+    "MODIS_SP": 173
+   }
+  },
+  "2005-01": {
+   "status": "complete",
+   "detections": 385,
+   "excludedStatic": 16,
+   "outsideRegion": 54,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 378,
+   "detectionsBySource": {
+    "MODIS_SP": 455
+   }
+  },
+  "2005-02": {
+   "status": "complete",
+   "detections": 786,
+   "excludedStatic": 20,
+   "outsideRegion": 32,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 748,
+   "detectionsBySource": {
+    "MODIS_SP": 838
+   }
+  },
+  "2005-03": {
+   "status": "complete",
+   "detections": 1030,
+   "excludedStatic": 24,
+   "outsideRegion": 220,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 993,
+   "detectionsBySource": {
+    "MODIS_SP": 1274
+   }
+  },
+  "2005-04": {
+   "status": "complete",
+   "detections": 323,
+   "excludedStatic": 52,
+   "outsideRegion": 45,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 317,
+   "detectionsBySource": {
+    "MODIS_SP": 420
+   }
+  },
+  "2005-05": {
+   "status": "complete",
+   "detections": 190,
+   "excludedStatic": 67,
+   "outsideRegion": 12,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 186,
+   "detectionsBySource": {
+    "MODIS_SP": 269
+   }
+  },
+  "2005-06": {
+   "status": "complete",
+   "detections": 625,
+   "excludedStatic": 69,
+   "outsideRegion": 50,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 582,
+   "detectionsBySource": {
+    "MODIS_SP": 744
+   }
+  },
+  "2005-07": {
+   "status": "complete",
+   "detections": 2225,
+   "excludedStatic": 59,
+   "outsideRegion": 491,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2010,
+   "detectionsBySource": {
+    "MODIS_SP": 2775
+   }
+  },
+  "2005-08": {
+   "status": "complete",
+   "detections": 7394,
+   "excludedStatic": 70,
+   "outsideRegion": 395,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 6342,
+   "detectionsBySource": {
+    "MODIS_SP": 7859
+   }
+  },
+  "2005-09": {
+   "status": "complete",
+   "detections": 1022,
+   "excludedStatic": 55,
+   "outsideRegion": 91,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 923,
+   "detectionsBySource": {
+    "MODIS_SP": 1168
+   }
+  },
+  "2005-10": {
+   "status": "complete",
+   "detections": 1157,
+   "excludedStatic": 33,
+   "outsideRegion": 52,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1012,
+   "detectionsBySource": {
+    "MODIS_SP": 1242
+   }
+  },
+  "2005-11": {
+   "status": "complete",
+   "detections": 290,
+   "excludedStatic": 19,
+   "outsideRegion": 12,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 282,
+   "detectionsBySource": {
+    "MODIS_SP": 321
+   }
+  },
+  "2005-12": {
+   "status": "complete",
+   "detections": 185,
+   "excludedStatic": 9,
+   "outsideRegion": 2,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 173,
+   "detectionsBySource": {
+    "MODIS_SP": 196
+   }
+  },
+  "2006-01": {
+   "status": "complete",
+   "detections": 84,
+   "excludedStatic": 3,
+   "outsideRegion": 2,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 80,
+   "detectionsBySource": {
+    "MODIS_SP": 89
+   }
+  },
+  "2006-02": {
+   "status": "complete",
+   "detections": 387,
+   "excludedStatic": 14,
+   "outsideRegion": 38,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 373,
+   "detectionsBySource": {
+    "MODIS_SP": 439
+   }
+  },
+  "2006-03": {
+   "status": "complete",
+   "detections": 363,
+   "excludedStatic": 27,
+   "outsideRegion": 80,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 348,
+   "detectionsBySource": {
+    "MODIS_SP": 470
+   }
+  },
+  "2006-04": {
+   "status": "complete",
+   "detections": 259,
+   "excludedStatic": 46,
+   "outsideRegion": 30,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 247,
+   "detectionsBySource": {
+    "MODIS_SP": 335
+   }
+  },
+  "2006-05": {
+   "status": "complete",
+   "detections": 310,
+   "excludedStatic": 65,
+   "outsideRegion": 4,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 298,
+   "detectionsBySource": {
+    "MODIS_SP": 379
+   }
+  },
+  "2006-06": {
+   "status": "complete",
+   "detections": 485,
+   "excludedStatic": 93,
+   "outsideRegion": 35,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 443,
+   "detectionsBySource": {
+    "MODIS_SP": 613
+   }
+  },
+  "2006-07": {
+   "status": "complete",
+   "detections": 623,
+   "excludedStatic": 56,
+   "outsideRegion": 221,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 577,
+   "detectionsBySource": {
+    "MODIS_SP": 900
+   }
+  },
+  "2006-08": {
+   "status": "complete",
+   "detections": 5709,
+   "excludedStatic": 72,
+   "outsideRegion": 238,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 4734,
+   "detectionsBySource": {
+    "MODIS_SP": 6019
+   }
+  },
+  "2006-09": {
+   "status": "complete",
+   "detections": 550,
+   "excludedStatic": 40,
+   "outsideRegion": 46,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 512,
+   "detectionsBySource": {
+    "MODIS_SP": 636
+   }
+  },
+  "2006-10": {
+   "status": "complete",
+   "detections": 222,
+   "excludedStatic": 29,
+   "outsideRegion": 339,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 216,
+   "detectionsBySource": {
+    "MODIS_SP": 590
+   }
+  },
+  "2006-11": {
+   "status": "complete",
+   "detections": 100,
+   "excludedStatic": 33,
+   "outsideRegion": 61,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 98,
+   "detectionsBySource": {
+    "MODIS_SP": 194
+   }
+  },
+  "2006-12": {
+   "status": "complete",
+   "detections": 71,
+   "excludedStatic": 11,
+   "outsideRegion": 10,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 65,
+   "detectionsBySource": {
+    "MODIS_SP": 92
+   }
+  },
+  "2007-01": {
+   "status": "complete",
+   "detections": 93,
+   "excludedStatic": 13,
+   "outsideRegion": 25,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 89,
+   "detectionsBySource": {
+    "MODIS_SP": 131
+   }
+  },
+  "2007-02": {
+   "status": "complete",
+   "detections": 52,
+   "excludedStatic": 6,
+   "outsideRegion": 28,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 49,
+   "detectionsBySource": {
+    "MODIS_SP": 86
+   }
+  },
+  "2007-03": {
+   "status": "complete",
+   "detections": 483,
+   "excludedStatic": 40,
+   "outsideRegion": 139,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 463,
+   "detectionsBySource": {
+    "MODIS_SP": 662
+   }
+  },
+  "2007-04": {
+   "status": "complete",
+   "detections": 166,
+   "excludedStatic": 38,
+   "outsideRegion": 7,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 166,
+   "detectionsBySource": {
+    "MODIS_SP": 211
+   }
+  },
+  "2007-05": {
+   "status": "complete",
+   "detections": 186,
+   "excludedStatic": 71,
+   "outsideRegion": 4,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 180,
+   "detectionsBySource": {
+    "MODIS_SP": 261
+   }
+  },
+  "2007-06": {
+   "status": "complete",
+   "detections": 188,
+   "excludedStatic": 67,
+   "outsideRegion": 18,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 185,
+   "detectionsBySource": {
+    "MODIS_SP": 273
+   }
+  },
+  "2007-07": {
+   "status": "complete",
+   "detections": 375,
+   "excludedStatic": 75,
+   "outsideRegion": 334,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 357,
+   "detectionsBySource": {
+    "MODIS_SP": 784
+   }
+  },
+  "2007-08": {
+   "status": "complete",
+   "detections": 604,
+   "excludedStatic": 45,
+   "outsideRegion": 1503,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 564,
+   "detectionsBySource": {
+    "MODIS_SP": 2152
+   }
+  },
+  "2007-09": {
+   "status": "complete",
+   "detections": 542,
+   "excludedStatic": 48,
+   "outsideRegion": 57,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 520,
+   "detectionsBySource": {
+    "MODIS_SP": 647
+   }
+  },
+  "2007-10": {
+   "status": "complete",
+   "detections": 758,
+   "excludedStatic": 45,
+   "outsideRegion": 57,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 728,
+   "detectionsBySource": {
+    "MODIS_SP": 860
+   }
+  },
+  "2007-11": {
+   "status": "complete",
+   "detections": 1484,
+   "excludedStatic": 16,
+   "outsideRegion": 33,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1389,
+   "detectionsBySource": {
+    "MODIS_SP": 1533
+   }
+  },
+  "2007-12": {
+   "status": "complete",
+   "detections": 201,
+   "excludedStatic": 7,
+   "outsideRegion": 5,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 196,
+   "detectionsBySource": {
+    "MODIS_SP": 213
+   }
+  },
+  "2008-01": {
+   "status": "complete",
+   "detections": 203,
+   "excludedStatic": 14,
+   "outsideRegion": 36,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 196,
+   "detectionsBySource": {
+    "MODIS_SP": 253
+   }
+  },
+  "2008-02": {
+   "status": "complete",
+   "detections": 564,
+   "excludedStatic": 38,
+   "outsideRegion": 418,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 541,
+   "detectionsBySource": {
+    "MODIS_SP": 1020
+   }
+  },
+  "2008-03": {
+   "status": "complete",
+   "detections": 378,
+   "excludedStatic": 22,
+   "outsideRegion": 13,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 374,
+   "detectionsBySource": {
+    "MODIS_SP": 413
+   }
+  },
+  "2008-04": {
+   "status": "complete",
+   "detections": 356,
+   "excludedStatic": 53,
+   "outsideRegion": 15,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 340,
+   "detectionsBySource": {
+    "MODIS_SP": 424
+   }
+  },
+  "2008-05": {
+   "status": "complete",
+   "detections": 75,
+   "excludedStatic": 31,
+   "outsideRegion": 3,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 75,
+   "detectionsBySource": {
+    "MODIS_SP": 109
+   }
+  },
+  "2008-06": {
+   "status": "complete",
+   "detections": 216,
+   "excludedStatic": 82,
+   "outsideRegion": 29,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 210,
+   "detectionsBySource": {
+    "MODIS_SP": 327
+   }
+  },
+  "2008-07": {
+   "status": "complete",
+   "detections": 218,
+   "excludedStatic": 54,
+   "outsideRegion": 137,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 209,
+   "detectionsBySource": {
+    "MODIS_SP": 409
+   }
+  },
+  "2008-08": {
+   "status": "complete",
+   "detections": 328,
+   "excludedStatic": 35,
+   "outsideRegion": 427,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 319,
+   "detectionsBySource": {
+    "MODIS_SP": 790
+   }
+  },
+  "2008-09": {
+   "status": "complete",
+   "detections": 195,
+   "excludedStatic": 24,
+   "outsideRegion": 126,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 192,
+   "detectionsBySource": {
+    "MODIS_SP": 345
+   }
+  },
+  "2008-10": {
+   "status": "complete",
+   "detections": 586,
+   "excludedStatic": 24,
+   "outsideRegion": 30,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 564,
+   "detectionsBySource": {
+    "MODIS_SP": 640
+   }
+  },
+  "2008-11": {
+   "status": "complete",
+   "detections": 360,
+   "excludedStatic": 6,
+   "outsideRegion": 5,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 349,
+   "detectionsBySource": {
+    "MODIS_SP": 371
+   }
+  },
+  "2008-12": {
+   "status": "complete",
+   "detections": 112,
+   "excludedStatic": 5,
+   "outsideRegion": 2,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 109,
+   "detectionsBySource": {
+    "MODIS_SP": 119
+   }
+  },
+  "2009-01": {
+   "status": "complete",
+   "detections": 62,
+   "excludedStatic": 6,
+   "outsideRegion": 0,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 60,
+   "detectionsBySource": {
+    "MODIS_SP": 68
+   }
+  },
+  "2009-02": {
+   "status": "complete",
+   "detections": 544,
+   "excludedStatic": 12,
+   "outsideRegion": 117,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 519,
+   "detectionsBySource": {
+    "MODIS_SP": 673
+   }
+  },
+  "2009-03": {
+   "status": "complete",
+   "detections": 2105,
+   "excludedStatic": 25,
+   "outsideRegion": 289,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1937,
+   "detectionsBySource": {
+    "MODIS_SP": 2419
+   }
+  },
+  "2009-04": {
+   "status": "complete",
+   "detections": 329,
+   "excludedStatic": 23,
+   "outsideRegion": 16,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 315,
+   "detectionsBySource": {
+    "MODIS_SP": 368
+   }
+  },
+  "2009-05": {
+   "status": "complete",
+   "detections": 242,
+   "excludedStatic": 45,
+   "outsideRegion": 11,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 232,
+   "detectionsBySource": {
+    "MODIS_SP": 298
+   }
+  },
+  "2009-06": {
+   "status": "complete",
+   "detections": 179,
+   "excludedStatic": 34,
+   "outsideRegion": 51,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 176,
+   "detectionsBySource": {
+    "MODIS_SP": 264
+   }
+  },
+  "2009-07": {
+   "status": "complete",
+   "detections": 806,
+   "excludedStatic": 30,
+   "outsideRegion": 628,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 722,
+   "detectionsBySource": {
+    "MODIS_SP": 1464
+   }
+  },
+  "2009-08": {
+   "status": "complete",
+   "detections": 1115,
+   "excludedStatic": 11,
+   "outsideRegion": 241,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 985,
+   "detectionsBySource": {
+    "MODIS_SP": 1367
+   }
+  },
+  "2009-09": {
+   "status": "complete",
+   "detections": 1545,
+   "excludedStatic": 41,
+   "outsideRegion": 48,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1431,
+   "detectionsBySource": {
+    "MODIS_SP": 1634
+   }
+  },
+  "2009-10": {
+   "status": "complete",
+   "detections": 524,
+   "excludedStatic": 21,
+   "outsideRegion": 80,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 505,
+   "detectionsBySource": {
+    "MODIS_SP": 625
+   }
+  },
+  "2009-11": {
+   "status": "complete",
+   "detections": 240,
+   "excludedStatic": 10,
+   "outsideRegion": 27,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 235,
+   "detectionsBySource": {
+    "MODIS_SP": 277
+   }
+  },
+  "2009-12": {
+   "status": "complete",
+   "detections": 60,
+   "excludedStatic": 6,
+   "outsideRegion": 3,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 59,
+   "detectionsBySource": {
+    "MODIS_SP": 69
+   }
+  },
+  "2010-01": {
+   "status": "complete",
+   "detections": 29,
+   "excludedStatic": 2,
+   "outsideRegion": 0,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 29,
+   "detectionsBySource": {
+    "MODIS_SP": 31
+   }
+  },
+  "2010-02": {
+   "status": "complete",
+   "detections": 47,
+   "excludedStatic": 8,
+   "outsideRegion": 5,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 46,
+   "detectionsBySource": {
+    "MODIS_SP": 60
+   }
+  },
+  "2010-03": {
+   "status": "complete",
+   "detections": 228,
+   "excludedStatic": 18,
+   "outsideRegion": 222,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 224,
+   "detectionsBySource": {
+    "MODIS_SP": 468
+   }
+  },
+  "2010-04": {
+   "status": "complete",
+   "detections": 349,
+   "excludedStatic": 33,
+   "outsideRegion": 45,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 332,
+   "detectionsBySource": {
+    "MODIS_SP": 427
+   }
+  },
+  "2010-05": {
+   "status": "complete",
+   "detections": 212,
+   "excludedStatic": 58,
+   "outsideRegion": 11,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 209,
+   "detectionsBySource": {
+    "MODIS_SP": 281
+   }
+  },
+  "2010-06": {
+   "status": "complete",
+   "detections": 140,
+   "excludedStatic": 59,
+   "outsideRegion": 10,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 139,
+   "detectionsBySource": {
+    "MODIS_SP": 209
+   }
+  },
+  "2010-07": {
+   "status": "complete",
+   "detections": 859,
+   "excludedStatic": 45,
+   "outsideRegion": 259,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 785,
+   "detectionsBySource": {
+    "MODIS_SP": 1163
+   }
+  },
+  "2010-08": {
+   "status": "complete",
+   "detections": 3297,
+   "excludedStatic": 19,
+   "outsideRegion": 318,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2880,
+   "detectionsBySource": {
+    "MODIS_SP": 3634
+   }
+  },
+  "2010-09": {
+   "status": "complete",
+   "detections": 481,
+   "excludedStatic": 26,
+   "outsideRegion": 208,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 453,
+   "detectionsBySource": {
+    "MODIS_SP": 715
+   }
+  },
+  "2010-10": {
+   "status": "complete",
+   "detections": 601,
+   "excludedStatic": 12,
+   "outsideRegion": 124,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 585,
+   "detectionsBySource": {
+    "MODIS_SP": 737
+   }
+  },
+  "2010-11": {
+   "status": "complete",
+   "detections": 193,
+   "excludedStatic": 12,
+   "outsideRegion": 8,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 183,
+   "detectionsBySource": {
+    "MODIS_SP": 213
+   }
+  },
+  "2010-12": {
+   "status": "complete",
+   "detections": 32,
+   "excludedStatic": 11,
+   "outsideRegion": 4,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 32,
+   "detectionsBySource": {
+    "MODIS_SP": 47
+   }
+  },
+  "2011-01": {
+   "status": "complete",
+   "detections": 129,
+   "excludedStatic": 9,
+   "outsideRegion": 12,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 124,
+   "detectionsBySource": {
+    "MODIS_SP": 150
+   }
+  },
+  "2011-02": {
+   "status": "complete",
+   "detections": 371,
+   "excludedStatic": 22,
+   "outsideRegion": 190,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 360,
+   "detectionsBySource": {
+    "MODIS_SP": 583
+   }
+  },
+  "2011-03": {
+   "status": "complete",
+   "detections": 456,
+   "excludedStatic": 31,
+   "outsideRegion": 110,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 435,
+   "detectionsBySource": {
+    "MODIS_SP": 597
+   }
+  },
+  "2011-04": {
+   "status": "complete",
+   "detections": 723,
+   "excludedStatic": 47,
+   "outsideRegion": 47,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 680,
+   "detectionsBySource": {
+    "MODIS_SP": 817
+   }
+  },
+  "2011-05": {
+   "status": "complete",
+   "detections": 187,
+   "excludedStatic": 46,
+   "outsideRegion": 13,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 179,
+   "detectionsBySource": {
+    "MODIS_SP": 246
+   }
+  },
+  "2011-06": {
+   "status": "complete",
+   "detections": 322,
+   "excludedStatic": 42,
+   "outsideRegion": 18,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 304,
+   "detectionsBySource": {
+    "MODIS_SP": 382
+   }
+  },
+  "2011-07": {
+   "status": "complete",
+   "detections": 568,
+   "excludedStatic": 35,
+   "outsideRegion": 111,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 530,
+   "detectionsBySource": {
+    "MODIS_SP": 714
+   }
+  },
+  "2011-08": {
+   "status": "complete",
+   "detections": 569,
+   "excludedStatic": 20,
+   "outsideRegion": 198,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 541,
+   "detectionsBySource": {
+    "MODIS_SP": 787
+   }
+  },
+  "2011-09": {
+   "status": "complete",
+   "detections": 582,
+   "excludedStatic": 24,
+   "outsideRegion": 223,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 560,
+   "detectionsBySource": {
+    "MODIS_SP": 829
+   }
+  },
+  "2011-10": {
+   "status": "complete",
+   "detections": 3908,
+   "excludedStatic": 41,
+   "outsideRegion": 111,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3481,
+   "detectionsBySource": {
+    "MODIS_SP": 4060
+   }
+  },
+  "2011-11": {
+   "status": "complete",
+   "detections": 152,
+   "excludedStatic": 11,
+   "outsideRegion": 9,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 147,
+   "detectionsBySource": {
+    "MODIS_SP": 172
+   }
+  },
+  "2011-12": {
+   "status": "complete",
+   "detections": 140,
+   "excludedStatic": 4,
+   "outsideRegion": 1,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 139,
+   "detectionsBySource": {
+    "MODIS_SP": 145
+   }
+  },
+  "2012-01": {
+   "status": "complete",
+   "detections": 590,
+   "excludedStatic": 168,
+   "outsideRegion": 122,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 507,
+   "detectionsBySource": {
+    "MODIS_SP": 333,
+    "VIIRS_SNPP_SP": 547
+   }
+  },
+  "2012-02": {
+   "status": "complete",
+   "detections": 5250,
+   "excludedStatic": 432,
+   "outsideRegion": 693,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3716,
+   "detectionsBySource": {
+    "MODIS_SP": 1723,
+    "VIIRS_SNPP_SP": 4652
+   }
+  },
+  "2012-03": {
+   "status": "complete",
+   "detections": 8041,
+   "excludedStatic": 523,
+   "outsideRegion": 1714,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 4876,
+   "detectionsBySource": {
+    "MODIS_SP": 2851,
+    "VIIRS_SNPP_SP": 7427
+   }
+  },
+  "2012-04": {
+   "status": "complete",
+   "detections": 619,
+   "excludedStatic": 314,
+   "outsideRegion": 211,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 452,
+   "detectionsBySource": {
+    "MODIS_SP": 211,
+    "VIIRS_SNPP_SP": 933
+   }
+  },
+  "2012-05": {
+   "status": "complete",
+   "detections": 871,
+   "excludedStatic": 695,
+   "outsideRegion": 354,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 534,
+   "detectionsBySource": {
+    "MODIS_SP": 264,
+    "VIIRS_SNPP_SP": 1656
+   }
+  },
+  "2012-06": {
+   "status": "complete",
+   "detections": 2941,
+   "excludedStatic": 649,
+   "outsideRegion": 751,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1271,
+   "detectionsBySource": {
+    "MODIS_SP": 894,
+    "VIIRS_SNPP_SP": 3447
+   }
+  },
+  "2012-07": {
+   "status": "complete",
+   "detections": 3907,
+   "excludedStatic": 609,
+   "outsideRegion": 2187,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1893,
+   "detectionsBySource": {
+    "MODIS_SP": 1464,
+    "VIIRS_SNPP_SP": 5239
+   }
+  },
+  "2012-08": {
+   "status": "complete",
+   "detections": 4043,
+   "excludedStatic": 577,
+   "outsideRegion": 8390,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1856,
+   "detectionsBySource": {
+    "MODIS_SP": 2901,
+    "VIIRS_SNPP_SP": 10109
+   }
+  },
+  "2012-09": {
+   "status": "complete",
+   "detections": 5511,
+   "excludedStatic": 542,
+   "outsideRegion": 2303,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2552,
+   "detectionsBySource": {
+    "MODIS_SP": 1947,
+    "VIIRS_SNPP_SP": 6409
+   }
+  },
+  "2012-10": {
+   "status": "complete",
+   "detections": 921,
+   "excludedStatic": 392,
+   "outsideRegion": 685,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 757,
+   "detectionsBySource": {
+    "MODIS_SP": 426,
+    "VIIRS_SNPP_SP": 1572
+   }
+  },
+  "2012-11": {
+   "status": "complete",
+   "detections": 255,
+   "excludedStatic": 263,
+   "outsideRegion": 126,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 211,
+   "detectionsBySource": {
+    "MODIS_SP": 85,
+    "VIIRS_SNPP_SP": 559
+   }
+  },
+  "2012-12": {
+   "status": "complete",
+   "detections": 265,
+   "excludedStatic": 270,
+   "outsideRegion": 124,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 225,
+   "detectionsBySource": {
+    "MODIS_SP": 73,
+    "VIIRS_SNPP_SP": 586
+   }
+  },
+  "2013-01": {
+   "status": "complete",
+   "detections": 323,
+   "excludedStatic": 260,
+   "outsideRegion": 127,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 261,
+   "detectionsBySource": {
+    "MODIS_SP": 101,
+    "VIIRS_SNPP_SP": 609
+   }
+  },
+  "2013-02": {
+   "status": "complete",
+   "detections": 407,
+   "excludedStatic": 268,
+   "outsideRegion": 144,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 342,
+   "detectionsBySource": {
+    "MODIS_SP": 123,
+    "VIIRS_SNPP_SP": 696
+   }
+  },
+  "2013-03": {
+   "status": "complete",
+   "detections": 252,
+   "excludedStatic": 284,
+   "outsideRegion": 159,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 210,
+   "detectionsBySource": {
+    "MODIS_SP": 95,
+    "VIIRS_SNPP_SP": 600
+   }
+  },
+  "2013-04": {
+   "status": "complete",
+   "detections": 970,
+   "excludedStatic": 468,
+   "outsideRegion": 459,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 751,
+   "detectionsBySource": {
+    "MODIS_SP": 335,
+    "VIIRS_SNPP_SP": 1562
+   }
+  },
+  "2013-05": {
+   "status": "complete",
+   "detections": 669,
+   "excludedStatic": 590,
+   "outsideRegion": 225,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 501,
+   "detectionsBySource": {
+    "MODIS_SP": 247,
+    "VIIRS_SNPP_SP": 1237
+   }
+  },
+  "2013-06": {
+   "status": "complete",
+   "detections": 968,
+   "excludedStatic": 730,
+   "outsideRegion": 369,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 696,
+   "detectionsBySource": {
+    "MODIS_SP": 312,
+    "VIIRS_SNPP_SP": 1755
+   }
+  },
+  "2013-07": {
+   "status": "complete",
+   "detections": 2374,
+   "excludedStatic": 640,
+   "outsideRegion": 588,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1348,
+   "detectionsBySource": {
+    "MODIS_SP": 682,
+    "VIIRS_SNPP_SP": 2920
+   }
+  },
+  "2013-08": {
+   "status": "complete",
+   "detections": 10672,
+   "excludedStatic": 829,
+   "outsideRegion": 1798,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 5224,
+   "detectionsBySource": {
+    "MODIS_SP": 3432,
+    "VIIRS_SNPP_SP": 9867
+   }
+  },
+  "2013-09": {
+   "status": "complete",
+   "detections": 5907,
+   "excludedStatic": 637,
+   "outsideRegion": 612,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3290,
+   "detectionsBySource": {
+    "MODIS_SP": 1655,
+    "VIIRS_SNPP_SP": 5501
+   }
+  },
+  "2013-10": {
+   "status": "complete",
+   "detections": 2038,
+   "excludedStatic": 477,
+   "outsideRegion": 1026,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1573,
+   "detectionsBySource": {
+    "MODIS_SP": 758,
+    "VIIRS_SNPP_SP": 2783
+   }
+  },
+  "2013-11": {
+   "status": "complete",
+   "detections": 1936,
+   "excludedStatic": 319,
+   "outsideRegion": 221,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1530,
+   "detectionsBySource": {
+    "MODIS_SP": 533,
+    "VIIRS_SNPP_SP": 1943
+   }
+  },
+  "2013-12": {
+   "status": "complete",
+   "detections": 1368,
+   "excludedStatic": 332,
+   "outsideRegion": 203,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1012,
+   "detectionsBySource": {
+    "MODIS_SP": 330,
+    "VIIRS_SNPP_SP": 1573
+   }
+  },
+  "2014-01": {
+   "status": "complete",
+   "detections": 191,
+   "excludedStatic": 192,
+   "outsideRegion": 114,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 159,
+   "detectionsBySource": {
+    "MODIS_SP": 49,
+    "VIIRS_SNPP_SP": 448
+   }
+  },
+  "2014-02": {
+   "status": "complete",
+   "detections": 486,
+   "excludedStatic": 269,
+   "outsideRegion": 269,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 377,
+   "detectionsBySource": {
+    "MODIS_SP": 155,
+    "VIIRS_SNPP_SP": 869
+   }
+  },
+  "2014-03": {
+   "status": "complete",
+   "detections": 3169,
+   "excludedStatic": 511,
+   "outsideRegion": 1515,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2198,
+   "detectionsBySource": {
+    "MODIS_SP": 1281,
+    "VIIRS_SNPP_SP": 3914
+   }
+  },
+  "2014-04": {
+   "status": "complete",
+   "detections": 938,
+   "excludedStatic": 586,
+   "outsideRegion": 361,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 661,
+   "detectionsBySource": {
+    "MODIS_SP": 259,
+    "VIIRS_SNPP_SP": 1626
+   }
+  },
+  "2014-05": {
+   "status": "complete",
+   "detections": 987,
+   "excludedStatic": 679,
+   "outsideRegion": 405,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 693,
+   "detectionsBySource": {
+    "MODIS_SP": 251,
+    "VIIRS_SNPP_SP": 1820
+   }
+  },
+  "2014-06": {
+   "status": "complete",
+   "detections": 749,
+   "excludedStatic": 699,
+   "outsideRegion": 558,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 564,
+   "detectionsBySource": {
+    "MODIS_SP": 267,
+    "VIIRS_SNPP_SP": 1739
+   }
+  },
+  "2014-07": {
+   "status": "complete",
+   "detections": 971,
+   "excludedStatic": 692,
+   "outsideRegion": 1386,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 639,
+   "detectionsBySource": {
+    "MODIS_SP": 468,
+    "VIIRS_SNPP_SP": 2581
+   }
+  },
+  "2014-08": {
+   "status": "complete",
+   "detections": 1198,
+   "excludedStatic": 735,
+   "outsideRegion": 3259,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 858,
+   "detectionsBySource": {
+    "MODIS_SP": 934,
+    "VIIRS_SNPP_SP": 4258
+   }
+  },
+  "2014-09": {
+   "status": "complete",
+   "detections": 1217,
+   "excludedStatic": 628,
+   "outsideRegion": 1125,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 890,
+   "detectionsBySource": {
+    "MODIS_SP": 452,
+    "VIIRS_SNPP_SP": 2518
+   }
+  },
+  "2014-10": {
+   "status": "complete",
+   "detections": 1608,
+   "excludedStatic": 746,
+   "outsideRegion": 605,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1316,
+   "detectionsBySource": {
+    "MODIS_SP": 533,
+    "VIIRS_SNPP_SP": 2426
+   }
+  },
+  "2014-11": {
+   "status": "complete",
+   "detections": 349,
+   "excludedStatic": 265,
+   "outsideRegion": 265,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 299,
+   "detectionsBySource": {
+    "MODIS_SP": 134,
+    "VIIRS_SNPP_SP": 745
+   }
+  },
+  "2014-12": {
+   "status": "complete",
+   "detections": 373,
+   "excludedStatic": 240,
+   "outsideRegion": 161,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 297,
+   "detectionsBySource": {
+    "MODIS_SP": 110,
+    "VIIRS_SNPP_SP": 664
+   }
+  },
+  "2015-01": {
+   "status": "complete",
+   "detections": 842,
+   "excludedStatic": 404,
+   "outsideRegion": 140,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 640,
+   "detectionsBySource": {
+    "MODIS_SP": 208,
+    "VIIRS_SNPP_SP": 1178
+   }
+  },
+  "2015-02": {
+   "status": "complete",
+   "detections": 504,
+   "excludedStatic": 257,
+   "outsideRegion": 147,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 417,
+   "detectionsBySource": {
+    "MODIS_SP": 130,
+    "VIIRS_SNPP_SP": 778
+   }
+  },
+  "2015-03": {
+   "status": "complete",
+   "detections": 2434,
+   "excludedStatic": 347,
+   "outsideRegion": 562,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1822,
+   "detectionsBySource": {
+    "MODIS_SP": 803,
+    "VIIRS_SNPP_SP": 2540
+   }
+  },
+  "2015-04": {
+   "status": "complete",
+   "detections": 2107,
+   "excludedStatic": 441,
+   "outsideRegion": 647,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1365,
+   "detectionsBySource": {
+    "MODIS_SP": 627,
+    "VIIRS_SNPP_SP": 2568
+   }
+  },
+  "2015-05": {
+   "status": "complete",
+   "detections": 884,
+   "excludedStatic": 599,
+   "outsideRegion": 338,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 602,
+   "detectionsBySource": {
+    "MODIS_SP": 220,
+    "VIIRS_SNPP_SP": 1601
+   }
+  },
+  "2015-06": {
+   "status": "complete",
+   "detections": 877,
+   "excludedStatic": 711,
+   "outsideRegion": 433,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 666,
+   "detectionsBySource": {
+    "MODIS_SP": 294,
+    "VIIRS_SNPP_SP": 1727
+   }
+  },
+  "2015-07": {
+   "status": "complete",
+   "detections": 3679,
+   "excludedStatic": 537,
+   "outsideRegion": 1370,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1929,
+   "detectionsBySource": {
+    "MODIS_SP": 1155,
+    "VIIRS_SNPP_SP": 4431
+   }
+  },
+  "2015-08": {
+   "status": "complete",
+   "detections": 4501,
+   "excludedStatic": 632,
+   "outsideRegion": 1141,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2172,
+   "detectionsBySource": {
+    "MODIS_SP": 1339,
+    "VIIRS_SNPP_SP": 4935
+   }
+  },
+  "2015-09": {
+   "status": "complete",
+   "detections": 1035,
+   "excludedStatic": 536,
+   "outsideRegion": 516,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 765,
+   "detectionsBySource": {
+    "MODIS_SP": 349,
+    "VIIRS_SNPP_SP": 1738
+   }
+  },
+  "2015-10": {
+   "status": "complete",
+   "detections": 1002,
+   "excludedStatic": 380,
+   "outsideRegion": 339,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 843,
+   "detectionsBySource": {
+    "MODIS_SP": 345,
+    "VIIRS_SNPP_SP": 1376
+   }
+  },
+  "2015-11": {
+   "status": "complete",
+   "detections": 950,
+   "excludedStatic": 486,
+   "outsideRegion": 323,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 792,
+   "detectionsBySource": {
+    "MODIS_SP": 321,
+    "VIIRS_SNPP_SP": 1438
+   }
+  },
+  "2015-12": {
+   "status": "complete",
+   "detections": 1649,
+   "excludedStatic": 334,
+   "outsideRegion": 387,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1051,
+   "detectionsBySource": {
+    "MODIS_SP": 325,
+    "VIIRS_SNPP_SP": 2045
+   }
+  },
+  "2016-01": {
+   "status": "complete",
+   "detections": 237,
+   "excludedStatic": 210,
+   "outsideRegion": 187,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 172,
+   "detectionsBySource": {
+    "MODIS_SP": 64,
+    "VIIRS_SNPP_SP": 570
+   }
+  },
+  "2016-02": {
+   "status": "complete",
+   "detections": 314,
+   "excludedStatic": 272,
+   "outsideRegion": 187,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 268,
+   "detectionsBySource": {
+    "MODIS_SP": 100,
+    "VIIRS_SNPP_SP": 673
+   }
+  },
+  "2016-03": {
+   "status": "complete",
+   "detections": 643,
+   "excludedStatic": 358,
+   "outsideRegion": 554,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 538,
+   "detectionsBySource": {
+    "MODIS_SP": 234,
+    "VIIRS_SNPP_SP": 1321
+   }
+  },
+  "2016-04": {
+   "status": "complete",
+   "detections": 394,
+   "excludedStatic": 332,
+   "outsideRegion": 281,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 349,
+   "detectionsBySource": {
+    "MODIS_SP": 139,
+    "VIIRS_SNPP_SP": 868
+   }
+  },
+  "2016-05": {
+   "status": "complete",
+   "detections": 573,
+   "excludedStatic": 468,
+   "outsideRegion": 263,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 425,
+   "detectionsBySource": {
+    "MODIS_SP": 220,
+    "VIIRS_SNPP_SP": 1084
+   }
+  },
+  "2016-06": {
+   "status": "complete",
+   "detections": 983,
+   "excludedStatic": 590,
+   "outsideRegion": 465,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 607,
+   "detectionsBySource": {
+    "MODIS_SP": 254,
+    "VIIRS_SNPP_SP": 1784
+   }
+  },
+  "2016-07": {
+   "status": "complete",
+   "detections": 1606,
+   "excludedStatic": 517,
+   "outsideRegion": 1420,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1071,
+   "detectionsBySource": {
+    "MODIS_SP": 647,
+    "VIIRS_SNPP_SP": 2896
+   }
+  },
+  "2016-08": {
+   "status": "complete",
+   "detections": 15195,
+   "excludedStatic": 660,
+   "outsideRegion": 1572,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 6237,
+   "detectionsBySource": {
+    "MODIS_SP": 4277,
+    "VIIRS_SNPP_SP": 13150
+   }
+  },
+  "2016-09": {
+   "status": "complete",
+   "detections": 5323,
+   "excludedStatic": 571,
+   "outsideRegion": 1001,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2726,
+   "detectionsBySource": {
+    "MODIS_SP": 1484,
+    "VIIRS_SNPP_SP": 5411
+   }
+  },
+  "2016-10": {
+   "status": "complete",
+   "detections": 2251,
+   "excludedStatic": 462,
+   "outsideRegion": 639,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1697,
+   "detectionsBySource": {
+    "MODIS_SP": 737,
+    "VIIRS_SNPP_SP": 2615
+   }
+  },
+  "2016-11": {
+   "status": "complete",
+   "detections": 1223,
+   "excludedStatic": 340,
+   "outsideRegion": 310,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 990,
+   "detectionsBySource": {
+    "MODIS_SP": 404,
+    "VIIRS_SNPP_SP": 1469
+   }
+  },
+  "2016-12": {
+   "status": "complete",
+   "detections": 846,
+   "excludedStatic": 400,
+   "outsideRegion": 604,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 550,
+   "detectionsBySource": {
+    "MODIS_SP": 310,
+    "VIIRS_SNPP_SP": 1540
+   }
+  },
+  "2017-01": {
+   "status": "complete",
+   "detections": 1519,
+   "excludedStatic": 314,
+   "outsideRegion": 725,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1137,
+   "detectionsBySource": {
+    "MODIS_SP": 408,
+    "VIIRS_SNPP_SP": 2150
+   }
+  },
+  "2017-02": {
+   "status": "complete",
+   "detections": 813,
+   "excludedStatic": 260,
+   "outsideRegion": 1215,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 628,
+   "detectionsBySource": {
+    "MODIS_SP": 587,
+    "VIIRS_SNPP_SP": 1701
+   }
+  },
+  "2017-03": {
+   "status": "complete",
+   "detections": 3074,
+   "excludedStatic": 390,
+   "outsideRegion": 687,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2103,
+   "detectionsBySource": {
+    "MODIS_SP": 907,
+    "VIIRS_SNPP_SP": 3244
+   }
+  },
+  "2017-04": {
+   "status": "complete",
+   "detections": 4663,
+   "excludedStatic": 640,
+   "outsideRegion": 399,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2678,
+   "detectionsBySource": {
+    "MODIS_SP": 1302,
+    "VIIRS_SNPP_SP": 4400
+   }
+  },
+  "2017-05": {
+   "status": "complete",
+   "detections": 492,
+   "excludedStatic": 551,
+   "outsideRegion": 331,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 399,
+   "detectionsBySource": {
+    "MODIS_SP": 159,
+    "VIIRS_SNPP_SP": 1215
+   }
+  },
+  "2017-06": {
+   "status": "complete",
+   "detections": 3704,
+   "excludedStatic": 447,
+   "outsideRegion": 400,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1737,
+   "detectionsBySource": {
+    "MODIS_SP": 770,
+    "VIIRS_SNPP_SP": 3781
+   }
+  },
+  "2017-07": {
+   "status": "complete",
+   "detections": 4505,
+   "excludedStatic": 580,
+   "outsideRegion": 2705,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2194,
+   "detectionsBySource": {
+    "MODIS_SP": 1828,
+    "VIIRS_SNPP_SP": 5962
+   }
+  },
+  "2017-08": {
+   "status": "complete",
+   "detections": 8253,
+   "excludedStatic": 603,
+   "outsideRegion": 952,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3837,
+   "detectionsBySource": {
+    "MODIS_SP": 2443,
+    "VIIRS_SNPP_SP": 7365
+   }
+  },
+  "2017-09": {
+   "status": "complete",
+   "detections": 1918,
+   "excludedStatic": 572,
+   "outsideRegion": 454,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1272,
+   "detectionsBySource": {
+    "MODIS_SP": 550,
+    "VIIRS_SNPP_SP": 2394
+   }
+  },
+  "2017-10": {
+   "status": "complete",
+   "detections": 13927,
+   "excludedStatic": 654,
+   "outsideRegion": 812,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 6956,
+   "detectionsBySource": {
+    "MODIS_SP": 3804,
+    "VIIRS_SNPP_SP": 11589
+   }
+  },
+  "2017-11": {
+   "status": "complete",
+   "detections": 1413,
+   "excludedStatic": 453,
+   "outsideRegion": 269,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1147,
+   "detectionsBySource": {
+    "MODIS_SP": 467,
+    "VIIRS_SNPP_SP": 1668
+   }
+  },
+  "2017-12": {
+   "status": "complete",
+   "detections": 645,
+   "excludedStatic": 285,
+   "outsideRegion": 246,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 516,
+   "detectionsBySource": {
+    "MODIS_SP": 194,
+    "VIIRS_SNPP_SP": 982
+   }
+  },
+  "2018-01": {
+   "status": "complete",
+   "detections": 415,
+   "excludedStatic": 366,
+   "outsideRegion": 200,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 358,
+   "detectionsBySource": {
+    "MODIS_SP": 130,
+    "VIIRS_SNPP_SP": 851
+   }
+  },
+  "2018-02": {
+   "status": "complete",
+   "detections": 1279,
+   "excludedStatic": 274,
+   "outsideRegion": 159,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1052,
+   "detectionsBySource": {
+    "MODIS_SP": 395,
+    "VIIRS_SNPP_SP": 1317
+   }
+  },
+  "2018-03": {
+   "status": "complete",
+   "detections": 327,
+   "excludedStatic": 313,
+   "outsideRegion": 164,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 267,
+   "detectionsBySource": {
+    "MODIS_SP": 93,
+    "VIIRS_SNPP_SP": 711
+   }
+  },
+  "2018-04": {
+   "status": "complete",
+   "detections": 1514,
+   "excludedStatic": 872,
+   "outsideRegion": 682,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 975,
+   "detectionsBySource": {
+    "MODIS_SP": 256,
+    "VIIRS_SNPP_SP": 1373,
+    "VIIRS_NOAA20_SP": 1439
+   }
+  },
+  "2018-05": {
+   "status": "complete",
+   "detections": 1060,
+   "excludedStatic": 1106,
+   "outsideRegion": 426,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 802,
+   "detectionsBySource": {
+    "MODIS_SP": 182,
+    "VIIRS_SNPP_SP": 1177,
+    "VIIRS_NOAA20_SP": 1233
+   }
+  },
+  "2018-06": {
+   "status": "complete",
+   "detections": 652,
+   "excludedStatic": 981,
+   "outsideRegion": 703,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 482,
+   "detectionsBySource": {
+    "MODIS_SP": 134,
+    "VIIRS_SNPP_SP": 1078,
+    "VIIRS_NOAA20_SP": 1124
+   }
+  },
+  "2018-07": {
+   "status": "complete",
+   "detections": 1050,
+   "excludedStatic": 1064,
+   "outsideRegion": 805,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 695,
+   "detectionsBySource": {
+    "MODIS_SP": 177,
+    "VIIRS_SNPP_SP": 1349,
+    "VIIRS_NOAA20_SP": 1393
+   }
+  },
+  "2018-08": {
+   "status": "complete",
+   "detections": 5891,
+   "excludedStatic": 1512,
+   "outsideRegion": 1679,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1927,
+   "detectionsBySource": {
+    "MODIS_SP": 967,
+    "VIIRS_SNPP_SP": 3806,
+    "VIIRS_NOAA20_SP": 4309
+   }
+  },
+  "2018-09": {
+   "status": "complete",
+   "detections": 2101,
+   "excludedStatic": 1343,
+   "outsideRegion": 860,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1237,
+   "detectionsBySource": {
+    "MODIS_SP": 367,
+    "VIIRS_SNPP_SP": 2026,
+    "VIIRS_NOAA20_SP": 1911
+   }
+  },
+  "2018-10": {
+   "status": "complete",
+   "detections": 2664,
+   "excludedStatic": 1099,
+   "outsideRegion": 620,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1626,
+   "detectionsBySource": {
+    "MODIS_SP": 449,
+    "VIIRS_SNPP_SP": 2036,
+    "VIIRS_NOAA20_SP": 1898
+   }
+  },
+  "2018-11": {
+   "status": "complete",
+   "detections": 355,
+   "excludedStatic": 588,
+   "outsideRegion": 325,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 286,
+   "detectionsBySource": {
+    "MODIS_SP": 75,
+    "VIIRS_SNPP_SP": 568,
+    "VIIRS_NOAA20_SP": 625
+   }
+  },
+  "2018-12": {
+   "status": "complete",
+   "detections": 706,
+   "excludedStatic": 593,
+   "outsideRegion": 430,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 499,
+   "detectionsBySource": {
+    "MODIS_SP": 97,
+    "VIIRS_SNPP_SP": 791,
+    "VIIRS_NOAA20_SP": 841
+   }
+  },
+  "2019-01": {
+   "status": "complete",
+   "detections": 2975,
+   "excludedStatic": 597,
+   "outsideRegion": 626,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1616,
+   "detectionsBySource": {
+    "MODIS_SP": 403,
+    "VIIRS_SNPP_SP": 1844,
+    "VIIRS_NOAA20_SP": 1951
+   }
+  },
+  "2019-02": {
+   "status": "complete",
+   "detections": 4252,
+   "excludedStatic": 910,
+   "outsideRegion": 5150,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2437,
+   "detectionsBySource": {
+    "MODIS_SP": 1311,
+    "VIIRS_SNPP_SP": 4547,
+    "VIIRS_NOAA20_SP": 4454
+   }
+  },
+  "2019-03": {
+   "status": "complete",
+   "detections": 5585,
+   "excludedStatic": 1226,
+   "outsideRegion": 1267,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3038,
+   "detectionsBySource": {
+    "MODIS_SP": 962,
+    "VIIRS_SNPP_SP": 3503,
+    "VIIRS_NOAA20_SP": 3613
+   }
+  },
+  "2019-04": {
+   "status": "complete",
+   "detections": 743,
+   "excludedStatic": 810,
+   "outsideRegion": 381,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 556,
+   "detectionsBySource": {
+    "MODIS_SP": 119,
+    "VIIRS_SNPP_SP": 876,
+    "VIIRS_NOAA20_SP": 939
+   }
+  },
+  "2019-05": {
+   "status": "complete",
+   "detections": 1392,
+   "excludedStatic": 1256,
+   "outsideRegion": 671,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 910,
+   "detectionsBySource": {
+    "MODIS_SP": 237,
+    "VIIRS_SNPP_SP": 1551,
+    "VIIRS_NOAA20_SP": 1531
+   }
+  },
+  "2019-06": {
+   "status": "complete",
+   "detections": 2585,
+   "excludedStatic": 1117,
+   "outsideRegion": 1324,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1161,
+   "detectionsBySource": {
+    "MODIS_SP": 507,
+    "VIIRS_SNPP_SP": 2161,
+    "VIIRS_NOAA20_SP": 2358
+   }
+  },
+  "2019-07": {
+   "status": "complete",
+   "detections": 2343,
+   "excludedStatic": 990,
+   "outsideRegion": 2663,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1082,
+   "detectionsBySource": {
+    "MODIS_SP": 676,
+    "VIIRS_SNPP_SP": 2733,
+    "VIIRS_NOAA20_SP": 2587
+   }
+  },
+  "2019-08": {
+   "status": "complete",
+   "detections": 1691,
+   "excludedStatic": 1137,
+   "outsideRegion": 2157,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 971,
+   "detectionsBySource": {
+    "MODIS_SP": 467,
+    "VIIRS_SNPP_SP": 2292,
+    "VIIRS_NOAA20_SP": 2226
+   }
+  },
+  "2019-09": {
+   "status": "complete",
+   "detections": 3539,
+   "excludedStatic": 1151,
+   "outsideRegion": 1111,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1687,
+   "detectionsBySource": {
+    "MODIS_SP": 681,
+    "VIIRS_SNPP_SP": 2594,
+    "VIIRS_NOAA20_SP": 2526
+   }
+  },
+  "2019-10": {
+   "status": "complete",
+   "detections": 2204,
+   "excludedStatic": 898,
+   "outsideRegion": 1056,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1552,
+   "detectionsBySource": {
+    "MODIS_SP": 405,
+    "VIIRS_SNPP_SP": 1881,
+    "VIIRS_NOAA20_SP": 1872
+   }
+  },
+  "2019-11": {
+   "status": "complete",
+   "detections": 721,
+   "excludedStatic": 403,
+   "outsideRegion": 341,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 561,
+   "detectionsBySource": {
+    "MODIS_SP": 156,
+    "VIIRS_SNPP_SP": 655,
+    "VIIRS_NOAA20_SP": 654
+   }
+  },
+  "2019-12": {
+   "status": "complete",
+   "detections": 616,
+   "excludedStatic": 387,
+   "outsideRegion": 358,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 401,
+   "detectionsBySource": {
+    "MODIS_SP": 110,
+    "VIIRS_SNPP_SP": 625,
+    "VIIRS_NOAA20_SP": 626
+   }
+  },
+  "2020-01": {
+   "status": "complete",
+   "detections": 585,
+   "excludedStatic": 325,
+   "outsideRegion": 463,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 431,
+   "detectionsBySource": {
+    "MODIS_SP": 122,
+    "VIIRS_SNPP_SP": 595,
+    "VIIRS_NOAA20_SP": 656
+   }
+  },
+  "2020-02": {
+   "status": "complete",
+   "detections": 2332,
+   "excludedStatic": 680,
+   "outsideRegion": 1565,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1487,
+   "detectionsBySource": {
+    "MODIS_SP": 540,
+    "VIIRS_SNPP_SP": 2040,
+    "VIIRS_NOAA20_SP": 1997
+   }
+  },
+  "2020-03": {
+   "status": "complete",
+   "detections": 1296,
+   "excludedStatic": 604,
+   "outsideRegion": 388,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 913,
+   "detectionsBySource": {
+    "MODIS_SP": 228,
+    "VIIRS_SNPP_SP": 1060,
+    "VIIRS_NOAA20_SP": 1000
+   }
+  },
+  "2020-04": {
+   "status": "complete",
+   "detections": 230,
+   "excludedStatic": 265,
+   "outsideRegion": 337,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 180,
+   "detectionsBySource": {
+    "MODIS_SP": 58,
+    "VIIRS_SNPP_SP": 381,
+    "VIIRS_NOAA20_SP": 393
+   }
+  },
+  "2020-05": {
+   "status": "complete",
+   "detections": 651,
+   "excludedStatic": 913,
+   "outsideRegion": 689,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 459,
+   "detectionsBySource": {
+    "MODIS_SP": 126,
+    "VIIRS_SNPP_SP": 1063,
+    "VIIRS_NOAA20_SP": 1064
+   }
+  },
+  "2020-06": {
+   "status": "complete",
+   "detections": 1086,
+   "excludedStatic": 861,
+   "outsideRegion": 1036,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 680,
+   "detectionsBySource": {
+    "MODIS_SP": 232,
+    "VIIRS_SNPP_SP": 1385,
+    "VIIRS_NOAA20_SP": 1366
+   }
+  },
+  "2020-07": {
+   "status": "complete",
+   "detections": 3934,
+   "excludedStatic": 829,
+   "outsideRegion": 3067,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1813,
+   "detectionsBySource": {
+    "MODIS_SP": 1014,
+    "VIIRS_SNPP_SP": 3305,
+    "VIIRS_NOAA20_SP": 3511
+   }
+  },
+  "2020-08": {
+   "status": "complete",
+   "detections": 5518,
+   "excludedStatic": 888,
+   "outsideRegion": 4313,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2120,
+   "detectionsBySource": {
+    "MODIS_SP": 1206,
+    "VIIRS_SNPP_SP": 4658,
+    "VIIRS_NOAA20_SP": 4855
+   }
+  },
+  "2020-09": {
+   "status": "complete",
+   "detections": 5324,
+   "excludedStatic": 999,
+   "outsideRegion": 1197,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2152,
+   "detectionsBySource": {
+    "MODIS_SP": 934,
+    "VIIRS_SNPP_SP": 3326,
+    "VIIRS_NOAA20_SP": 3260
+   }
+  },
+  "2020-10": {
+   "status": "complete",
+   "detections": 2736,
+   "excludedStatic": 756,
+   "outsideRegion": 1166,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1991,
+   "detectionsBySource": {
+    "MODIS_SP": 595,
+    "VIIRS_SNPP_SP": 1968,
+    "VIIRS_NOAA20_SP": 2095
+   }
+  },
+  "2020-11": {
+   "status": "complete",
+   "detections": 1162,
+   "excludedStatic": 713,
+   "outsideRegion": 599,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 812,
+   "detectionsBySource": {
+    "MODIS_SP": 230,
+    "VIIRS_SNPP_SP": 1111,
+    "VIIRS_NOAA20_SP": 1133
+   }
+  },
+  "2020-12": {
+   "status": "complete",
+   "detections": 299,
+   "excludedStatic": 375,
+   "outsideRegion": 360,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 225,
+   "detectionsBySource": {
+    "MODIS_SP": 79,
+    "VIIRS_SNPP_SP": 469,
+    "VIIRS_NOAA20_SP": 486
+   }
+  },
+  "2021-01": {
+   "status": "complete",
+   "detections": 947,
+   "excludedStatic": 428,
+   "outsideRegion": 303,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 567,
+   "detectionsBySource": {
+    "MODIS_SP": 142,
+    "VIIRS_SNPP_SP": 767,
+    "VIIRS_NOAA20_SP": 769
+   }
+  },
+  "2021-02": {
+   "status": "complete",
+   "detections": 770,
+   "excludedStatic": 369,
+   "outsideRegion": 1253,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 549,
+   "detectionsBySource": {
+    "MODIS_SP": 316,
+    "VIIRS_SNPP_SP": 950,
+    "VIIRS_NOAA20_SP": 1126
+   }
+  },
+  "2021-03": {
+   "status": "complete",
+   "detections": 3736,
+   "excludedStatic": 752,
+   "outsideRegion": 1339,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2260,
+   "detectionsBySource": {
+    "MODIS_SP": 828,
+    "VIIRS_SNPP_SP": 2503,
+    "VIIRS_NOAA20_SP": 2496
+   }
+  },
+  "2021-04": {
+   "status": "complete",
+   "detections": 1314,
+   "excludedStatic": 663,
+   "outsideRegion": 728,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 808,
+   "detectionsBySource": {
+    "MODIS_SP": 217,
+    "VIIRS_SNPP_SP": 1225,
+    "VIIRS_NOAA20_SP": 1263
+   }
+  },
+  "2021-05": {
+   "status": "complete",
+   "detections": 759,
+   "excludedStatic": 996,
+   "outsideRegion": 501,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 552,
+   "detectionsBySource": {
+    "MODIS_SP": 133,
+    "VIIRS_SNPP_SP": 1025,
+    "VIIRS_NOAA20_SP": 1098
+   }
+  },
+  "2021-06": {
+   "status": "complete",
+   "detections": 1146,
+   "excludedStatic": 1003,
+   "outsideRegion": 508,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 692,
+   "detectionsBySource": {
+    "MODIS_SP": 179,
+    "VIIRS_SNPP_SP": 1210,
+    "VIIRS_NOAA20_SP": 1268
+   }
+  },
+  "2021-07": {
+   "status": "complete",
+   "detections": 2389,
+   "excludedStatic": 1121,
+   "outsideRegion": 941,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1158,
+   "detectionsBySource": {
+    "MODIS_SP": 367,
+    "VIIRS_SNPP_SP": 2089,
+    "VIIRS_NOAA20_SP": 1995
+   }
+  },
+  "2021-08": {
+   "status": "complete",
+   "detections": 5766,
+   "excludedStatic": 1117,
+   "outsideRegion": 2573,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1878,
+   "detectionsBySource": {
+    "MODIS_SP": 1107,
+    "VIIRS_SNPP_SP": 4005,
+    "VIIRS_NOAA20_SP": 4344
+   }
+  },
+  "2021-09": {
+   "status": "complete",
+   "detections": 2730,
+   "excludedStatic": 989,
+   "outsideRegion": 598,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 974,
+   "detectionsBySource": {
+    "MODIS_SP": 391,
+    "VIIRS_SNPP_SP": 1960,
+    "VIIRS_NOAA20_SP": 1966
+   }
+  },
+  "2021-10": {
+   "status": "complete",
+   "detections": 2166,
+   "excludedStatic": 1142,
+   "outsideRegion": 801,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1603,
+   "detectionsBySource": {
+    "MODIS_SP": 456,
+    "VIIRS_SNPP_SP": 1786,
+    "VIIRS_NOAA20_SP": 1867
+   }
+  },
+  "2021-11": {
+   "status": "complete",
+   "detections": 1583,
+   "excludedStatic": 623,
+   "outsideRegion": 197,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1133,
+   "detectionsBySource": {
+    "MODIS_SP": 316,
+    "VIIRS_SNPP_SP": 1052,
+    "VIIRS_NOAA20_SP": 1035
+   }
+  },
+  "2021-12": {
+   "status": "complete",
+   "detections": 1283,
+   "excludedStatic": 480,
+   "outsideRegion": 313,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 750,
+   "detectionsBySource": {
+    "MODIS_SP": 243,
+    "VIIRS_SNPP_SP": 896,
+    "VIIRS_NOAA20_SP": 937
+   }
+  },
+  "2022-01": {
+   "status": "complete",
+   "detections": 3740,
+   "excludedStatic": 665,
+   "outsideRegion": 821,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1962,
+   "detectionsBySource": {
+    "MODIS_SP": 577,
+    "VIIRS_SNPP_SP": 2319,
+    "VIIRS_NOAA20_SP": 2330
+   }
+  },
+  "2022-02": {
+   "status": "complete",
+   "detections": 2643,
+   "excludedStatic": 632,
+   "outsideRegion": 1002,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1637,
+   "detectionsBySource": {
+    "MODIS_SP": 514,
+    "VIIRS_SNPP_SP": 1772,
+    "VIIRS_NOAA20_SP": 1991
+   }
+  },
+  "2022-03": {
+   "status": "complete",
+   "detections": 750,
+   "excludedStatic": 326,
+   "outsideRegion": 922,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 494,
+   "detectionsBySource": {
+    "MODIS_SP": 277,
+    "VIIRS_SNPP_SP": 849,
+    "VIIRS_NOAA20_SP": 872
+   }
+  },
+  "2022-04": {
+   "status": "complete",
+   "detections": 1090,
+   "excludedStatic": 684,
+   "outsideRegion": 443,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 728,
+   "detectionsBySource": {
+    "MODIS_SP": 135,
+    "VIIRS_SNPP_SP": 1020,
+    "VIIRS_NOAA20_SP": 1062
+   }
+  },
+  "2022-05": {
+   "status": "complete",
+   "detections": 1110,
+   "excludedStatic": 1104,
+   "outsideRegion": 634,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 687,
+   "detectionsBySource": {
+    "MODIS_SP": 190,
+    "VIIRS_SNPP_SP": 1312,
+    "VIIRS_NOAA20_SP": 1346
+   }
+  },
+  "2022-06": {
+   "status": "complete",
+   "detections": 6283,
+   "excludedStatic": 727,
+   "outsideRegion": 695,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1999,
+   "detectionsBySource": {
+    "MODIS_SP": 704,
+    "VIIRS_SNPP_SP": 3786,
+    "VIIRS_NOAA20_SP": 3215
+   }
+  },
+  "2022-07": {
+   "status": "complete",
+   "detections": 20200,
+   "excludedStatic": 972,
+   "outsideRegion": 972,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 6090,
+   "detectionsBySource": {
+    "MODIS_SP": 3321,
+    "VIIRS_SNPP_SP": 9123,
+    "VIIRS_NOAA20_SP": 9700
+   }
+  },
+  "2022-08": {
+   "status": "complete",
+   "detections": 12686,
+   "excludedStatic": 629,
+   "outsideRegion": 971,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 4183,
+   "detectionsBySource": {
+    "MODIS_SP": 2217,
+    "VIIRS_SNPP_SP": 4978,
+    "VIIRS_NOAA20_SP": 7091
+   }
+  },
+  "2022-09": {
+   "status": "complete",
+   "detections": 1941,
+   "excludedStatic": 881,
+   "outsideRegion": 683,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 844,
+   "detectionsBySource": {
+    "MODIS_SP": 331,
+    "VIIRS_SNPP_SP": 1520,
+    "VIIRS_NOAA20_SP": 1654
+   }
+  },
+  "2022-10": {
+   "status": "complete",
+   "detections": 1459,
+   "excludedStatic": 671,
+   "outsideRegion": 1151,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 872,
+   "detectionsBySource": {
+    "MODIS_SP": 230,
+    "VIIRS_SNPP_SP": 1509,
+    "VIIRS_NOAA20_SP": 1542
+   }
+  },
+  "2022-11": {
+   "status": "complete",
+   "detections": 871,
+   "excludedStatic": 551,
+   "outsideRegion": 587,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 600,
+   "detectionsBySource": {
+    "MODIS_SP": 166,
+    "VIIRS_SNPP_SP": 883,
+    "VIIRS_NOAA20_SP": 960
+   }
+  },
+  "2022-12": {
+   "status": "complete",
+   "detections": 273,
+   "excludedStatic": 224,
+   "outsideRegion": 435,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 206,
+   "detectionsBySource": {
+    "MODIS_SP": 50,
+    "VIIRS_SNPP_SP": 404,
+    "VIIRS_NOAA20_SP": 478
+   }
+  },
+  "2023-01": {
+   "status": "complete",
+   "detections": 642,
+   "excludedStatic": 326,
+   "outsideRegion": 422,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 485,
+   "detectionsBySource": {
+    "MODIS_SP": 110,
+    "VIIRS_SNPP_SP": 612,
+    "VIIRS_NOAA20_SP": 668
+   }
+  },
+  "2023-02": {
+   "status": "complete",
+   "detections": 3596,
+   "excludedStatic": 454,
+   "outsideRegion": 2373,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2062,
+   "detectionsBySource": {
+    "MODIS_SP": 898,
+    "VIIRS_SNPP_SP": 2724,
+    "VIIRS_NOAA20_SP": 2801
+   }
+  },
+  "2023-03": {
+   "status": "complete",
+   "detections": 9601,
+   "excludedStatic": 1183,
+   "outsideRegion": 1655,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3564,
+   "detectionsBySource": {
+    "MODIS_SP": 913,
+    "VIIRS_SNPP_SP": 3566,
+    "VIIRS_NOAA20_SP": 4246,
+    "VIIRS_NOAA21_SP": 3714
+   }
+  },
+  "2023-04": {
+   "status": "complete",
+   "detections": 2773,
+   "excludedStatic": 1021,
+   "outsideRegion": 1345,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1295,
+   "detectionsBySource": {
+    "MODIS_SP": 342,
+    "VIIRS_SNPP_SP": 1540,
+    "VIIRS_NOAA20_SP": 1697,
+    "VIIRS_NOAA21_SP": 1560
+   }
+  },
+  "2023-05": {
+   "status": "complete",
+   "detections": 3503,
+   "excludedStatic": 929,
+   "outsideRegion": 715,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 929,
+   "detectionsBySource": {
+    "MODIS_SP": 220,
+    "VIIRS_SNPP_SP": 1635,
+    "VIIRS_NOAA20_SP": 1451,
+    "VIIRS_NOAA21_SP": 1841
+   }
+  },
+  "2023-06": {
+   "status": "complete",
+   "detections": 1053,
+   "excludedStatic": 1252,
+   "outsideRegion": 731,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 604,
+   "detectionsBySource": {
+    "MODIS_SP": 115,
+    "VIIRS_SNPP_SP": 937,
+    "VIIRS_NOAA20_SP": 1042,
+    "VIIRS_NOAA21_SP": 942
+   }
+  },
+  "2023-07": {
+   "status": "complete",
+   "detections": 1459,
+   "excludedStatic": 1205,
+   "outsideRegion": 3505,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 813,
+   "detectionsBySource": {
+    "MODIS_SP": 468,
+    "VIIRS_SNPP_SP": 1751,
+    "VIIRS_NOAA20_SP": 1902,
+    "VIIRS_NOAA21_SP": 2048
+   }
+  },
+  "2023-08": {
+   "status": "complete",
+   "detections": 5778,
+   "excludedStatic": 1234,
+   "outsideRegion": 1295,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1682,
+   "detectionsBySource": {
+    "MODIS_SP": 686,
+    "VIIRS_SNPP_SP": 2368,
+    "VIIRS_NOAA20_SP": 2733,
+    "VIIRS_NOAA21_SP": 2520
+   }
+  },
+  "2023-09": {
+   "status": "complete",
+   "detections": 767,
+   "excludedStatic": 1206,
+   "outsideRegion": 1089,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 522,
+   "detectionsBySource": {
+    "MODIS_SP": 131,
+    "VIIRS_SNPP_SP": 1041,
+    "VIIRS_NOAA20_SP": 936,
+    "VIIRS_NOAA21_SP": 954
+   }
+  },
+  "2023-10": {
+   "status": "complete",
+   "detections": 1512,
+   "excludedStatic": 1126,
+   "outsideRegion": 1229,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 896,
+   "detectionsBySource": {
+    "MODIS_SP": 234,
+    "VIIRS_SNPP_SP": 1182,
+    "VIIRS_NOAA20_SP": 1175,
+    "VIIRS_NOAA21_SP": 1276
+   }
+  },
+  "2023-11": {
+   "status": "complete",
+   "detections": 1387,
+   "excludedStatic": 810,
+   "outsideRegion": 807,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 802,
+   "detectionsBySource": {
+    "MODIS_SP": 202,
+    "VIIRS_SNPP_SP": 956,
+    "VIIRS_NOAA20_SP": 934,
+    "VIIRS_NOAA21_SP": 912
+   }
+  },
+  "2023-12": {
+   "status": "complete",
+   "detections": 829,
+   "excludedStatic": 751,
+   "outsideRegion": 628,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 527,
+   "detectionsBySource": {
+    "MODIS_SP": 115,
+    "VIIRS_SNPP_SP": 676,
+    "VIIRS_NOAA20_SP": 699,
+    "VIIRS_NOAA21_SP": 718
+   }
+  },
+  "2024-01": {
+   "status": "complete",
+   "detections": 1025,
+   "excludedStatic": 581,
+   "outsideRegion": 940,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 567,
+   "detectionsBySource": {
+    "MODIS_SP": 159,
+    "VIIRS_SNPP_SP": 742,
+    "VIIRS_NOAA20_SP": 820,
+    "VIIRS_NOAA21_SP": 825
+   }
+  },
+  "2024-02": {
+   "status": "complete",
+   "detections": 1782,
+   "excludedStatic": 600,
+   "outsideRegion": 906,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 971,
+   "detectionsBySource": {
+    "MODIS_SP": 204,
+    "VIIRS_SNPP_SP": 1122,
+    "VIIRS_NOAA20_SP": 943,
+    "VIIRS_NOAA21_SP": 1019
+   }
+  },
+  "2024-03": {
+   "status": "complete",
+   "detections": 1393,
+   "excludedStatic": 705,
+   "outsideRegion": 1240,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 845,
+   "detectionsBySource": {
+    "MODIS_SP": 268,
+    "VIIRS_SNPP_SP": 982,
+    "VIIRS_NOAA20_SP": 1054,
+    "VIIRS_NOAA21_SP": 1034
+   }
+  },
+  "2024-04": {
+   "status": "complete",
+   "detections": 2627,
+   "excludedStatic": 1290,
+   "outsideRegion": 905,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1239,
+   "detectionsBySource": {
+    "MODIS_SP": 291,
+    "VIIRS_SNPP_SP": 1567,
+    "VIIRS_NOAA20_SP": 1521,
+    "VIIRS_NOAA21_SP": 1443
+   }
+  },
+  "2024-05": {
+   "status": "complete",
+   "detections": 1059,
+   "excludedStatic": 1141,
+   "outsideRegion": 903,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 684,
+   "detectionsBySource": {
+    "MODIS_SP": 159,
+    "VIIRS_SNPP_SP": 913,
+    "VIIRS_NOAA20_SP": 971,
+    "VIIRS_NOAA21_SP": 1060
+   }
+  },
+  "2024-06": {
+   "status": "complete",
+   "detections": 1523,
+   "excludedStatic": 872,
+   "outsideRegion": 858,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 749,
+   "detectionsBySource": {
+    "MODIS_SP": 159,
+    "VIIRS_SNPP_SP": 877,
+    "VIIRS_NOAA20_SP": 1096,
+    "VIIRS_NOAA21_SP": 1121
+   }
+  },
+  "2024-07": {
+   "status": "complete",
+   "detections": 2733,
+   "excludedStatic": 1035,
+   "outsideRegion": 913,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1398,
+   "detectionsBySource": {
+    "MODIS_SP": 384,
+    "VIIRS_SNPP_SP": 1022,
+    "VIIRS_NOAA20_SP": 1594,
+    "VIIRS_NOAA21_SP": 1681
+   }
+  },
+  "2024-08": {
+   "status": "complete",
+   "detections": 3559,
+   "excludedStatic": 1017,
+   "outsideRegion": 1449,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1628,
+   "detectionsBySource": {
+    "MODIS_SP": 465,
+    "VIIRS_SNPP_SP": 1872,
+    "VIIRS_NOAA20_SP": 1869,
+    "VIIRS_NOAA21_SP": 1819
+   }
+  },
+  "2024-09": {
+   "status": "complete",
+   "detections": 34225,
+   "excludedStatic": 1316,
+   "outsideRegion": 964,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 5772,
+   "detectionsBySource": {
+    "MODIS_SP": 2910,
+    "VIIRS_SNPP_SP": 11637,
+    "VIIRS_NOAA20_SP": 11832,
+    "VIIRS_NOAA21_SP": 10126
+   }
+  },
+  "2024-10": {
+   "status": "complete",
+   "detections": 1397,
+   "excludedStatic": 937,
+   "outsideRegion": 843,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 959,
+   "detectionsBySource": {
+    "MODIS_SP": 243,
+    "VIIRS_SNPP_SP": 1010,
+    "VIIRS_NOAA20_SP": 985,
+    "VIIRS_NOAA21_SP": 939
+   }
+  },
+  "2024-11": {
+   "status": "complete",
+   "detections": 1115,
+   "excludedStatic": 847,
+   "outsideRegion": 761,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 728,
+   "detectionsBySource": {
+    "MODIS_SP": 156,
+    "VIIRS_SNPP_SP": 778,
+    "VIIRS_NOAA20_SP": 889,
+    "VIIRS_NOAA21_SP": 900
+   }
+  },
+  "2024-12": {
+   "status": "complete",
+   "detections": 1015,
+   "excludedStatic": 608,
+   "outsideRegion": 812,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 704,
+   "detectionsBySource": {
+    "MODIS_SP": 105,
+    "VIIRS_SNPP_SP": 731,
+    "VIIRS_NOAA20_SP": 827,
+    "VIIRS_NOAA21_SP": 772
+   }
+  },
+  "2025-01": {
+   "status": "complete",
+   "detections": 1088,
+   "excludedStatic": 679,
+   "outsideRegion": 544,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 635,
+   "detectionsBySource": {
+    "MODIS_SP": 79,
+    "VIIRS_SNPP_SP": 744,
+    "VIIRS_NOAA20_SP": 771,
+    "VIIRS_NOAA21_SP": 717
+   }
+  },
+  "2025-02": {
+   "status": "complete",
+   "detections": 1062,
+   "excludedStatic": 545,
+   "outsideRegion": 1901,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 691,
+   "detectionsBySource": {
+    "MODIS_SP": 240,
+    "VIIRS_SNPP_SP": 1063,
+    "VIIRS_NOAA20_SP": 1054,
+    "VIIRS_NOAA21_SP": 1151
+   }
+  },
+  "2025-03": {
+   "status": "complete",
+   "detections": 1633,
+   "excludedStatic": 744,
+   "outsideRegion": 985,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 824,
+   "detectionsBySource": {
+    "MODIS_SP": 267,
+    "VIIRS_SNPP_SP": 1003,
+    "VIIRS_NOAA20_SP": 980,
+    "VIIRS_NOAA21_SP": 1112
+   }
+  },
+  "2025-04": {
+   "status": "complete",
+   "detections": 2065,
+   "excludedStatic": 1092,
+   "outsideRegion": 1371,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1108,
+   "detectionsBySource": {
+    "MODIS_SP": 336,
+    "VIIRS_SNPP_SP": 1414,
+    "VIIRS_NOAA20_SP": 1438,
+    "VIIRS_NOAA21_SP": 1340
+   }
+  },
+  "2025-05": {
+   "status": "complete",
+   "detections": 1361,
+   "excludedStatic": 1343,
+   "outsideRegion": 907,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 837,
+   "detectionsBySource": {
+    "MODIS_SP": 184,
+    "VIIRS_SNPP_SP": 1143,
+    "VIIRS_NOAA20_SP": 1182,
+    "VIIRS_NOAA21_SP": 1102
+   }
+  },
+  "2025-06": {
+   "status": "complete",
+   "detections": 2253,
+   "excludedStatic": 1282,
+   "outsideRegion": 1528,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1259,
+   "detectionsBySource": {
+    "MODIS_SP": 274,
+    "VIIRS_SNPP_SP": 1594,
+    "VIIRS_NOAA20_SP": 1675,
+    "VIIRS_NOAA21_SP": 1520
+   }
+  },
+  "2025-07": {
+   "status": "complete",
+   "detections": 11481,
+   "excludedStatic": 1145,
+   "outsideRegion": 1500,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3212,
+   "detectionsBySource": {
+    "MODIS_SP": 1293,
+    "VIIRS_SNPP_SP": 4360,
+    "VIIRS_NOAA20_SP": 4649,
+    "VIIRS_NOAA21_SP": 3824
+   }
+  },
+  "2025-08": {
+   "status": "complete",
+   "detections": 99865,
+   "excludedStatic": 1037,
+   "outsideRegion": 2325,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 17980,
+   "detectionsBySource": {
+    "MODIS_SP": 10964,
+    "VIIRS_SNPP_SP": 31937,
+    "VIIRS_NOAA20_SP": 31284,
+    "VIIRS_NOAA21_SP": 29042
+   }
+  },
+  "2025-09": {
+   "status": "complete",
+   "detections": 5752,
+   "excludedStatic": 1168,
+   "outsideRegion": 1057,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2043,
+   "detectionsBySource": {
+    "MODIS_SP": 614,
+    "VIIRS_SNPP_SP": 2297,
+    "VIIRS_NOAA20_SP": 2625,
+    "VIIRS_NOAA21_SP": 2441
+   }
+  },
+  "2025-10": {
+   "status": "complete",
+   "detections": 3479,
+   "excludedStatic": 1303,
+   "outsideRegion": 1415,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2167,
+   "detectionsBySource": {
+    "MODIS_SP": 490,
+    "VIIRS_SNPP_SP": 1896,
+    "VIIRS_NOAA20_SP": 2005,
+    "VIIRS_NOAA21_SP": 1806
+   }
+  },
+  "2025-11": {
+   "status": "complete",
+   "detections": 1737,
+   "excludedStatic": 752,
+   "outsideRegion": 869,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1166,
+   "detectionsBySource": {
+    "MODIS_SP": 224,
+    "VIIRS_SNPP_SP": 974,
+    "VIIRS_NOAA20_SP": 1113,
+    "VIIRS_NOAA21_SP": 1047
+   }
+  },
+  "2025-12": {
+   "status": "complete",
+   "detections": 354,
+   "excludedStatic": 357,
+   "outsideRegion": 536,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 262,
+   "detectionsBySource": {
+    "MODIS_SP": 21,
+    "VIIRS_SNPP_SP": 397,
+    "VIIRS_NOAA20_SP": 405,
+    "VIIRS_NOAA21_SP": 424
+   }
+  },
+  "2026-01": {
+   "status": "complete",
+   "detections": 360,
+   "excludedStatic": 341,
+   "outsideRegion": 322,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 225,
+   "detectionsBySource": {
+    "MODIS_SP": 9,
+    "VIIRS_SNPP_SP": 330,
+    "VIIRS_NOAA20_SP": 366,
+    "VIIRS_NOAA21_SP": 318
+   }
+  },
+  "2026-02": {
+   "status": "complete",
+   "detections": 2443,
+   "excludedStatic": 536,
+   "outsideRegion": 3314,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1221,
+   "detectionsBySource": {
+    "MODIS_SP": 391,
+    "VIIRS_SNPP_SP": 2014,
+    "VIIRS_NOAA20_SP": 2128,
+    "VIIRS_NOAA21_SP": 1760
+   }
+  },
+  "2026-03": {
+   "status": "complete",
+   "detections": 5768,
+   "excludedStatic": 860,
+   "outsideRegion": 1940,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2768,
+   "detectionsBySource": {
+    "MODIS_SP": 713,
+    "VIIRS_SNPP_SP": 2584,
+    "VIIRS_NOAA20_SP": 2674,
+    "VIIRS_NOAA21_SP": 2597
+   }
+  },
+  "2026-04": {
+   "status": "complete",
+   "detections": 4865,
+   "excludedStatic": 937,
+   "outsideRegion": 1336,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2093,
+   "detectionsBySource": {
+    "MODIS_SP": 527,
+    "VIIRS_SNPP_SP": 2192,
+    "VIIRS_NOAA20_SP": 2146,
+    "VIIRS_NOAA21_SP": 2273
+   }
+  },
+  "2026-05": {
+   "status": "complete",
+   "detections": 2009,
+   "excludedStatic": 1035,
+   "outsideRegion": 1145,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1023,
+   "detectionsBySource": {
+    "MODIS_SP": 232,
+    "VIIRS_SNPP_SP": 1278,
+    "VIIRS_NOAA20_SP": 1391,
+    "VIIRS_NOAA21_SP": 1288
+   }
+  },
+  "2026-06": {
+   "status": "complete",
+   "detections": 4738,
+   "excludedStatic": 992,
+   "outsideRegion": 1188,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 1893,
+   "detectionsBySource": {
+    "MODIS_SP": 473,
+    "VIIRS_SNPP_SP": 2111,
+    "VIIRS_NOAA20_SP": 2247,
+    "VIIRS_NOAA21_SP": 2087
+   }
+  },
+  "2026-07": {
+   "status": "complete",
+   "detections": 33831,
+   "excludedStatic": 1003,
+   "outsideRegion": 4114,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 6997,
+   "detectionsBySource": {
+    "MODIS_SP": 3583,
+    "VIIRS_SNPP_SP": 11576,
+    "VIIRS_NOAA20_SP": 11920,
+    "VIIRS_NOAA21_SP": 11869
+   }
+  },
+  "2026-08": {
+   "status": "complete",
+   "detections": 15399,
+   "excludedStatic": 1116,
+   "outsideRegion": 1906,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 3576,
+   "detectionsBySource": {
+    "MODIS_SP": 1728,
+    "VIIRS_SNPP_NRT": 5710,
+    "VIIRS_NOAA20_NRT": 5815,
+    "VIIRS_NOAA21_NRT": 5168
+   }
+  },
+  "2026-09": {
+   "status": "complete",
+   "detections": 4949,
+   "excludedStatic": 1354,
+   "outsideRegion": 1840,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2163,
+   "detectionsBySource": {
+    "MODIS_NRT": 615,
+    "VIIRS_SNPP_NRT": 2539,
+    "VIIRS_NOAA20_NRT": 2547,
+    "VIIRS_NOAA21_NRT": 2442
+   }
+  },
+  "2026-10": {
+   "status": "complete",
+   "detections": 3372,
+   "excludedStatic": 964,
+   "outsideRegion": 1067,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 2254,
+   "detectionsBySource": {
+    "MODIS_NRT": 482,
+    "VIIRS_SNPP_NRT": 1602,
+    "VIIRS_NOAA20_NRT": 1664,
+    "VIIRS_NOAA21_NRT": 1655
+   }
+  },
+  "2026-11": {
+   "status": "complete",
+   "detections": 1414,
+   "excludedStatic": 309,
+   "outsideRegion": 308,
+   "origins": [
+    "api"
+   ],
+   "fineCellDays": 913,
+   "detectionsBySource": {
+    "MODIS_NRT": 191,
+    "VIIRS_SNPP_NRT": 167,
+    "VIIRS_NOAA20_NRT": 849,
+    "VIIRS_NOAA21_NRT": 824
+   }
+  }
+ },
+ "code": {
+  "scripts/ingest/plan.mjs": "9a76df6ebdf8db8fbf1bb8af3e27f25d5981688adca0175992289ae56abc4cce",
+  "scripts/ingest/aggregate-core.mjs": "750cd15cbe405552040e8d69ce398e3e96a8b1dc73a314836ce1e1f296c2b2db",
+  "scripts/ingest/aggregate.mjs": "e3d935fb574c90dfb2e2d39472cd019b1a26fdd13a1daf94afe3e331a5be9c8f",
+  "scripts/ingest/publish.mjs": "96635544b99e4092af691a48d5e86a486a051746dc1220211487d8d576091a10",
+  "src/data/v2/codec.ts": "51a9602c08c74325d473122a7958dce5821366aaccbc4e70d41d4ed1a750203a"
+ },
+ "files": [
+  {
+   "path": "aoi/ib-620.json.gz",
+   "bytes": 15345,
+   "sha256": "195e693dcb9aa8bf93a5a65187fc032299b64c6809294c212c6ed96c4d978669",
+   "decodedSha256": "1eb9b6dd4a9937c8725d1f902dbeec09fdd38c25ba76781a8e37317d6bf73bdf",
+   "rows": 309
+  },
+  {
+   "path": "aoi/ib-724.json.gz",
+   "bytes": 43171,
+   "sha256": "e720c257f409f2c7686f5866e65da4bee658a2b47d62abe507155791a72bdf21",
+   "decodedSha256": "da908c37647be9e94290934c07483e5aa9448b7c31cc94c6412684a37579f7d5",
+   "rows": 1217
+  },
+  {
+   "path": "cells.json.gz",
+   "bytes": 5920,
+   "sha256": "52eea96bf4870174c45512916110ecbf9ceb773ac2d3506630319c48a3d247c5",
+   "decodedSha256": "6aedfc5faab0790e3500676c814e3fd59ce7fc7616164d1a2bb033d97cccd141",
+   "rows": 4
+  },
+  {
+   "path": "daily/81187ffffffffff/2000.json.gz",
+   "bytes": 252,
+   "sha256": "032786584852a05982f85191c7e2f676d22d121cfa2db8bc1e2fdca4a766ab0f",
+   "decodedSha256": "530d02474ad9872be0413b5a900b7be2975dd05b19ae681d75719ffee940e31a",
+   "rows": 4
+  },
+  {
+   "path": "daily/81187ffffffffff/2001.json.gz",
+   "bytes": 1558,
+   "sha256": "2df572b923dcc97c59ef02c1ef3bbd051e9593535d7c0be38bcf24a0a39729d4",
+   "decodedSha256": "176ad0a2de5246e3d04eb8258edc8630596dc4373b04b3e244157b921897c001",
+   "rows": 98
+  },
+  {
+   "path": "daily/81187ffffffffff/2002.json.gz",
+   "bytes": 1926,
+   "sha256": "524e199f700c5b6846eca0c23d43086f5830bc5921093e5d13442a11731b9ff6",
+   "decodedSha256": "e8e8b429b75cc7963c380ba051518fa067a2f2ee04ac31e24215894baca34978",
+   "rows": 125
+  },
+  {
+   "path": "daily/81187ffffffffff/2003.json.gz",
+   "bytes": 2530,
+   "sha256": "6c08d3e7bce12373b283c4006fe6ea7671dc000b29cb798d26746adc8c376681",
+   "decodedSha256": "037471339c86750d05977bcc9929cdb8554d7baa3b90ac80dafc175844d90b53",
+   "rows": 179
+  },
+  {
+   "path": "daily/81187ffffffffff/2004.json.gz",
+   "bytes": 2270,
+   "sha256": "3bf2d7a34e5845be8c38db5d99c602eac839677d817984377a17eaa5fa7aa786",
+   "decodedSha256": "bd1a1893f6f67959b0e8a117d426e0142c905240586e5f30f7cf2eef463a5740",
+   "rows": 146
+  },
+  {
+   "path": "daily/81187ffffffffff/2005.json.gz",
+   "bytes": 2265,
+   "sha256": "1dd5283f9faf6c4488aeebe711715898447d9b19717a87806be5c30064ac8ca0",
+   "decodedSha256": "e1f8bd27dc258f4ba18fd52161f51ed783ef9ffff27111571a8801392d6b7ca6",
+   "rows": 134
+  },
+  {
+   "path": "daily/81187ffffffffff/2006.json.gz",
+   "bytes": 1844,
+   "sha256": "662aa3985d5babad97819d53321f685362421a9add9a443a5e319abe25167d65",
+   "decodedSha256": "97f765432e3c030e27deb4345a6ae0f0a4c44570163456485db304b7460b6a81",
+   "rows": 102
+  },
+  {
+   "path": "daily/81187ffffffffff/2007.json.gz",
+   "bytes": 1369,
+   "sha256": "06957799b87e3e928dfc9401499ba8fa09246417bd7a016cde67d2d1257b9c7c",
+   "decodedSha256": "709692c28657c8b256437c8dd77396cc89e67627157688f2a2ce5c65cea343bb",
+   "rows": 46
+  },
+  {
+   "path": "daily/81187ffffffffff/2008.json.gz",
+   "bytes": 1723,
+   "sha256": "e5bdfd77c6fabc5e078bb3fc5d1c97a9d51ae4927d654a885f79b6956537aff5",
+   "decodedSha256": "9947561df6995d4b1a7f577ac5cfba8e045d50d60c676b15358ff22f820d9173",
+   "rows": 85
+  },
+  {
+   "path": "daily/81187ffffffffff/2009.json.gz",
+   "bytes": 2516,
+   "sha256": "8ce919984f040f818ca267104e8bdfa1783a311d73f045e99eb4f28d47062099",
+   "decodedSha256": "9025fbd67ccaefaeb2eef78ad322879e665e452fee1f56fd424d6aa1d982a28d",
+   "rows": 167
+  },
+  {
+   "path": "daily/81187ffffffffff/2010.json.gz",
+   "bytes": 1512,
+   "sha256": "cff1dbe27f95150cdb71fcf2f6b90289fd8334bee8f8ed7b5f9cc61fddfbdcc6",
+   "decodedSha256": "756488e74c0df2cbf8b1f0fdfb9eeafb1882183a3951e04b3d9f4baba18e90af",
+   "rows": 73
+  },
+  {
+   "path": "daily/81187ffffffffff/2011.json.gz",
+   "bytes": 2245,
+   "sha256": "075d58418a87aeb9cbd1ce30b21fbd12457c2035ab5c7509d3bdd901b0d2f0d4",
+   "decodedSha256": "b3e0383e4af9abdc7d22cb37df2453712ccf7bb3426d26e526398b6332427e3f",
+   "rows": 132
+  },
+  {
+   "path": "daily/81187ffffffffff/2012.json.gz",
+   "bytes": 6349,
+   "sha256": "4516592e3d6a0f4613b915ec2c5acc7f5c3a1f4ab6d921d1727a536bfd4bfc8c",
+   "decodedSha256": "f9599bb60e1936200fead898106709c5ab7f79045531ef1fd31095e5b259aea8",
+   "rows": 489
+  },
+  {
+   "path": "daily/81187ffffffffff/2013.json.gz",
+   "bytes": 2739,
+   "sha256": "27a2c4ca2eb7a94e408612d671f540b0754d0e336aaa3c9f71386ce35941a243",
+   "decodedSha256": "5e505f42ac14468eee80f04e789142b9b4dbf231458dcc9af7ff3e01208232ff",
+   "rows": 194
+  },
+  {
+   "path": "daily/81187ffffffffff/2014.json.gz",
+   "bytes": 4313,
+   "sha256": "80c1e77a57e5fe429d2047ae429c2399e2b27fcccbfede0cc34bf5cdb07ac30e",
+   "decodedSha256": "47d28236592aae3bbc98efde5cc5e42fd874a2869f373dbcf0a6ccb566ef2d62",
+   "rows": 341
+  },
+  {
+   "path": "daily/81187ffffffffff/2015.json.gz",
+   "bytes": 4166,
+   "sha256": "e7f6b7d03a0fc4b46fba78c5e910edc3eff67c8d60cde291123692bb1e8f1e27",
+   "decodedSha256": "bde7f32424019f71f146e676fa4ab6caaef76bb30d54379d8aa09fad73432cc6",
+   "rows": 340
+  },
+  {
+   "path": "daily/81187ffffffffff/2016.json.gz",
+   "bytes": 2405,
+   "sha256": "c47fba3e010ac9fe25c11cff3058f35f28734f12af0bcd5800ff8088b8945902",
+   "decodedSha256": "4083ec3dc777f27789be4f231cdefecedc358dd8e6008fce79feb48267bf61b8",
+   "rows": 151
+  },
+  {
+   "path": "daily/81187ffffffffff/2017.json.gz",
+   "bytes": 6459,
+   "sha256": "d11338e54a0f5993714c3d2723d2e6761e321a0b7c0688354479e14f58236d3d",
+   "decodedSha256": "787d720d3d1a8001da5ae491142f22b7239c505192c8828e1e47e90436ba81bd",
+   "rows": 553
+  },
+  {
+   "path": "daily/81187ffffffffff/2018.json.gz",
+   "bytes": 4004,
+   "sha256": "497f1f562586f8c1159fa06c8b393041c3408eacfb7ec48a5861a6acf67aab44",
+   "decodedSha256": "da2451fa2f73c745017874f26115aa8359e77e4564602234b184fd5c1280e4fd",
+   "rows": 368
+  },
+  {
+   "path": "daily/81187ffffffffff/2019.json.gz",
+   "bytes": 8262,
+   "sha256": "8863f43209a2194baeb47d5d31568655a38a27857a2499a2d12526e1ac80326c",
+   "decodedSha256": "0a944bf965e9ae8b7243cc93165af2886eafa1933403256628b41a203eb56eae",
+   "rows": 634
+  },
+  {
+   "path": "daily/81187ffffffffff/2020.json.gz",
+   "bytes": 4496,
+   "sha256": "7dc4978980d04baa75718ae96480887b0a4432ab57d50f0324eb82fa73867e6b",
+   "decodedSha256": "0a8e5a751479142c223e9f9157d6ce1fcd848163c7037d08b009aeaf10180cc0",
+   "rows": 317
+  },
+  {
+   "path": "daily/81187ffffffffff/2021.json.gz",
+   "bytes": 5152,
+   "sha256": "c4b3fa3a2593adcb99d392a6c25bd4ae91c21d203e5e52b53271e53148d98b15",
+   "decodedSha256": "ddd0cbb8dea91f026e2f3060fc1a880f10520fd21972356df79d6c9c1b676327",
+   "rows": 395
+  },
+  {
+   "path": "daily/81187ffffffffff/2022.json.gz",
+   "bytes": 5886,
+   "sha256": "5f05ed457159085c4200663282caf79b4371719749a693a0756430295271b6f7",
+   "decodedSha256": "c132793b15b9453f8b29e1258ea241344c2ef8ba5d920b3d884d3f66118e3191",
+   "rows": 433
+  },
+  {
+   "path": "daily/81187ffffffffff/2023.json.gz",
+   "bytes": 8646,
+   "sha256": "3858f37adec4a84744470e8d7b4f54e0a83dbda27de726a06cad3544a579cd52",
+   "decodedSha256": "445e9da4e2598767ee8043bf968139588c90058ce118550566928474dcadd340",
+   "rows": 533
+  },
+  {
+   "path": "daily/81187ffffffffff/2024.json.gz",
+   "bytes": 4732,
+   "sha256": "4a7860eaaae3a8b9be3569900def9801acf51af51032b3a4a9e27701df10790b",
+   "decodedSha256": "4efa0f8fe7db4ebb28ae65f28a1fd1a1d2e920308a68b8be53668fbc9fef1774",
+   "rows": 331
+  },
+  {
+   "path": "daily/81187ffffffffff/2025.json.gz",
+   "bytes": 5617,
+   "sha256": "7002b1d0b7aeec2251b18873ea5a9c2d2f380b6f134f148da33a984d4e25bd56",
+   "decodedSha256": "a8be124b35d9c70a1a74d3792fa12a307da5bc10d8c7b34d952d34607575ca36",
+   "rows": 415
+  },
+  {
+   "path": "daily/81187ffffffffff/2026.json.gz",
+   "bytes": 7527,
+   "sha256": "f7c2d0eadbfcd496dda2c5329fcf4040a07d2f5ab0e4996949a2015ad403edd8",
+   "decodedSha256": "8eeeb176a4ce64eb1aeca214433f1a96b6847ce814b239c92146b3d5d28a78ee",
+   "rows": 550
+  },
+  {
+   "path": "daily/81383ffffffffff/2000.json.gz",
+   "bytes": 249,
+   "sha256": "eaa9eb3312a89c90bdc891e14a08a2f56921a369f6d139f46ef612b9d7944fb4",
+   "decodedSha256": "8eb54f930139f87d808f38222d461af43b189eeb88fbac4be85461eb3d20d094",
+   "rows": 4
+  },
+  {
+   "path": "daily/81383ffffffffff/2001.json.gz",
+   "bytes": 861,
+   "sha256": "d5dd2f4a7d640db2ca44058d7e3640b79a92f90ab6921212f2d8d687011e69bf",
+   "decodedSha256": "f31e6b50af359deaaaa8b86be5aa8a05eb8596fa3f3eb1264e80c11a1cbaa2da",
+   "rows": 15
+  },
+  {
+   "path": "daily/81383ffffffffff/2002.json.gz",
+   "bytes": 1099,
+   "sha256": "9603366e49b26fa23a89a4e7cd41d2e3d4f81fa7410286abdfe6027ee1f42b20",
+   "decodedSha256": "1868d053c22edfe2deb0556050935343fb8a610f2b80edd980c941ecf81f194b",
+   "rows": 33
+  },
+  {
+   "path": "daily/81383ffffffffff/2003.json.gz",
+   "bytes": 1289,
+   "sha256": "ccc7ab52bdbc61348249d9ebd06d0290eb92eaf7a9c39aaed85c5daf0e209a8b",
+   "decodedSha256": "47cd21abf6842e8075b9c1c8accdde22207fdfb590a435d0bcd9df5e45647739",
+   "rows": 45
+  },
+  {
+   "path": "daily/81383ffffffffff/2004.json.gz",
+   "bytes": 1697,
+   "sha256": "d41806ff825b780c2278b6bc54ff75f78b4e0b41dcaa9729614f0120b06fc472",
+   "decodedSha256": "8a7e1947bb7be61e3d18a18f502f89af210e9d8828f3ce7bc6bb9a8acc985590",
+   "rows": 85
+  },
+  {
+   "path": "daily/81383ffffffffff/2005.json.gz",
+   "bytes": 1419,
+   "sha256": "0cd021aa73da013907cb3638816ee70f3ff4f43e734a5493d4a709e6e6194f69",
+   "decodedSha256": "2c46f6080e78cdbaf4d7eec7bfec2a2f06d2d0b155cfa5899df79c90809e5785",
+   "rows": 50
+  },
+  {
+   "path": "daily/81383ffffffffff/2006.json.gz",
+   "bytes": 1222,
+   "sha256": "52adbf71b9f40fab2e9be46475268d7c456994d40be0b285c2718a3e5dbad1e3",
+   "decodedSha256": "5f83703b18bfa5324994e7c12b4392d2a9b72eea1eec89b7ebe230c58c8f16d1",
+   "rows": 42
+  },
+  {
+   "path": "daily/81383ffffffffff/2007.json.gz",
+   "bytes": 1545,
+   "sha256": "f21e77b738987eb56f24b3c16cb757a83a7ba6a4967b0b9106d9152251be2bab",
+   "decodedSha256": "a3f15e39bfe9a69dc896dff1fb605a1a1f136c28f722a68b6639c91e7bc59377",
+   "rows": 69
+  },
+  {
+   "path": "daily/81383ffffffffff/2008.json.gz",
+   "bytes": 1204,
+   "sha256": "5b3a8cc784135c0a8a7dfe024e26a056f2707275cf18573a8f54eb0ba7645529",
+   "decodedSha256": "bc5994b5eef7bed2060897f5e8fd5cfb1a267f62ee7edb6d9d51474e752bf59d",
+   "rows": 35
+  },
+  {
+   "path": "daily/81383ffffffffff/2009.json.gz",
+   "bytes": 1417,
+   "sha256": "f99d4ff3acf36a1a816b259b70fc4b4b87d53d82df496a78f319dc923a155821",
+   "decodedSha256": "57c548ee0e307d83cfb123f85c8e7e207c2f0803b20fa44dc69b78f8c9d6d7d1",
+   "rows": 51
+  },
+  {
+   "path": "daily/81383ffffffffff/2010.json.gz",
+   "bytes": 1288,
+   "sha256": "d6b08f1eec42437e4cfd645d619c7e9fe5ef24f14dda6893b3d194ab7277dd2c",
+   "decodedSha256": "17fe88934e9e328a63e834f6cd81d219b6a2fb1a0468de8825e58bc0b6f70be1",
+   "rows": 53
+  },
+  {
+   "path": "daily/81383ffffffffff/2011.json.gz",
+   "bytes": 1307,
+   "sha256": "d8a7ad06514efdfe8ea95a2becac5d0e2f620caac7b8b540f85e9d2e6d9e35b4",
+   "decodedSha256": "dced67d7d06f36de15f347cb00cfeefedd38a1e60ac2ec5f0eaaa726a63b10fa",
+   "rows": 47
+  },
+  {
+   "path": "daily/81383ffffffffff/2012.json.gz",
+   "bytes": 2636,
+   "sha256": "337f0fe79ec3b6a47234850c7390de13bb52e3ae33a354f4ab18106c81ca5ebe",
+   "decodedSha256": "27ca60cf57c9aaa08affec900ec8a1b87cc53896495cf1164f5b7bd78b061a34",
+   "rows": 176
+  },
+  {
+   "path": "daily/81383ffffffffff/2013.json.gz",
+   "bytes": 2503,
+   "sha256": "eae13e715bdc554d100e4f6d89a30793c8ff69ef941d40e5e734715c52529bae",
+   "decodedSha256": "17291d0f280878e5e43a09c2197e3670f4076ed627335a5efc63aa66184966d6",
+   "rows": 166
+  },
+  {
+   "path": "daily/81383ffffffffff/2014.json.gz",
+   "bytes": 2432,
+   "sha256": "50864066579b11bc27f99eb2f6c69c5c6bb7885560aad3523089f3a85e179673",
+   "decodedSha256": "5b9cb6320d26f0737031e7946a5216041c37b53821cf97b7a0ea968c49d8d8d7",
+   "rows": 152
+  },
+  {
+   "path": "daily/81383ffffffffff/2015.json.gz",
+   "bytes": 2158,
+   "sha256": "889e7df6bd8d80836b0e012c68f2a49ab74e3f240b194d779b34d1bbea28eba4",
+   "decodedSha256": "a17a02ee7f35c19de41bd0f74cb14a2376bdf934b655ded5f7645fc95ea2e59f",
+   "rows": 118
+  },
+  {
+   "path": "daily/81383ffffffffff/2016.json.gz",
+   "bytes": 1913,
+   "sha256": "32e15ab5d2021e8c564f7f2cef4dc8ce3a558912e5cbe888a2b39a52ed350f7d",
+   "decodedSha256": "c52b8cc67fae71278663fede92f486a1f796b4de1c922d7607390aa6290c921e",
+   "rows": 111
+  },
+  {
+   "path": "daily/81383ffffffffff/2017.json.gz",
+   "bytes": 2069,
+   "sha256": "c52f358ec9cb01faa4f8b39050b9ebfe5bf39e30ab5df9acb380a232dec59d04",
+   "decodedSha256": "de950bcd773b3ee4a118fc299ba28e42a0c516788cefb619f72b2c5148555845",
+   "rows": 128
+  },
+  {
+   "path": "daily/81383ffffffffff/2018.json.gz",
+   "bytes": 2728,
+   "sha256": "6c602d9b9a3c65249e6dcecf264f8a223329c2a24f91d99b1a4810855b520a68",
+   "decodedSha256": "ed664835a07bd6ac7316989a2b6b8d1e0fa7da984dcec27b61d5b1280e2669d5",
+   "rows": 178
+  },
+  {
+   "path": "daily/81383ffffffffff/2019.json.gz",
+   "bytes": 3354,
+   "sha256": "a0711fca5ee96e0576d52e30fd22d0b56fffb1d7ebb07c44b6a4e182d007960e",
+   "decodedSha256": "d28d7f02c83f24332a58c0981624ee4b2fc50d1d960d782f46411b1e498254f4",
+   "rows": 225
+  },
+  {
+   "path": "daily/81383ffffffffff/2020.json.gz",
+   "bytes": 3081,
+   "sha256": "bde3d144b0498d8e3fe7d0442de144e71fc9d2bce69a6066f0bd0cd817d022b5",
+   "decodedSha256": "b2167d0856bfef23a1fca9abdfd4dd7620ca7a6078346582431d6ad12a98996e",
+   "rows": 211
+  },
+  {
+   "path": "daily/81383ffffffffff/2021.json.gz",
+   "bytes": 2997,
+   "sha256": "226ae0389575b8e96fa73f31337fbe8d7cc70bd6429578be500a12d51b3dde1e",
+   "decodedSha256": "6247ef77b73fc5fef011c940e0e587fb719a28d45d43e0485564cd23bb501b6c",
+   "rows": 206
+  },
+  {
+   "path": "daily/81383ffffffffff/2022.json.gz",
+   "bytes": 2785,
+   "sha256": "04dc4439746d344c069855c9cc3ab0fc483ec8cd9b5f69668b7136399727a525",
+   "decodedSha256": "750af3a89fc09d4e9c77f781331ab8f3e43ffe8f6913304a64bcf9a7529e4a2f",
+   "rows": 179
+  },
+  {
+   "path": "daily/81383ffffffffff/2023.json.gz",
+   "bytes": 3912,
+   "sha256": "7f7fd6f8589f7a68932f76bd60023ad42f5c042ab44b5d062d36dd469ca5c9c1",
+   "decodedSha256": "cdeb6ca04bf128fe5fffbc57bc63d5780fd6ed37b174b2d6c4458e8dc07cf59c",
+   "rows": 292
+  },
+  {
+   "path": "daily/81383ffffffffff/2024.json.gz",
+   "bytes": 4231,
+   "sha256": "8dea9b8c9de32a530b0a4b5dfc45b3ed9bd1e53b0fe46fb36cefd06689151343",
+   "decodedSha256": "f12c1dfd9d589c3345c25020f3c4ee893cbb2ef7644436355c992f778b82d5aa",
+   "rows": 298
+  },
+  {
+   "path": "daily/81383ffffffffff/2025.json.gz",
+   "bytes": 4641,
+   "sha256": "0b071d05df088bb8810e6fd02a654d30d42628649e7645bcb5a137a18a79dfa8",
+   "decodedSha256": "db0d314e3aa221d061bb3b7bebe078a34fa80353bc633afabd04c2dcfeb37e9f",
+   "rows": 323
+  },
+  {
+   "path": "daily/81383ffffffffff/2026.json.gz",
+   "bytes": 4336,
+   "sha256": "3c795f5d97366738973afe7f75789eb8239388adcf047b33dd2ba8288509f57e",
+   "decodedSha256": "890c7569c9cdb80ace7e2b52f13eac2d76bbb07eaf553ebfa950c37b10983ee2",
+   "rows": 308
+  },
+  {
+   "path": "daily/81393ffffffffff/2000.json.gz",
+   "bytes": 789,
+   "sha256": "1d18116698ab03854a815e263694d9befb82f6c3c666a4bede464b80bcb96ede",
+   "decodedSha256": "f5ad7f61222856fe2e6f4cf95cb36a0db92d8daebbcc11453558949933c6a41b",
+   "rows": 72
+  },
+  {
+   "path": "daily/81393ffffffffff/2001.json.gz",
+   "bytes": 17391,
+   "sha256": "fba66efac6fb11ec4aab83bc49b3745349ed4df1d4fac51e98e16bfcb11c3965",
+   "decodedSha256": "cf4267931fec48dc5b592f122e218332de4ae993b58f5ca7ffb8602a56c2111f",
+   "rows": 2175
+  },
+  {
+   "path": "daily/81393ffffffffff/2002.json.gz",
+   "bytes": 28186,
+   "sha256": "077cc38df5148d5a9530e4ca673ba670188a484c39ea845634dd3b346c40a69b",
+   "decodedSha256": "4d924496a6387b41c7e50fdbe92b3ae6e52b29251654f61cdf9aaa57661c60e9",
+   "rows": 3255
+  },
+  {
+   "path": "daily/81393ffffffffff/2003.json.gz",
+   "bytes": 36675,
+   "sha256": "705d8d7bd67ac7c85e68f0054169ec7eb4dcc38eeed3633e947cb7948fc12bbc",
+   "decodedSha256": "5f928f5cca242a4d4e4c40bc3fa7aa4a01573ba97b4c67f2b6ee5dde2a382708",
+   "rows": 3910
+  },
+  {
+   "path": "daily/81393ffffffffff/2004.json.gz",
+   "bytes": 36496,
+   "sha256": "7edb258d0618f51bc97f6a4feca12b257fce0449aa560be2bf88df55e0c93a9c",
+   "decodedSha256": "5d182a2386e5284d982aed15bb21cc939885ec345fcb659b86e74b16b4a9613a",
+   "rows": 4153
+  },
+  {
+   "path": "daily/81393ffffffffff/2005.json.gz",
+   "bytes": 41253,
+   "sha256": "be85f9d33f1d235d42e846a81cd2cb3c115e256e8640616670be7b620e48e93e",
+   "decodedSha256": "e99adeeac8f501c0fffcb6b64877a64e2d1f8772c076b6e4480f564adc8d5c43",
+   "rows": 4151
+  },
+  {
+   "path": "daily/81393ffffffffff/2006.json.gz",
+   "bytes": 24036,
+   "sha256": "bdccc89d3ad652c7371538b8e18bede9cbcad8c6860803f4ae4030e6b766d9e8",
+   "decodedSha256": "d319bcb39923bca446dc72a4305b797f5e697b9acb2106d2bc4ff8c99e4fd731",
+   "rows": 2297
+  },
+  {
+   "path": "daily/81393ffffffffff/2007.json.gz",
+   "bytes": 21505,
+   "sha256": "0a0be986228d77e568cc07b70f37ba8eb14ce563d0196b0f5d96a7e1d71d126a",
+   "decodedSha256": "d5fc8a37e1838a60d1af4ffba224c269986270b550ecdd68f25b978aac1d06f9",
+   "rows": 2432
+  },
+  {
+   "path": "daily/81393ffffffffff/2008.json.gz",
+   "bytes": 17086,
+   "sha256": "d09780e045e83a2fc667b9157db61c7466e0dfe6442ef84a61875e70ab6ab1eb",
+   "decodedSha256": "de727209e692773f267eb14e242f236ef3a194848e55a7b243ae07a336d3e4c9",
+   "rows": 1911
+  },
+  {
+   "path": "daily/81393ffffffffff/2009.json.gz",
+   "bytes": 25681,
+   "sha256": "e20d7366046ee211cf7003ec4e07f318cc5cea1e5e374ea4b8b05b8a976ca52c",
+   "decodedSha256": "e9280c337719848f3d518a6090fb157a7dfcaa9fef8a68acaa94d2726ed1e3eb",
+   "rows": 2748
+  },
+  {
+   "path": "daily/81393ffffffffff/2010.json.gz",
+   "bytes": 21084,
+   "sha256": "31721aa762a613368b69b122fad2a687914ff58e033c0e2a6d729da25af6f362",
+   "decodedSha256": "06063319f124bca1f65183897b1b31a99f5e45da1eb6c34cd899fdfe0af96b80",
+   "rows": 2144
+  },
+  {
+   "path": "daily/81393ffffffffff/2011.json.gz",
+   "bytes": 27612,
+   "sha256": "18462b17922b875c3054fcbe6699ae207b9511ceaa53c407960fcdc4bf883387",
+   "decodedSha256": "4439a9ca1d38219d7e28f9cf11f5682bf98c51d53d8ad03024b6a4ace154ea44",
+   "rows": 2922
+  },
+  {
+   "path": "daily/81393ffffffffff/2012.json.gz",
+   "bytes": 60145,
+   "sha256": "51bc5cb43bd7f255172a96a06a0860dbcf0b0eda966df56a4042fbfc71e017ed",
+   "decodedSha256": "cc60b01f31ad88d37ed4c01c7591237f67e4513053fc28bdbcd8c39bf0fc17b3",
+   "rows": 6247
+  },
+  {
+   "path": "daily/81393ffffffffff/2013.json.gz",
+   "bytes": 62426,
+   "sha256": "eb9d70c09f1103f0beac9a5d21a0f5a718e5cadca08b4669684178d5c7fa5370",
+   "decodedSha256": "a09bbf7c3561fd58b3821ef20ab994cc74d518e0736502adc3f1fa66ff2d28b4",
+   "rows": 6562
+  },
+  {
+   "path": "daily/81393ffffffffff/2014.json.gz",
+   "bytes": 36345,
+   "sha256": "4d2661a5f6296ec9f504053e353fa417221003203d747cff72686c0e1bcd7a37",
+   "decodedSha256": "b1ca537e4831e2b3ae78bfb16c1a5565d7840a2b72c6ecf36ef4fb53d9e1671d",
+   "rows": 4095
+  },
+  {
+   "path": "daily/81393ffffffffff/2015.json.gz",
+   "bytes": 51551,
+   "sha256": "54637b70f873510797a0944acdaa9ff345ad30c060619c22b931107c56282986",
+   "decodedSha256": "3443bb85ba724ca33166f4401b3cc6b312d6a900992061207cfd23e874723332",
+   "rows": 5618
+  },
+  {
+   "path": "daily/81393ffffffffff/2016.json.gz",
+   "bytes": 52726,
+   "sha256": "dcf6d4e67f0f545ca1d8d51d8cf10e9e248eac12f2d7ffc6d4b9a79baedcbd82",
+   "decodedSha256": "9fedc461e7d4b4edb49baf4416cc7f3b06d8fc8d5cba227c631ae20df8ba2cf6",
+   "rows": 5288
+  },
+  {
+   "path": "daily/81393ffffffffff/2017.json.gz",
+   "bytes": 72171,
+   "sha256": "53c7d657df9e2779ef53e6dd31f154a8b762525f1f0a0d4898577a6c1325eccb",
+   "decodedSha256": "fe9a667019ee3fb4d0ac9e2016be3ea3d37e319c25c64ff4d8a0e991d1e535e7",
+   "rows": 7244
+  },
+  {
+   "path": "daily/81393ffffffffff/2018.json.gz",
+   "bytes": 45514,
+   "sha256": "25a3e4b1b3c324943b56b354f403d0ad0cf91d99186406876896de9d66d3240d",
+   "decodedSha256": "890a75ee712bbabcdcb3811c9e3d7784ebbefa10af80c5147bcddc0bfcbc8e4a",
+   "rows": 4774
+  },
+  {
+   "path": "daily/81393ffffffffff/2019.json.gz",
+   "bytes": 66966,
+   "sha256": "cdd67a190357c19fe2cd181c1bbee76ae54cf561293ef664db51d04fe5d8d872",
+   "decodedSha256": "e2b2fcb7c5d4918199e90edd30e78c9d2e2517850cb5d9f850bc576f62f898f4",
+   "rows": 6627
+  },
+  {
+   "path": "daily/81393ffffffffff/2020.json.gz",
+   "bytes": 55261,
+   "sha256": "9e226fb1c37a8f484ee8d83906ce96d92bdfad9e4c0ff36bb3508d982a856069",
+   "decodedSha256": "aabcecfc11ac01e89c347b6081563520affb0b0dc9e40ed135f503eccff267f8",
+   "rows": 5340
+  },
+  {
+   "path": "daily/81393ffffffffff/2021.json.gz",
+   "bytes": 55621,
+   "sha256": "969cec8102d0f7c53acf101e66e43e5f52541bed7bb0e5026c7a6aea1cc295f6",
+   "decodedSha256": "b9e47013f42e61dd0aa1b5430dc57dbbd0a04947a196c952a057dcda2db63dbc",
+   "rows": 5556
+  },
+  {
+   "path": "daily/81393ffffffffff/2022.json.gz",
+   "bytes": 64300,
+   "sha256": "265a12b03653c1253c3d325b784c8042c4558b0facbbcfd29ebc10bb2817a07e",
+   "decodedSha256": "fbed6ebf53f39d0eb284ef7cb25dc1cf5dd7f5ee5758fa41c0f9b5c57b9b0b4a",
+   "rows": 5496
+  },
+  {
+   "path": "daily/81393ffffffffff/2023.json.gz",
+   "bytes": 57006,
+   "sha256": "51080b029d34758bfe5b6b33519c70078937f232ef14fff0a4f433b5fa526ce9",
+   "decodedSha256": "d0737e294610a62da3d5b3cfa271be7a0f9814b8b3548a03d6a8932bbb6f049a",
+   "rows": 5063
+  },
+  {
+   "path": "daily/81393ffffffffff/2024.json.gz",
+   "bytes": 64220,
+   "sha256": "b4f8a9ac93d82f0236491bd974aca77f3d04e266c910427ac3b074b0a92999fa",
+   "decodedSha256": "e67ed95845490416ea3f64412257879974caf5b6705eb1fb93b762627e8722cc",
+   "rows": 5388
+  },
+  {
+   "path": "daily/81393ffffffffff/2025.json.gz",
+   "bytes": 105951,
+   "sha256": "8d2fe357a52d373894a1961546eaae2ea65cc4414b50a8d165a9c4bac87b3bb7",
+   "decodedSha256": "0d030129fd9f0cd2932bcd8a9fdeae001eb5c8fdbedb5f109393089a5d5bded4",
+   "rows": 7465
+  },
+  {
+   "path": "daily/81393ffffffffff/2026.json.gz",
+   "bytes": 91691,
+   "sha256": "1010e7125daaf5ef16cf7dfab975984a09db7a0c41df55e3550b4694b2f26692",
+   "decodedSha256": "6ada8ebe72dc28cf1e6135d23df72b7972de1395a52c102905c939be170a327d",
+   "rows": 7424
+  },
+  {
+   "path": "daily/81397ffffffffff/2000.json.gz",
+   "bytes": 392,
+   "sha256": "f94f75379bdddf503e751d9c47bd19b3e406d027eb760ee5168fa18923194aaa",
+   "decodedSha256": "732d720172836482f7f68ee94494812daaefefef609446433b2f6dd72ff0cf10",
+   "rows": 17
+  },
+  {
+   "path": "daily/81397ffffffffff/2001.json.gz",
+   "bytes": 2994,
+   "sha256": "e8f41d16bec5a0b026b82a1b38883196db44e25d8a432b236f92aee25e6dd349",
+   "decodedSha256": "aa828d4bd80c3a399eae0dfd4d9b68e63591a1600113289368036d898f113973",
+   "rows": 281
+  },
+  {
+   "path": "daily/81397ffffffffff/2002.json.gz",
+   "bytes": 3716,
+   "sha256": "7ca4ed897c55579823178d72c40cf83470b25050207cf93db6919f1e22e32af2",
+   "decodedSha256": "5d59fb15ce971fbb1e94f771e0d11aa51727479e7d7435d04468f04ed81f680c",
+   "rows": 346
+  },
+  {
+   "path": "daily/81397ffffffffff/2003.json.gz",
+   "bytes": 5062,
+   "sha256": "7a519da13804b015e109fd28a1177d682d85be240c19d0a972a1e3c5ff91bf39",
+   "decodedSha256": "03a72069bf5bb8bd5ce0a13abd10536666fe2eaae12c5c416699cd994cbdb6f1",
+   "rows": 472
+  },
+  {
+   "path": "daily/81397ffffffffff/2004.json.gz",
+   "bytes": 4943,
+   "sha256": "b342f5b79bf8329232a5c90de5b19b81a6d911e9c3f7a56482612c29b75a06ea",
+   "decodedSha256": "36b868a0a17e7bc28ec23442748f7a47119a25436e48532927bb4b13f29f5da6",
+   "rows": 494
+  },
+  {
+   "path": "daily/81397ffffffffff/2005.json.gz",
+   "bytes": 5115,
+   "sha256": "2f26131ce1b1bee135b4dc259d895909a85820204d4cd74662b708e733177f2f",
+   "decodedSha256": "2f8655efcdc096e16e861b202cb54087be4ae8ba1a549da8384da64172250743",
+   "rows": 483
+  },
+  {
+   "path": "daily/81397ffffffffff/2006.json.gz",
+   "bytes": 3781,
+   "sha256": "fea68b2c6cd763db4546fc3943538bd95094d1dbe82d3b1b8be9850cab619960",
+   "decodedSha256": "1e3b5b12d195025b1f02162bb31b920530817254a4ab9e11424133ed6e7bfbc6",
+   "rows": 320
+  },
+  {
+   "path": "daily/81397ffffffffff/2007.json.gz",
+   "bytes": 4583,
+   "sha256": "c18ac7877d29fbaffe78a4c390e7903a2825e75e740f1ccb4f137367acc13a24",
+   "decodedSha256": "2ff5aae6546204268fdd47ecfa8cafd7f81b54a18b5849cdb6b58ce29fc339a3",
+   "rows": 411
+  },
+  {
+   "path": "daily/81397ffffffffff/2008.json.gz",
+   "bytes": 3282,
+   "sha256": "579f693d6ffc40a789331403179892dcef2318e6b02f1c42b1208d17d6b6b4df",
+   "decodedSha256": "8e9317c3deca4910d8f91a0a2f6e3b4cb2702aef8c7ed2c5e55b99cf7b4af881",
+   "rows": 270
+  },
+  {
+   "path": "daily/81397ffffffffff/2009.json.gz",
+   "bytes": 5023,
+   "sha256": "d470032834678c4ff218ba4a0478443cdfa870a8856cd51c19c9321fc54f8afe",
+   "decodedSha256": "a99f3d730869c70f2c7395f5baf69052ffb10cdfe2fd90daf946a59c1139a41e",
+   "rows": 428
+  },
+  {
+   "path": "daily/81397ffffffffff/2010.json.gz",
+   "bytes": 3204,
+   "sha256": "3ba93c1d1f5d346389df174ec399c8405645238667e09b831f5e12dd3b92b692",
+   "decodedSha256": "8fc1087ed87b2cd3f37cf0d8b1612fd27bdc0a827a7493878d19f30740af4702",
+   "rows": 272
+  },
+  {
+   "path": "daily/81397ffffffffff/2011.json.gz",
+   "bytes": 3823,
+   "sha256": "111108d3a8b9075286185a52184da9a3ca4a3ce2c4e577549d63dc48e10cab9b",
+   "decodedSha256": "cfa9d0368c52f01c94912b4075cca4c86bab8e50dcb003a8483b8e2cf24c17c3",
+   "rows": 313
+  },
+  {
+   "path": "daily/81397ffffffffff/2012.json.gz",
+   "bytes": 12300,
+   "sha256": "216c43c33acb29f0c0638ac38ec6518f14862dbb46dfe39a78418fe9082e2e98",
+   "decodedSha256": "21849f114c763292f0ee3c077341efb959f40655bb61d0df74cd1b8683dedaa2",
+   "rows": 1195
+  },
+  {
+   "path": "daily/81397ffffffffff/2013.json.gz",
+   "bytes": 8347,
+   "sha256": "711a79e63401fc183e9ac1c351b8a0106f38dff047641bfe897863f90d53a38d",
+   "decodedSha256": "9208daa2b76d040ccc3a1dd16b3e91aaaf0b2b639635639a6abe9eb84642b969",
+   "rows": 818
+  },
+  {
+   "path": "daily/81397ffffffffff/2014.json.gz",
+   "bytes": 8643,
+   "sha256": "7efbed3e67bff32554e4bb01507bd7efd84dd30933cfe2e2112720fdefaeb312",
+   "decodedSha256": "950e1e1c80664bf65d78e3c9141174a8bd9652e5e487e39a86384946c5cefece",
+   "rows": 901
+  },
+  {
+   "path": "daily/81397ffffffffff/2015.json.gz",
+   "bytes": 8212,
+   "sha256": "47a83925ff578bf662f7a2e894f645f72962a611d4466ceb9bc2d6534a643da9",
+   "decodedSha256": "4657643a2d7b21af07c511ad66c3399a39a84312533fd35e7eb037a9fe16a28a",
+   "rows": 838
+  },
+  {
+   "path": "daily/81397ffffffffff/2016.json.gz",
+   "bytes": 8702,
+   "sha256": "e81896e65e42ba2235f5d4421057cfd834e174a51b0d6667fbec73b08e23baa8",
+   "decodedSha256": "e514073ff6592c55acffc8dc8c0af08bb61f4358095b50f6abf231b2c2bbb327",
+   "rows": 837
+  },
+  {
+   "path": "daily/81397ffffffffff/2017.json.gz",
+   "bytes": 9944,
+   "sha256": "be7355b658843ea25af7025b7b54d4bc3600403a1a22e4d61b1030fa9623b449",
+   "decodedSha256": "603cb14cb498baf582432554b22d7875e0548bf380f0c44b63330e70dd9e93fe",
+   "rows": 1028
+  },
+  {
+   "path": "daily/81397ffffffffff/2018.json.gz",
+   "bytes": 9948,
+   "sha256": "25fc2f7aec47efe3cce4b84e401ee4ad8041748acd3a6fcb0caf85166a1cdee2",
+   "decodedSha256": "b4f9578e391f0177095c4da027abb91a457ebd3857c5afe1bf4d5bde9568e0ad",
+   "rows": 1018
+  },
+  {
+   "path": "daily/81397ffffffffff/2019.json.gz",
+   "bytes": 14285,
+   "sha256": "7d0f001a45a4d74815ac90ad9fc7a088b0e4de8ef4fc788f7326dd6bf379f925",
+   "decodedSha256": "9eb7290d03f7b2b4dbcf1338daec9695894348542acf18943fd53173a341e32e",
+   "rows": 1472
+  },
+  {
+   "path": "daily/81397ffffffffff/2020.json.gz",
+   "bytes": 12885,
+   "sha256": "9f7f34db32808c784e1ac74bf97fb1297f14d88b6761cb9059122b94fe1031c6",
+   "decodedSha256": "9dfc924a73dffd51fc70e692468fc2a2662ce31a50894d05d5274875642607d4",
+   "rows": 1277
+  },
+  {
+   "path": "daily/81397ffffffffff/2021.json.gz",
+   "bytes": 12550,
+   "sha256": "4a9c53db31f0b023baccf0cbbdfba080aeca71735a580df73e4c357909e44b74",
+   "decodedSha256": "c13436a1ffea7162ff72d639c6f33b758005213e01fa458867f6f023c11639ca",
+   "rows": 1204
+  },
+  {
+   "path": "daily/81397ffffffffff/2022.json.gz",
+   "bytes": 15930,
+   "sha256": "2b370a7ce68834a2dca8e1b11751cb4ff8d129cab751195300016eb354fa6653",
+   "decodedSha256": "d0abb6100312747f7d83ac9bfd36bb9e3d62e9867a7ed62ad6aeaaa9083dd8ab",
+   "rows": 1366
+  },
+  {
+   "path": "daily/81397ffffffffff/2023.json.gz",
+   "bytes": 16550,
+   "sha256": "0404be13ada601ecb201e62a0837778bb22f9e52bd16c428fe3db08a3aa2f49f",
+   "decodedSha256": "0da36312f9a291884df6362923c3f4806823ff0f4eb90f025e7c621a46acdd6f",
+   "rows": 1563
+  },
+  {
+   "path": "daily/81397ffffffffff/2024.json.gz",
+   "bytes": 15742,
+   "sha256": "cfbeae2570541d15f850f38916e60d6c3b25a83560a745cc6ac38da94f17f9d8",
+   "decodedSha256": "d7c0fa22e0ddd1bb520c7155fa4f0882133015cf8e4bd395b82351d873a8e38d",
+   "rows": 1442
+  },
+  {
+   "path": "daily/81397ffffffffff/2025.json.gz",
+   "bytes": 16111,
+   "sha256": "c9c5ca5084f86460ba46d1cd9f3e37d2864c28b443b3b7905ed80d2d5e797738",
+   "decodedSha256": "fdf351b5ea8439c5c782645b5dc50050b7c306ff392d28899dcf62a48c9f2988",
+   "rows": 1501
+  },
+  {
+   "path": "daily/81397ffffffffff/2026.json.gz",
+   "bytes": 21368,
+   "sha256": "32e8b940791ea2ffb6d7f180aaaf60f548a8842db2961e09a88f14c8335a2200",
+   "decodedSha256": "a8fd7398240f1c214811d28cee8fc271f8fb2777da03e0cd92d249edf28c0365",
+   "rows": 1784
+  },
+  {
+   "path": "monthly/81187ffffffffff.json.gz",
+   "bytes": 45570,
+   "sha256": "4edca7cf8f7917653a46728f7e63a1b99f6127ac49fc665ddcab7f405e07da45",
+   "decodedSha256": "8ba4c36d43aac5b297882aebb7e78d4e6271130b03406baacf62e02534e58c08",
+   "rows": 3796
+  },
+  {
+   "path": "monthly/81383ffffffffff.json.gz",
+   "bytes": 25458,
+   "sha256": "ebdf2eaf4fede298570e6aefcdd5d943ee3005e40afbc58f876bb4fb897939af",
+   "decodedSha256": "723dd457feecd95dec58c7d9efc701705550610e1530fb99ba2ceaaf0c88008f",
+   "rows": 2618
+  },
+  {
+   "path": "monthly/81393ffffffffff.json.gz",
+   "bytes": 724692,
+   "sha256": "734f3326a8ee8b68d7761c4008fcf326350ce2f88d6aeffdfd2f5f3c68b1341b",
+   "decodedSha256": "57be085eedb0b300a034e933a822b440bf9620c92ad983ee0ff2530377395e2f",
+   "rows": 66627
+  },
+  {
+   "path": "monthly/81397ffffffffff.json.gz",
+   "bytes": 141428,
+   "sha256": "f68531da957690a84cbde51c5a5e4847cb63fb1ba1b93139487a4450939d1af6",
+   "decodedSha256": "4fa20a4812f3a9a4284d3f58d5a7e781717bef4c824d6cbcb4f627ceaff81c1b",
+   "rows": 14586
+  },
+  {
+   "path": "overview.json.gz",
+   "bytes": 10655,
+   "sha256": "3fd4df743068120c38fcc5d726adad6e32d9a03f1c61bbb0de68e81747f546ca",
+   "decodedSha256": "9a8b58ec2d205f8d0684d950851c12000673dcf2ed114a7e940c455b23303a50",
+   "rows": 1717
+  },
+  {
+   "path": "region-daily.json.gz",
+   "bytes": 227899,
+   "sha256": "7283a13898ce618fa58346e168944a232a1f4cd871afa73cab87a0fc082249e8",
+   "decodedSha256": "05e38469b202ac427b89c2d97f9cc75d08a37688e27f694f59cd9e49894b0a30",
+   "rows": 8587
+  },
+  {
+   "path": "region-monthly.json.gz",
+   "bytes": 19833,
+   "sha256": "23f3cc4db32e80d65bc9d7a11ee700988908c5b227f2e652bf7bda421b3eed55",
+   "decodedSha256": "938108cb7c3a6106687ba0b38de30cf639d3c08de6401c93827bb2d54d192e85",
+   "rows": 313
+  },
+  {
+   "path": "zone-monthly.json.gz",
+   "bytes": 45329,
+   "sha256": "7f46b057653cc945024bc2a7649cb205b44904d170f38b4b0a10d907faefbc9a",
+   "decodedSha256": "d940034c7c2095964641be9405f434472fe5957eec38ca94e3f0854ce223c7b9",
+   "rows": 1219
+  }
+ ]
+}

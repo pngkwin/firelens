@@ -1,0 +1,12 @@
+[
+ {
+  "id": "us",
+  "bundleEnd": "2026-11-14",
+  "sha256": "df3e1345943474deb0722631849c0a185214bb2022f52a65aff5bc6bd1ba7b46"
+ },
+ {
+  "id": "iberia",
+  "bundleEnd": "2026-11-14",
+  "sha256": "c8d4ac6ed371863d831c1e404a88f11f876bb879e9fb90eea45c582d305cbe57"
+ }
+]

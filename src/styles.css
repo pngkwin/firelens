@@ -1758,3 +1758,87 @@ main {
     margin: 0 12px;
   }
 }
+
+/* ---- Harmonized fire calendar (v2) ------------------------------------------ */
+.fc-root { display: grid; gap: 16px; }
+.fc-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 10px 14px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.fc-status { margin-left: auto; color: var(--muted); font-size: 0.9rem; }
+.fc-field { display: grid; gap: 3px; font-size: 0.85rem; color: var(--muted); }
+.fc-field.inline { display: inline-grid; }
+.fc-field select, .fc-field input { color: var(--ink); border: 1px solid var(--line); background: #fff; padding: 5px 8px; min-height: 34px; }
+.fc-field.small input { width: 7.5rem; }
+.fc-check { display: inline-flex; align-items: center; gap: 5px; font-size: 0.9rem; }
+.fc-top { display: grid; grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.fc-side, .fc-main { display: grid; gap: 16px; min-width: 0; }
+.fc-two { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; }
+.fc-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.fc-panel h2 { margin: 0 0 4px; font-size: 1.05rem; color: var(--forest); }
+.fc-panel-head { margin-bottom: 10px; }
+.fc-sub, .fc-note, .fc-hint, .fc-hover { margin: 0; color: var(--muted); font-size: 0.85rem; line-height: 1.4; }
+.fc-note { margin-top: 10px; }
+.fc-error { margin: 0; padding: 8px 12px; background: var(--error-bg); color: var(--warning); border-radius: 6px; }
+.fc-loading { color: var(--muted); padding: 12px 0; }
+.fc-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 8px 0; }
+.fc-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 8px 0; }
+.fc-form-title { width: 100%; font-weight: 600; font-size: 0.9rem; }
+.fc-details { margin-top: 8px; }
+.fc-details summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--forest); }
+.fc-current { margin: 8px 0; font-size: 0.9rem; }
+.fc-map-wrap { display: grid; gap: 6px; }
+.fc-map { height: 360px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.fc-draw-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.fc-heat-scroll { overflow-x: auto; }
+.fc-heat { width: auto; table-layout: auto; border-collapse: separate; border-spacing: 2px; font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.fc-heat th { font-weight: 600; color: var(--muted); padding: 0 4px; text-align: right; }
+.fc-heat thead th { text-align: center; }
+.fc-heat td { padding: 0; }
+.fc-heat .fc-total-col { padding-left: 8px; text-align: right; color: var(--ink); white-space: nowrap; }
+.fc-cell { width: 44px; height: 22px; border: 0; padding: 0 2px; font-size: 0.7rem; position: relative; border-radius: 3px; }
+.fc-cell.est { outline: 1.5px dotted #132a24; outline-offset: -3px; }
+.fc-cell.partial::after { content: ""; position: absolute; right: 0; bottom: 0; border-left: 8px solid transparent; border-bottom: 8px solid #132a24; }
+.fc-cell.focus { box-shadow: 0 0 0 2px var(--fire), 0 0 0 4px #fff; z-index: 1; }
+.fc-cell:focus-visible { outline: 3px solid var(--viirs); outline-offset: 1px; z-index: 2; }
+.fc-empty { width: 44px; height: 22px; }
+.fc-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin-top: 10px; font-size: 0.8rem; color: var(--muted); }
+.fc-tick { display: inline-flex; align-items: center; gap: 4px; }
+.fc-swatch { display: inline-block; width: 14px; height: 12px; border-radius: 2px; border: 1px solid #c7d1cb; vertical-align: middle; margin-right: 4px; }
+.fc-swatch.est-key { background: #fff; outline: 1.5px dotted #132a24; outline-offset: -3px; }
+.fc-swatch.partial-key { background: linear-gradient(135deg, #fff 55%, #132a24 55%); }
+
+.fc-focus-grid { display: grid; grid-template-columns: 1.4fr repeat(5, 1fr); gap: 8px; }
+.fc-stat { display: grid; gap: 2px; align-content: start; padding: 10px; border: 1px solid var(--line); border-radius: 6px; }
+.fc-stat strong { font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.fc-stat.big strong { font-size: 1.8rem; color: var(--forest); }
+.fc-stat-label { font-size: 0.78rem; opacity: 0.85; }
+.fc-stat-note { font-size: 0.78rem; opacity: 0.85; }
+.fc-verdict { margin: 10px 0 0; font-weight: 500; }
+.fc-badge { display: inline-block; justify-self: start; margin-top: 4px; padding: 1px 7px; border-radius: 10px; background: var(--soft); color: var(--forest); font-size: 0.75rem; font-weight: 600; }
+.fc-badge.est { background: #fde9c8; color: #6b3a0f; }
+.fc-badge.small { margin: 0 0 0 6px; }
+
+.fc-rank-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.fc-table { border-collapse: collapse; width: 100%; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.fc-table caption { text-align: left; font-weight: 600; padding-bottom: 4px; color: var(--forest); }
+.fc-table th, .fc-table td { padding: 3px 6px; border-bottom: 1px solid var(--line); text-align: left; }
+.fc-table .num { text-align: right; white-space: nowrap; }
+.fc-dim { color: var(--muted); font-size: 0.78rem; }
+.fc-bar-cell { width: 35%; }
+.fc-bar { display: block; height: 8px; background: #31688e; border-radius: 2px; }
+.fc-chart { width: 100%; }
+.fc-doy-scroll { overflow-x: auto; }
+.fc-doy { display: block; max-width: none; }
+.fc-method ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 6px; font-size: 0.9rem; line-height: 1.45; }
+
+@media (max-width: 1100px) {
+  .fc-top, .fc-two { grid-template-columns: minmax(0, 1fr); }
+  .fc-focus-grid { grid-template-columns: repeat(2, 1fr); }
+  .fc-status { margin-left: 0; width: 100%; }
+}
+
+.fc-ew-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.fc-ew-chip { justify-self: start; margin-top: 4px; padding: 1px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; }
+.fc-ew-flag { margin: 0 0 10px; padding: 8px 12px; border-radius: 6px; font-weight: 600; }
+.fc-ew-flag.high { background: #fde0b6; color: #6b3a0f; border-left: 4px solid #b35806; }
+.fc-ew-flag.elevated { background: #fff3e0; color: #6b3a0f; border-left: 4px solid #fdb863; }
+@media (max-width: 1100px) { .fc-ew-grid { grid-template-columns: minmax(0, 1fr); } }

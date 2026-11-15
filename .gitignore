@@ -11,3 +11,5 @@ data/raw/**/*.gz
 public/data/*.csv
 *.tsbuildinfo
 data/processed/
+data/raw/firms-api/
+data/raw/firms-archive/
