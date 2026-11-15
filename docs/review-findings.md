@@ -1,6 +1,6 @@
 # Review findings: security, accessibility, data integrity
 
-Review of branch `wip/phase5-snapshot` (4d16ca3), 2026-11-15. Scope: FIRMS key handling and abuse paths (`src`, `convex`, `scripts`, built bundle, committed files), keyboard and assistive-technology support in `src/fire`, and code-vs-doc consistency for `docs/convex.md`, `docs/harmonization-method.md`, `docs/harmonization-validation.md`. Only documentation was changed; every code item below is a recommendation. Line numbers refer to 4d16ca3.
+Review of branch `wip/phase5-snapshot` at 207fa13 (first pass on 4d16ca3), 2026-11-15. Scope: FIRMS key handling and abuse paths (`src`, `convex`, `scripts`, built bundle, committed files), keyboard and assistive-technology support in `src/fire`, and code-vs-doc consistency for `docs/convex.md`, `docs/harmonization-method.md`, `docs/harmonization-validation.md`. Only documentation was changed; every code item below is a recommendation. Line numbers refer to 207fa13.
 
 Severity: **high** = breaks a core flow or a WCAG 2.2 Level A criterion in a common path; **medium** = real risk or AA failure with a workaround; **low** = hardening, polish, or an edge case.
 
@@ -10,6 +10,7 @@ Severity: **high** = breaks a core flow or a WCAG 2.2 Level A criterion in a com
 |---|---|---|---|
 | DATA-1 | high | build/data | CRLF checkout (Windows `core.autocrlf=true`) breaks manifest/calibration hash checks |
 | A11Y-1 | high | keyboard | Month grid has no tab stop when the focus month is outside From–To |
+| REPO-1 | medium | repo hygiene | Commit 207fa13 tracks a Claude worktree as a gitlink |
 | SEC-1 | medium | abuse | Public, unauthenticated point export can drain the FIRMS budget and block the daily pull |
 | A11Y-2 | medium | contrast | `textOn()` picks white text on mid-tone fills: down to 2.84:1 |
 | A11Y-3 | medium | non-text contrast | Estimated/partial markers and the focus ring disappear on dark fills |
@@ -32,6 +33,8 @@ Severity: **high** = breaks a core flow or a WCAG 2.2 Level A criterion in a com
 | BUG-2 | low | UI | "Link copied" shown even when the clipboard write failed |
 | BUG-3 | low | PNG | Calendar PNG subtitle says "fire-cell-days" for hotspot scales |
 | BUG-4 | low | maintenance | S-NPP end of production hard-coded in `fit.mjs` |
+| BUG-5 | low | wording | Fire-episode percentiles read "1th", "2th", "3th", "22th" |
+| TEST-1 | low | tests | `perf.test.ts` "Texas < 1 s" fails inside the full parallel suite |
 
 Verified as fine (no action) and doc corrections made are listed at the end.
 
@@ -42,9 +45,23 @@ Verified as fine (no action) and doc corrections made are listed at the end.
 ### DATA-1 (high) CRLF checkout breaks hash checks
 
 - **Where:** no `.gitattributes`; `src/data/v2/bundle.ts:97` (calibration vs manifest SHA-256), `src/data/historyRepository.ts:129`, `scripts/history/verify.mjs:9`.
-- **Problem:** with Git for Windows' default `core.autocrlf=true`, the pretty-printed JSON files under `public/data` (`v2/*/manifest.json`, `v2/*/calibration.json`, `history/**/*.json`, `demo/v1/manifest.json`), `config/regions.json` and `convex/regionData/index.json` are checked out with CRLF. Their SHA-256 no longer matches what the calibration and history pointers record. Measured in this worktree: the calendar would refuse to load ("calibration was fitted on a different manifest"), `npx vitest run` gives 21 failures (series, perf and historyRepository suites), and `npm run history:verify` (part of `prebuild`) throws "History manifest integrity mismatch", so `npm run build` fails. The same tree with LF restored passes (136 passed, 1 skipped). A Windows `vercel deploy` uploads the CRLF files.
+- **Problem:** with Git for Windows' default `core.autocrlf=true`, the pretty-printed JSON files under `public/data` (`v2/*/manifest.json`, `v2/*/calibration.json`, `history/**/*.json`, `demo/v1/manifest.json`), `config/regions.json` and `convex/regionData/index.json` are checked out with CRLF. Their SHA-256 no longer matches what the calibration and history pointers record. Measured in this worktree: the calendar would refuse to load ("calibration was fitted on a different manifest"), `npx vitest run` gives 21 failures (series, perf and historyRepository suites), and `npm run history:verify` (part of `prebuild`) throws "History manifest integrity mismatch", so `npm run build` fails. The same tree with LF restored passes (137 passed, 1 skipped, apart from the timing flake in TEST-1). A Windows `vercel deploy` uploads the CRLF files.
 - **Fix:** add `.gitattributes` with `public/data/** -text`, `convex/regionData/** -text` and `config/*.json text eol=lf` (or `* text=auto eol=lf`), then renormalize. Alternatively hash a canonical form (parse and re-stringify) instead of raw bytes.
 - **Test:** a CI job on `windows-latest` with default Git settings that runs `npm ci && npm test && npm run build`. A unit test: `git ls-files --eol public/data` must report no `w/crlf`.
+
+### REPO-1 (medium) A Claude worktree is committed as a gitlink
+
+- **Where:** commit 207fa13, path `.claude/worktrees/agent-aa8323b5b8b3058ab` (mode 160000, pointing at 4d16ca3); no `.gitmodules`.
+- **Problem:** `git add -A` in the main checkout picked up a review worktree as an embedded repository. Fresh clones get an empty directory and a dangling submodule entry (`git submodule status` errors; some hosts warn during checkout), and later `git add -A` runs keep re-recording whatever that worktree's HEAD is.
+- **Fix:** `git rm --cached .claude/worktrees/agent-aa8323b5b8b3058ab` and add `.claude/worktrees/` to `.gitignore`.
+- **Test:** CI check that `git ls-files -s | grep '^160000'` is empty.
+
+### TEST-1 (low) Timing test fails inside the full suite
+
+- **Where:** `src/data/v2/perf.test.ts` ("US AOI query time (cold, per query) > Texas < 1 s").
+- **Problem:** it passed when run alone and failed in both full-suite runs on the review machine (vitest runs files in parallel workers, so the cold query competes for CPU). A timing assertion that depends on machine load makes `npm test` unreliable as a commit gate.
+- **Fix:** run perf tests in a separate project or script (`vitest run --project perf` or `--pool=forks --poolOptions.forks.singleFork`), or assert on work done (files fetched, rows scanned) and keep the wall-clock check for e2e.
+- **Test:** `npm test` green three times in a row on the same machine.
 
 ---
 
@@ -106,7 +123,7 @@ Paths checked for key leakage: `scripts/ingest/firms-client.mjs`, `download.mjs`
 
 ### A11Y-1 (high) Month grid has no tab stop when the focus month is outside From–To
 
-- **Where:** `src/fire/MonthHeatmap.tsx:24,82`; `src/fire/FireCalendar.tsx:35`.
+- **Where:** `src/fire/MonthHeatmap.tsx:24,82`; `src/fire/FireCalendar.tsx:36`.
 - **Problem:** roving tabindex gives `tabIndex=0` only to `current = active ?? focus ?? last-in-range`. `focus` defaults to the last data month (2026-11) and is not clamped to the selected range, and `active` is not cleared when the range changes. After choosing any To before 2026-11 (or moving the range past a previously arrowed month), no rendered cell has `tabIndex=0`, so Tab skips the whole calendar. The FocusCard also keeps showing a month outside the range.
 - **WCAG:** 2.1.1 Keyboard (A), 2.4.3 Focus Order (A).
 - **Fix:** `const current = [active, focus].find((m) => m && byMonth.has(m)) ?? inRange.at(-1)?.month ?? null;` and clamp `focus` in `FireCalendar` to `[from, to]`.
@@ -170,7 +187,7 @@ Paths checked for key leakage: `scripts/ingest/firms-client.mjs`, `download.mjs`
 
 ### A11Y-9 (low) Over-broad live regions
 
-- **Where:** `src/fire/FocusCard.tsx:18` and `src/fire/EarlyWarning.tsx:36` (`aria-live="polite"` on whole sections, with nested `role="status"` at `EarlyWarning.tsx:42,46` and `FocusCard.tsx:31`), `src/fire/FireCalendar.tsx:65` (`.fc-status` `role="status"` with timing text), `src/fire/AoiMap.tsx:144` (hint `role="status"` re-announced when the year range changes).
+- **Where:** `src/fire/FocusCard.tsx:18` and `src/fire/EarlyWarning.tsx:36` (`aria-live="polite"` on whole sections, with nested `role="status"` at `EarlyWarning.tsx:42,46` and `FocusCard.tsx:31`), `src/fire/FireCalendar.tsx:66` (`.fc-status` `role="status"` with timing text), `src/fire/AoiMap.tsx:144` (hint `role="status"` re-announced when the year range changes).
 - **Problem:** every focus, scale or AOI change re-reads entire panels (and nested regions can double-announce); every query re-announces "query 0.23 s (load …)".
 - **WCAG:** 4.1.3 Status Messages (AA) is met, but the verbosity hurts usability.
 - **Fix:** one concise live summary (for example "Nov 2026: 3,575 fire-cell-days, 112 % of median") and plain, non-live panels; keep timing text out of the live region.
@@ -202,7 +219,7 @@ Paths checked for key leakage: `scripts/ingest/firms-client.mjs`, `download.mjs`
   - `role="application"` on the non-focusable map wrapper (`:143`) adds nothing (MapLibre's canvas is the focusable element and has its own label); move the label to the canvas or drop the role.
 - **Test:** Playwright: submit an empty or invalid box and assert `aria-invalid="true"` on the West input and `aria-describedby` pointing to the alert.
 
-Checked and fine: one `h1` per view and `h2` per panel in order; `SelectField` label association; labelled bbox, point, date and checkbox inputs; `role="alert"` for URL, form and export errors; `aria-current="page"` on primary navigation; "est." and "partial" badges in Rankings are text, not colour; viridis and PuOr are CVD-safe ramps; the zero legend wording "0 = no matching records".
+Checked and fine: one `h1` per view and `h2` per panel in order; `SelectField` label association; labelled bbox, point, date and checkbox inputs; `role="alert"` for URL, form and export errors; `aria-current="page"` on primary navigation; "est." and "partial" badges in Rankings are text, not colour; viridis and PuOr are CVD-safe ramps; the zero legend wording "0 = no matching records"; `EventsPanel.tsx` (added in 207fa13) uses `h3` under its `h2`, visually hidden table captions, `scope="col"` headers, date buttons with visible text, and the "no matching records" wording for an empty current list.
 
 ---
 
@@ -217,7 +234,7 @@ Checked and fine: one `h1` per view and `h2` per panel in order; `SelectField` l
 
 ### BUG-2 (low) "Link copied" on failure
 
-- **Where:** `src/fire/FireCalendar.tsx:62`.
+- **Where:** `src/fire/FireCalendar.tsx:63`.
 - **Problem:** the clipboard error is swallowed and `setCopied(true)` runs anyway, including when `navigator.clipboard` is undefined (non-secure context).
 - **Fix:** show "Copy failed: select the address bar" on failure; announce the result through a status region.
 - **Test:** Playwright with clipboard permission denied: the button must not say "Link copied".
@@ -235,11 +252,18 @@ Checked and fine: one `h1` per view and `h2` per panel in order; `SelectField` l
 - **Problem:** duplicates `endOfProduction` in `config/regions.json`; a change in one place would silently desynchronize V\* coverage.
 - **Fix:** read `endOfProduction` from `manifest.sources.VIIRS_SNPP_NRT`.
 
+### BUG-5 (low) Ordinal suffixes in the fire-episode table
+
+- **Where:** `src/fire/EventsPanel.tsx:10` (`` `${fmt(p)}th percentile` ``).
+- **Problem:** produces "1th", "2th", "3th", "21th", "22th" percentile; screen readers read it as written.
+- **Fix:** use `Intl.PluralRules("en-US", { type: "ordinal" })` for the suffix, or write "percentile 22".
+- **Test:** unit test of the formatter for 1, 2, 3, 11, 12, 13, 21, 22, 23, 100.
+
 ---
 
 ## Doc corrections made in this branch
 
-- `README.md`, `CLAUDE.md`: rewritten for the Fire calendar default view, the `#workspace` CSV workspace (v1 demo loads only there), all `ingest:*` and `convex:*` scripts, `fit.mjs` and `build-presets.mjs`, the pipeline order (publish deletes `calibration.json`, so refit after every publish), the v2 file layout, Node ≥ 22.18 (README said 22.12), measured test counts, key rules, and the CRLF caveat. CLAUDE.md's "no harmonization" was wrong.
+- `README.md`, `CLAUDE.md`: rewritten for the Fire calendar default view, the `#workspace` CSV workspace (v1 demo loads only there), all `ingest:*` and `convex:*` scripts, `fit.mjs` and `build-presets.mjs`, the pipeline order (publish deletes `calibration.json`, so refit after every publish), the v2 file layout (including `zone-daily.json.gz` from 207fa13), Node ≥ 22.18 (README said 22.12), measured test counts, key rules, and the CRLF caveat. CLAUDE.md's "no harmonization" was wrong.
 - `docs/convex.md`: `runs` also stores `stats`; prune is limited to 500 rows per table per run and happens only after a successful pull; the NRT-vs-bundle equality test is skipped without `data/raw`; the pull shares the 10-minute budget with exports; CORS is not access control; bbox also needs south < north; sensors validation; transactions are reserved before fetching (a 413 still counts); the daily export 429 also sends `Retry-After`; 502 for missing key or FIRMS errors; `convex:set-key` reads the shell environment first and accepts `--prod`; public query limits and `live:status` error exposure; `convex:region-data` needs `data/processed`; function-call estimate corrected from ≈25 to about 20 per run.
 - `docs/harmonization-method.md`: the products table used labels that do not exist in the UI ("Raw · <platform>", "Harmonized · MODIS-equivalent"); it now lists the actual scale labels from `SCALES` and the CSV columns, and notes that per-platform raw values are CSV-only. The `viirs-estimated` class said "k · V\*" for every region; Iberia uses quantile mapping.
 - `docs/harmonization-validation.md`: the Iberia "Interval" line reported the v1 in-sample interval without saying so; it is now labelled and points to the v2 value.
@@ -255,5 +279,5 @@ Not verifiable in this worktree (need `data/processed` or the key): the per-year
 - `set-firms-key.mjs` passes the key via stdin with fixed arguments (`shell: true` on Windows is safe here because no argument is user-controlled) and redacts CLI output.
 - `convex/http.ts` and `convex/pull.ts` redact every error before returning or storing it; `parseExportParams` validates bbox, dates, span and sensors before any FIRMS call; the `Content-Disposition` filename uses only validated numbers and dates.
 - Public queries validate region, dates and array sizes and read aggregates only.
-- Provenance JSON and the PNG footer include `window.location.href`, but `FireCalendar.tsx:37-40` rewrites the query string to the known keys (`r`, `aoi`, `from`, `to`, `scale`, `focus`), so unknown parameters such as share tokens are dropped before any export. The AOI geometry (user-drawn coordinates) is included on purpose.
+- Provenance JSON and the PNG footer include `window.location.href`, but `FireCalendar.tsx:38-41` rewrites the query string to the known keys (`r`, `aoi`, `from`, `to`, `scale`, `focus`), so unknown parameters such as share tokens are dropped before any export. The AOI geometry (user-drawn coordinates) is included on purpose.
 - `.env*` and `*.local` are gitignored; no tracked `.env`, log or ledger files; no key-like pattern (`MAP_KEY=<value>`, `/api/area/csv/<32 chars>`) in tracked files or inside `gpt_zip.zip`.

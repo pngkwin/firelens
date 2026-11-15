@@ -2,7 +2,7 @@
 
 Scientific workspace for NASA FIRMS active-fire observations. The default view is the harmonized **Fire calendar** (`src/fire/FireCalendar.tsx`): MODIS-equivalent fire-cell-days for the US and Iberia from the static v2 bundle (`public/data/v2/<region>`), plus near-real-time days from an optional Convex backend (`convex/`). Raw sensor scales stay separate and available next to the harmonized ones; nothing raw is ever summed across sensors. The older point-level **CSV workspace** is the `#workspace` tab (with `#datasets` and `#methods`); it keeps MODIS and VIIRS separate with no harmonization, and the v1 demo bundle loads only there. Vite + React 19 + TypeScript + Tailwind 4 + MapLibre + Recharts + h3-js + Convex.
 
-Read `README.md` for data semantics, scripts and the v2 data layout before changing anything that touches counts, confidence, coverage or bundles. `docs/harmonization-method.md` and `docs/harmonization-validation.md` define the harmonized product; `docs/convex.md` the backend; `docs/review-findings.md` open security and accessibility findings. `DESIGN.md` and `PRODUCT.md` describe the UI and product intent.
+Read `README.md` for data semantics, scripts and the v2 data layout before changing anything that touches counts, confidence, coverage or bundles. `docs/harmonization-method.md` and `docs/harmonization-validation.md` define the harmonized product; `docs/convex.md` the backend; `docs/review-findings.md` open security and accessibility findings; `docs/HANDOFF.md` the current state of the work. `DESIGN.md` and `PRODUCT.md` describe the UI and product intent.
 
 ## Setup
 
@@ -20,7 +20,7 @@ On Windows, `core.autocrlf=true` rewrites `public/data/**/*.json` with CRLF and 
 ## Test before committing
 
 ```sh
-npm test               # vitest: 18 files, 137 tests (136 pass, 1 skipped without data/raw); includes convex/**/*.test.ts
+npm test               # vitest: 18 files, 138 tests (137 pass, 1 skipped without data/raw); includes convex/**/*.test.ts
 npx tsc -b             # type check
 npm run ingest:test    # v2 pipeline tests (node --test), 14 tests
 npm run history:test   # history pipeline tests (node --test), 3 tests (1 skipped without data/raw)
@@ -29,7 +29,7 @@ npm run build          # data:verify + history:verify + ingest:verify, type chec
 npm run test:e2e       # Playwright, tests/*.spec.ts (incl. tests/calendar.spec.ts); builds first; uses installed Microsoft Edge (see playwright.config.ts)
 ```
 
-Run at least `npm test` and `npx tsc -b` before any commit. Run `npm run build` when touching data, scripts, or config. `src/data/v2/perf.test.ts` is timing-based and can fail on a busy machine; rerun before treating it as a regression.
+Run at least `npm test` and `npx tsc -b` before any commit. Run `npm run build` when touching data, scripts, or config. `src/data/v2/perf.test.ts` is timing-based: it passes alone (`npx vitest run src/data/v2/perf.test.ts`) but can fail inside the full parallel suite; rerun it alone before treating it as a regression.
 
 ## v2 data pipeline
 

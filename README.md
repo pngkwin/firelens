@@ -38,7 +38,7 @@ If `node_modules` was installed on another OS (for example Linux in a VM), delet
 | Datasets | `#datasets` | loaded CSV datasets and their provenance |
 | Methods & provenance | `#methods` | method notes and the `public/data/history` aggregate preview |
 
-Fire calendar scales: MODIS-equivalent (harmonized, primary), VIIRS-level (harmonized, S-NPP scale), raw fire-cell-days (any sensor, MODIS, VIIRS) and raw hotspot counts (MODIS, VIIRS). Areas: whole region, a state (US) or country (Iberia) preset, a bounding box, a point and radius, or a polygon drawn on the map. Exports: harmonized monthly CSV, provenance JSON, calendar PNG, and (with the backend) a capped hotspot point CSV.
+Fire calendar scales: MODIS-equivalent (harmonized, primary), VIIRS-level (harmonized, S-NPP scale), raw fire-cell-days (any sensor, MODIS, VIIRS) and raw hotspot counts (MODIS, VIIRS). Areas: whole region, a state (US) or country (Iberia) preset, a bounding box, a point and radius, or a polygon drawn on the map. Panels: focus month vs other years, early warning (last 7/30 days and critical periods), month calendar, rankings, annual trend, fire episodes (current vs past, grouped in the browser for areas up to about 2 million km²), day-of-year calendar. Exports: harmonized monthly CSV, provenance JSON, calendar PNG, and (with the backend) a capped hotspot point CSV.
 
 ## npm scripts
 
@@ -71,7 +71,7 @@ Fire calendar scales: MODIS-equivalent (harmonized, primary), VIIRS-level (harmo
 | `npm run ingest:supervise -- --regions us,iberia` | runs the downloader per region, restarting it until no window failed; logs counts to `data/raw/firms-api/supervisor.log` |
 | `npm run ingest:aggregate -- --region <id>` | aggregates downloaded windows (and imported archive windows, if present) into fire-cell-day histograms in `data/processed/agg/<region>/` (static-source mask, region clip, per-month status) |
 | `npm run ingest:publish -- --region <id>` | writes the hash-listed v2 bundle to `public/data/v2/<region>/` (replaces the whole directory, including `calibration.json`); refuses incomplete months unless `--allow-partial` |
-| `npm run ingest:verify` | `scripts/ingest/verify-v2.mjs`: file sizes and SHA-256 hashes, row counts, and exact reconciliation (shards = region totals, daily = monthly, zones, cell index, overview) for every published region |
+| `npm run ingest:verify` | `scripts/ingest/verify-v2.mjs`: file sizes and SHA-256 hashes, row counts, and exact reconciliation (shards = region totals, daily = monthly, zone-monthly and zone-daily, cell index, overview) for every published region |
 | `npm run ingest:test` | `node --test` for `plan.mjs` and `aggregate-core.mjs` |
 
 Other scripts (no npm alias):
@@ -117,13 +117,14 @@ Steps 2–4 and 7 need `data/raw` and `data/processed`, which are not in Git.
 | `region-monthly.json.gz` | whole-region totals per month |
 | `region-daily.json.gz` | whole-region totals per UTC day |
 | `zone-monthly.json.gz` | res-1 zone × month totals (the calibration's spatial unit) |
+| `zone-daily.json.gz` | res-1 zone × day totals (daily values for shards fully inside an area, without cell files) |
 | `cells.json.gz` | res-5 cell index per res-1 shard (plans AOI downloads) |
 | `overview.json.gz` | res-3 cell × year raw fire-cell-days (any sensor, MODIS, VIIRS) for the map |
 | `monthly/<res1>.json.gz` | res-5 cells × months, one file per res-1 shard |
 | `daily/<res1>/<year>.json.gz` | res-5 cells × days, per shard and year |
 | `aoi/<preset>.json.gz` | zone × month aggregates for each state/country preset |
 
-`public/data/presets/<region>.json` holds the preset polygons. Each partition is `{v: 2, region, kind, res, shard, periods, cells, rows}`; rows are wire rows (`src/data/v2/codec.ts`) with day, night and any-time platform-mask histograms plus detections and FRP per platform. The browser (`src/data/v2/bundle.ts`) checks every partition against the manifest hash and row count before use. Current bundles: US 1,029 files (~49 MB), Iberia 119 files (~3.3 MB), both 2000-11 to 2026-11-14.
+`public/data/presets/<region>.json` holds the preset polygons. Each partition is `{v: 2, region, kind, res, shard, periods, cells, rows}`; rows are wire rows (`src/data/v2/codec.ts`) with day, night and any-time platform-mask histograms plus detections and FRP per platform. The browser (`src/data/v2/bundle.ts`) checks every partition against the manifest hash and row count before use. Current bundles: US 1,030 files (~53 MB), Iberia 120 files (~3.7 MB), both 2000-11 to 2026-11-14.
 
 The unit is the **fire-cell-day**: one H3 resolution-8 cell (~0.74 km²) on one UTC day with at least one detection. Sensors are combined as a union of platform masks, never a sum of detections. Detections belong to a region when the centre of their H3 res-7 cell lies inside the boundary polygon; persistent static sources (volcanoes, industry, offshore) are masked. A zero is no matching records in the loaded data, never evidence that no fire occurred.
 
@@ -141,12 +142,12 @@ Key rules:
 
 | Command | Count (Windows, LF checkout, no `data/raw`) |
 |---|---|
-| `npm test` (vitest) | 18 files, 137 tests: 136 pass, 1 skipped (the NRT-vs-bundle equality test in `convex/lib/nrtCore.test.ts` needs `data/raw/firms-api/us`). `src/data/v2/perf.test.ts` asserts sub-second AOI queries and can fail on a loaded machine. |
+| `npm test` (vitest) | 18 files, 138 tests: 137 pass, 1 skipped (the NRT-vs-bundle equality test in `convex/lib/nrtCore.test.ts` needs `data/raw/firms-api/us`). `src/data/v2/perf.test.ts` asserts sub-second AOI queries; it passes alone but its "Texas" case failed in both full-suite runs on the review machine (parallel workers). |
 | `npx tsc -b` | type check, no errors |
 | `npm run ingest:test` | 14 tests |
 | `npm run history:test` | 3 tests: 2 pass, 1 skipped without the original 2024 archive CSVs in `data/raw` |
-| `npm run ingest:verify` | US and Iberia: 313/313 complete months, OK |
-| `npm run test:e2e` | 4 spec files, 12 tests: `tests/calendar.spec.ts` (5: default calendar and keyboard grid, preset AOI, Iberia quantile mapping, exports, bounding-box form and invalid URL), `workspace.spec.ts` (3), `enhancements.spec.ts` (2), `history.spec.ts` (2) |
+| `npm run ingest:verify` | US (1,030 files) and Iberia (120 files): 313/313 complete months, OK |
+| `npm run test:e2e` | 4 spec files, 13 tests: `tests/calendar.spec.ts` (6: default calendar and keyboard grid, preset AOI, Iberia quantile mapping, exports, bounding-box form and invalid URL, fire episodes), `workspace.spec.ts` (3), `enhancements.spec.ts` (2), `history.spec.ts` (2). Not run during the doc review. |
 
 ## CSV workspace (v1) data semantics
 
@@ -183,3 +184,4 @@ Official sources: [FIRMS archive](https://firms.modaps.eosdis.nasa.gov/download/
 - [Convex backend](docs/convex.md)
 - [Historical pipeline](docs/historical-data-pipeline.md), [data quality](docs/data-quality.md), [earlier harmonization research plan](docs/harmonization-methodology.md)
 - [Review findings: security and accessibility](docs/review-findings.md)
+- [Handoff notes](docs/HANDOFF.md) and [gap analysis](docs/gap-analysis.md)
