@@ -64,11 +64,11 @@
 
 Source: `nasawebchallengeinfo.pdf` (challenge text). Gaps against the brief, in build order (small first):
 
-1. **Anomaly vs multi-year average** — brief: "anomalies against multi-year averages". Show % of mean next to % of median and z-score, in the focus card and exports.
-2. **Hotspot-count scale** — brief: "number of hotspots" / "number of fires detected and reported". Add raw detection counts per sensor, and name the harmonized unit "MODIS-equivalent hotspots (~1 km fire-cell-days)".
-3. **Early-warning view** — brief: "anticipate critical periods", "early warning". Last 7 / 30 days vs the same window in every prior year; typical fire-season critical periods marked on the calendar; "next 4 weeks historically" outlook.
-4. **Performance** — browser cache for the immutable bundle; fetch/verify/parse in a Web Worker; per-zone daily totals (`zone-daily`) for large areas.
-5. **Current fire vs past fires** — brief: "how a current fire compares with previous ones". Group detections into fire events (space–time connected fire-cell-days) and rank recent events against historical ones in the AOI.
+1. **Anomaly vs multi-year average**: brief: "anomalies against multi-year averages". Show % of mean next to % of median and z-score, in the focus card and exports.
+2. **Hotspot-count scale**: brief: "number of hotspots" / "number of fires detected and reported". Add raw detection counts per sensor, and name the harmonized unit "MODIS-equivalent hotspots (~1 km fire-cell-days)".
+3. **Early-warning view**: brief: "anticipate critical periods", "early warning". Last 7 / 30 days vs the same window in every prior year; typical fire-season critical periods marked on the calendar; "next 4 weeks historically" outlook.
+4. **Performance**: browser cache for the immutable bundle; fetch/verify/parse in a Web Worker; per-zone daily totals (`zone-daily`) for large areas.
+5. **Current fire vs past fires**: brief: "how a current fire compares with previous ones". Group detections into fire events (space–time connected fire-cell-days) and rank recent events against historical ones in the AOI.
 
 Coverage decision: stay with US + Iberia (calibrated and validated per region); other regions are a config entry through the same pipeline.
 

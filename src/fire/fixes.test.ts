@@ -40,7 +40,7 @@ describe("BUG-5: ordinal percentiles", () => {
   it.each([[1, "1st"], [2, "2nd"], [3, "3rd"], [4, "4th"], [11, "11th"], [12, "12th"], [13, "13th"], [21, "21st"], [22, "22nd"], [23, "23rd"], [100, "100th"], [21.6, "22nd"]])("%d -> %s", (n, s) => {
     expect(ord(n)).toBe(`${s} percentile`);
   });
-  it("shows a dash for missing values", () => expect(ord(NaN)).toBe("–"));
+  it("shows n/a for missing values", () => expect(ord(NaN)).toBe("n/a"));
 });
 
 describe("A11Y-4: polygon vertices form", () => {

@@ -99,7 +99,7 @@ export function MonthHeatmap({ months, scale, from, to, focus, onFocus }: Props)
                     );
                   })}
                   <td className="fc-total-col">
-                    {a ? <span title={a.partial ? "Partial year" : undefined}>{fmt(a.value)}{a.partial ? "*" : ""}</span> : "–"}
+                    {a ? <span title={a.partial ? "Partial year" : undefined}>{fmt(a.value)}{a.partial ? "*" : ""}</span> : "n/a"}
                   </td>
                 </tr>
               );

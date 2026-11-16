@@ -1,0 +1,1 @@
+Join NASA's two generations of fire satellites naively and US fire activity looks like it grew 72% per decade. Harmonize them and the trend is 0%. FireLens puts 26 years of NASA FIRMS data for the US and Iberia on one scale: https://firelens-iota.vercel.app

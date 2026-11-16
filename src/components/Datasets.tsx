@@ -43,7 +43,7 @@ export function Datasets({ remove }: { remove: (id: string) => void }) {
             <div>
               <dt>Record date extent (UTC)</dt>
               <dd>
-                {d.start} — {d.end}
+                {d.start} to {d.end}
               </dd>
             </div>
             <div>

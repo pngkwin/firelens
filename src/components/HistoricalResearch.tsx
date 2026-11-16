@@ -235,7 +235,7 @@ export function HistoricalResearch() {
                   <td>{s.both.toLocaleString()}</td>
                   <td>
                     {s.jaccard === null
-                      ? "—"
+                      ? "n/a"
                       : (s.jaccard * 100).toFixed(1) + "%"}
                   </td>
                 </tr>
@@ -379,8 +379,8 @@ export function HistoricalResearch() {
               >
                 <table className="calendar-table">
                   <caption>
-                    Historical monthly detection records, separate sensors · “—”
-                    unknown or excluded · * partial record/date interval
+                    Historical monthly detection records, separate sensors.
+                    n/a: unknown or excluded. *: partial record or date interval.
                   </caption>
                   <thead>
                     <tr>
@@ -409,7 +409,7 @@ export function HistoricalResearch() {
                                   className={`history-heat heat-cell ${n === null ? "unknown" : n === 0 ? "zero" : "heat-" + (scale.find((s) => n <= s.high)?.level ?? 5)}`}
                                   title={`${sensor} ${year} ${m}: ${n === null ? "unknown or excluded" : n.toLocaleString() + " loaded detections"}; ${status ? availabilityText(status) : "outside study"}`}
                                 >
-                                  {n === null ? "—" : n.toLocaleString()}
+                                  {n === null ? "n/a" : n.toLocaleString()}
                                   {n !== null &&
                                   status === "partial-record-interval"
                                     ? "*"

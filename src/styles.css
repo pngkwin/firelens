@@ -1910,3 +1910,94 @@ tr.fc-selected td { font-weight: 600; }
 .fc-incident p { margin: 0; font-size: 0.9rem; line-height: 1.45; overflow-wrap: anywhere; }
 .fc-incident .fc-list { margin: 0; font-size: 0.9rem; }
 @media (max-width: 640px) { .fc-incidents { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- Polish pass (hybrid layer). Rules recorded in DESIGN.md, "Hybrid layer". ---- */
+:root {
+  --serif: "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --r-control: 5px;
+  --r-panel: 6px;
+  color-scheme: light;
+  scrollbar-color: #b7c8bd transparent;
+}
+a { text-decoration-thickness: 1px; }
+
+/* Press receipt: every enabled button answers on pointer-down. */
+button {
+  transition:
+    background-color 0.15s ease-out,
+    color 0.15s ease-out,
+    border-color 0.15s ease-out,
+    transform 0.1s var(--ease);
+}
+button:not(:disabled):active { transform: translateY(1px); }
+.button:not(:disabled):not(.primary):not(.active):active { background-color: var(--selection); }
+.button:hover:not(:disabled):not(.primary):not(.active) { border-color: #93ad9d; }
+.fc-tab:hover:not(.active) { background: var(--selection); }
+.fc-cell:not(:disabled):active { transform: none; filter: brightness(0.94); }
+
+/* One radius scale: controls 5px, analytical panels 6px, heat cells 3px. */
+.fc-toolbar, .fc-panel, .fc-map, .fc-case, .fc-incident, .fc-stat, .fc-error, .fc-ew-flag { border-radius: var(--r-panel); }
+.fc-field select, .fc-field input { border-color: #b7c8bd; border-radius: var(--r-control); }
+
+/* Emphasis by tone and a full hairline, not a coloured side stripe. */
+.fc-ew-flag.high { border-left: 0; border: 1px solid #ebbd8c; }
+.fc-ew-flag.elevated { border-left: 0; border: 1px solid #f3d5a6; }
+.fc-case.active { box-shadow: none; border-color: var(--forest); background: #f4f9f5; }
+
+/* Consecutive tables and figures need air between them. */
+.fc-table { margin-bottom: 14px; }
+.fc-table:last-child { margin-bottom: 0; }
+.fc-status { font-size: 0.85rem; cursor: default; }
+
+/* Headline: the atlas plate title. Serif display, sans everywhere else. */
+.brand span { font-family: var(--serif); font-weight: 650; letter-spacing: -0.01em; }
+.workspace-heading { margin-bottom: 22px; }
+.workspace-heading h1 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 1.15rem + 1.5vw, 2.45rem);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+  color: var(--forest);
+  text-wrap: balance;
+}
+.workspace-heading p { font-size: 1rem; max-width: 64ch; margin-top: 8px; color: var(--muted); }
+@media (max-width: 620px) { .workspace-heading p { font-size: 0.925rem; } }
+
+/* The one authored moment: the heading settles in once, on load. */
+@keyframes fl-rise { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: no-preference) {
+  .workspace-heading h1 { animation: fl-rise 480ms var(--ease) both; }
+  .workspace-heading p { animation: fl-rise 480ms var(--ease) 80ms both; }
+}
+
+/* Phone header: destinations stay on one line and scroll sideways instead of wrapping. */
+@media (max-width: 620px) {
+  .app-header nav { justify-content: flex-start; gap: 20px; overflow-x: auto; scrollbar-width: none; padding-right: 28px; mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+  .app-header nav::-webkit-scrollbar { display: none; }
+  .app-header nav button { white-space: nowrap; flex: 0 0 auto; }
+}
+
+/* Loading: skeletons hold the layout so nothing jumps when data lands. */
+.fc-skeleton { display: grid; gap: 16px; }
+.fc-sk-line { display: block; height: 12px; border-radius: 3px; background: var(--soft); margin-bottom: 10px; }
+.fc-sk-line.w30 { width: 30%; } .fc-sk-line.w40 { width: 40%; } .fc-sk-line.w70 { width: 70%; }
+.fc-sk-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-top: 4px; }
+.fc-sk-block { height: 84px; border-radius: var(--r-panel); background: var(--soft); }
+.fc-sk-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2px; margin-top: 4px; }
+.fc-sk-cell { height: 22px; border-radius: 3px; background: var(--soft); }
+@media (max-width: 1100px) { .fc-sk-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@keyframes fl-pulse { 50% { opacity: 0.5; } }
+@media (prefers-reduced-motion: no-preference) {
+  .fc-skeleton .fc-panel { animation: fl-pulse 1.6s ease-in-out infinite; }
+  .fc-skeleton .fc-panel + .fc-panel { animation-delay: 0.2s; }
+}
+.fc-map-wrap.fc-loading { min-height: 420px; display: grid; place-items: center; background: var(--soft); border-radius: var(--r-panel); }
+.fc-panel.fc-loading { min-height: 160px; display: grid; place-items: center; }
+.fc-loading { font-size: 0.9rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+  button:not(:disabled):active { transform: none; }
+}

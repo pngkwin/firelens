@@ -4,7 +4,7 @@ import { fmt, monthLabel } from "./colors";
 import { download } from "./png";
 
 type Props = { input: BriefInput | null; onFocus: (m: string) => void; onTab: (t: "season" | "atlas" | "transition" | "evidence" | "context") => void };
-const pct = (v: number | null | undefined) => (v == null ? "–" : `${(100 * v).toFixed(0)}%`);
+const pct = (v: number | null | undefined) => (v == null ? "n/a" :`${(100 * v).toFixed(0)}%`);
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 /** Concise, evidence-backed historical monitoring brief for the selected area and period. */
@@ -46,7 +46,7 @@ export function RegionalBrief({ input, onFocus, onTab }: Props) {
         <div>
           <h3 className="fc-h3">Unusual months in the period</h3>
           {br.unusual.length ? (
-            <ul className="fc-list">{br.unusual.map((u) => <li key={u.month}>{M(u.month)}: {fmt(u.value)}, {fmt(u.pctOfMedian)}% of median, percentile {fmt(u.percentile)} — {u.high ? "unusually high" : "unusually low"}{!u.intervalClear && <span className="fc-dim"> (90% interval overlaps the median)</span>}</li>)}</ul>
+            <ul className="fc-list">{br.unusual.map((u) => <li key={u.month}>{M(u.month)}: {fmt(u.value)}, {fmt(u.pctOfMedian)}% of median, percentile {fmt(u.percentile)}, {u.high ? "unusually high" : "unusually low"}{!u.intervalClear && <span className="fc-dim"> (90% interval overlaps the median)</span>}</li>)}</ul>
           ) : <p>No month in the period is in the top or bottom 10% of its comparable years.</p>}
           {br.focus && <p className="fc-note">Focus {monthLabel(br.focus.month)}: {br.focus.stats ? `${fmt(br.focus.value)}, ${fmt(br.focus.stats.pctOfMedian)}% of the median of ${br.focus.stats.n} comparable years (percentile ${fmt(br.focus.stats.percentile)}).` : br.focus.blocked}</p>}
         </div>

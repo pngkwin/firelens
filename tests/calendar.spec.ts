@@ -9,7 +9,7 @@ async function offline(page: Page) {
 const status = (page: Page) => page.locator(".fc-status");
 async function ready(page: Page) {
   await expect(status(page)).toContainText("Data through 2026-11-14", { timeout: 60000 });
-  await expect(status(page)).toContainText("query");
+  await expect(status(page)).toHaveAttribute("title", /^Query /);
 }
 
 test("default calendar: whole US, focus month vs history, keyboard grid, URL state", async ({ page }) => {

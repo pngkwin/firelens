@@ -25,7 +25,7 @@ export function SeasonPanel({ months, areaName, isSubArea }: Props) {
   return (
     <section className="fc-panel" aria-labelledby="fc-season-title">
       <div className="fc-panel-head">
-        <h2 id="fc-season-title">Fire season evolution: {areaName}</h2>
+        <h2 id="fc-season-title">Fire season evolution: {areaName.replace(/^Whole region: /, "")}</h2>
         <p className="fc-sub">How detected burning is distributed across the months of the year, and whether that distribution differs between periods. Each year is first normalized to its own annual total, so a single extreme year does not set the profile. Harmonized MODIS-equivalent fire-cell-days; complete years only; years whose satellite outages may hide more than 2% of the total are left out.</p>
       </div>
       {!p1 || !p2 ? <p className="fc-note">Not enough complete years in this area for a seasonal comparison.</p> : (

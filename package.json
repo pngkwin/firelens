@@ -36,6 +36,7 @@
     "convex:pull": "convex run pull:pullAll"
   },
   "dependencies": {
+    "@fontsource-variable/source-serif-4": "^5.3.1",
     "@fontsource/source-sans-3": "^5.2.8",
     "@tailwindcss/vite": "^4.1.0",
     "convex": "1.49.0",

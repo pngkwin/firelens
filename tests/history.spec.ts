@@ -79,7 +79,7 @@ test("historical research uses authentic partitions, shared filters and separate
     .click();
   await expect(calendar).toBeVisible();
   await expect(calendar).toContainText("2025 VIIRS");
-  await expect(calendar.locator("tbody tr").first()).toContainText("—");
+  await expect(calendar.locator("tbody tr").first()).toContainText("n/a");
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.screenshot({
     path: ".impeccable/review/history-desktop.png",

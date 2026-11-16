@@ -134,8 +134,8 @@ export function Methods() {
             <p key={d.id}>
               <strong>
                 {d.sensors.join(", ")} · {d.satellites.join(", ")}
-              </strong>{" "}
-              — {d.records.length.toLocaleString()} records, {d.start} to{" "}
+              </strong>
+              : {d.records.length.toLocaleString()} records, {d.start} to{" "}
               {d.end}, version {d.versions.join(", ")}.
             </p>
           ))

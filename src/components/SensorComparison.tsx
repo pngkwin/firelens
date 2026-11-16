@@ -56,7 +56,7 @@ export function SensorComparison() {
               </h3>
               <strong className="comparison-count">
                 {!loaded || excluded || !comparison.start
-                  ? "—"
+                  ? "n/a"
                   : totals[s].toLocaleString()}
               </strong>
               <span>

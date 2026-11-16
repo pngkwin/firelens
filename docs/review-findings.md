@@ -44,7 +44,7 @@ Every finding was addressed in the working tree of `wip/phase5-snapshot` (not co
 
 | ID | Status | What changed | Test |
 |---|---|---|---|
-| DATA-1, REPO-1 | fixed (first session) | `.gitattributes` `* -text`; gitlink untracked, `.claude/worktrees/` ignored | — |
+| DATA-1, REPO-1 | fixed (first session) | `.gitattributes` `* -text`; gitlink untracked, `.claude/worktrees/` ignored | n/a |
 | A11Y-1 | fixed | tab stop = arrowed or focus month only if in range, else last in range; focus month clamped to From–To | `a11y.spec.ts` A11Y-1/8 |
 | A11Y-2 | fixed | `textOn()` picks black or white by higher contrast (≥ 4.58:1 on any fill); no opacity on coloured tiles | `colors.test.ts` (1,001 samples per ramp) |
 | A11Y-3 | fixed | markers drawn in `--mark` = `textOn(fill)` (screen and PNG); two-tone focus ring (white + `#132a24`) | `colors.test.ts`; checked visually in Chrome |
@@ -62,8 +62,8 @@ Every finding was addressed in the working tree of `wip/phase5-snapshot` (not co
 | SEC-3 | fixed | `redact()` matches the key in any case plus any standalone 32-hex token (SHA-256 untouched); key format validated in `firmsKey()` / `loadKey()` without printing it | `functions.test.ts` (export, availability, case echo) |
 | SEC-4 | fixed | CSP, nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy in `vercel.json`; `vite preview` serves the same headers | `a11y.spec.ts` SEC-4 (no CSP violations with map, workers, fonts) |
 | SEC-5 | fixed | `guardFormula()` in backend CSV and browser exports (numbers such as `-120.5` untouched) | `exportsV2.test.ts`, `functions.test.ts` |
-| SEC-6 | partly | `gpt_zip.zip` untracked (`git rm --cached`, file kept on disk), `/*.zip` ignored. History rewrite is the owner's decision. Also noted: `.agents/skills/impeccable/scripts/bin/windows-x64/impeccable.exe` (22 MB) is tracked | — |
-| SEC-7 | info, no change | the FIRMS API requires the key in the URL; keep fetch debug logging off | — |
+| SEC-6 | partly | `gpt_zip.zip` untracked (`git rm --cached`, file kept on disk), `/*.zip` ignored. History rewrite is the owner's decision. Also noted: `.agents/skills/impeccable/scripts/bin/windows-x64/impeccable.exe` (22 MB) is tracked | n/a |
+| SEC-7 | info, no change | the FIRMS API requires the key in the URL; keep fetch debug logging off | n/a |
 | BUG-1 | fixed | `exportBoxes()` splits antimeridian areas into two boxes; the point export fetches both | `fixes.test.ts` (Alaska us-02) |
 | BUG-2 | fixed | `copyText()` reports failure; status says "Copy failed: copy the address from the address bar." | `a11y.spec.ts` BUG-2 |
 | BUG-3 | fixed | `pngSubtitle(scale)` uses the scale's unit | `fixes.test.ts` |

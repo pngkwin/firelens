@@ -211,7 +211,7 @@ export default function App() {
             </button>
           ))}
         </nav>
-        <span className="header-purpose">Satellite fire intelligence</span>
+        <span className="header-purpose">NASA FIRMS fire record, 2000 to today</span>
         <div className="header-actions" hidden={view === "calendar"}>
           <button
             className="button header-import"
@@ -246,10 +246,10 @@ export default function App() {
               {view === "calendar"
                 ? "MODIS + VIIRS burning activity since November 2000, on one harmonized scale."
                 : view === "workspace"
-                ? "Explore the fire record. Understand the observation."
+                ? "Load FIRMS point records and compare MODIS and VIIRS month by month."
                 : view === "datasets"
-                  ? "Keep every observation connected to its origin."
-                  : "Know what these observations can—and cannot—tell you."}
+                  ? "Every loaded file, with its source, version and date range."
+                  : "What these observations can tell you, and where they stop."}
             </p>
           </div>
           <div className="dataset-status" hidden={view === "calendar"}>

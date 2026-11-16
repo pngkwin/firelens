@@ -105,13 +105,16 @@ export function FireCalendar() {
         }}>
           {copied === "ok" ? "Link copied" : "Copy share link"}
         </button>
-        <span className="fc-status">
-          {/* Only the short state is announced; timing details are plain text. */}
+        <span
+          className="fc-status"
+          title={data.status === "ready" ? `Query ${fmt(data.timing.monthlyMs / 1000, 2)} s (load ${fmt(data.timing.loadMs / 1000, 2)} s, compute ${fmt(data.timing.computeMs / 1000, 2)} s${data.timing.liveMs ? `; live backend ${fmt(data.timing.liveMs / 1000, 2)} s, merged after` : ""})` : undefined}
+        >
+          {/* Only the short state is announced; timings sit in the tooltip. */}
           <span role="status">
             {data.status === "loading" ? data.progress || "Loading…" : data.status === "error" ? "Error" : `Data through ${data.dataEnd}${data.live.days.length ? ` (incl. ${data.live.days.length} live NRT day${data.live.days.length > 1 ? "s" : ""})` : ""}`}
             {copied === "failed" ? " · Copy failed: copy the address from the address bar." : copied === "ok" ? " · Link copied." : ""}
           </span>
-          {data.status === "ready" && ` · query ${fmt(data.timing.monthlyMs / 1000, 2)} s (load ${fmt(data.timing.loadMs / 1000, 2)} s, compute ${fmt(data.timing.computeMs / 1000, 2)} s${data.timing.liveMs ? `; live backend ${fmt(data.timing.liveMs / 1000, 2)} s, merged after` : ""})${data.progress ? ` · ${data.progress}` : ""}`}
+          {data.status === "ready" && data.progress ? ` · ${data.progress}` : ""}
         </span>
       </div>
       {urlErrors.length > 0 && <p className="fc-error" role="alert">Some link settings were ignored: {urlErrors.join(" ")}</p>}
@@ -125,6 +128,12 @@ export function FireCalendar() {
           </Suspense>
         </div>
         <div className="fc-main">
+          {data.status === "loading" && (
+            <div className="fc-skeleton" aria-hidden="true">
+              <div className="fc-panel"><span className="fc-sk-line w40" /><span className="fc-sk-line w70" /><div className="fc-sk-row">{[0, 1, 2, 3, 4, 5].map((i) => <span key={i} className="fc-sk-block" />)}</div></div>
+              <div className="fc-panel"><span className="fc-sk-line w30" /><div className="fc-sk-grid">{Array.from({ length: 96 }, (_, i) => <span key={i} className="fc-sk-cell" />)}</div></div>
+            </div>
+          )}
           {data.status === "ready" && focus && <FocusCard months={data.months} days={data.days} focus={focus} scale={state.scale} dataEnd={data.dataEnd!} provisionalFrom={provisionalFrom} />}
           {data.status === "ready" && <EarlyWarning days={data.days} scale={state.scale} obs={obs} coverStart={coverStart} dataEnd={data.dataEnd!} periods={periods} climYears={clim?.years ?? 0} provisionalFrom={provisionalFrom} />}
           {data.status === "ready" && <MonthHeatmap months={data.months} scale={state.scale} from={from} to={to} focus={focus} onFocus={(m) => set({ focus: m })} />}

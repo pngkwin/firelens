@@ -8,7 +8,7 @@ export type MapLayer = "activity" | "viirs-only" | "modis-only" | "both";
 type Props = { months: MonthResult[]; from: string; to: string; focus: string | null; mapLayer: MapLayer; onMapLayer: (l: MapLayer) => void; onFocus: (m: string) => void };
 
 const COLORS = { modisOnly: "#b54c20", both: "#5f7069", viirsOnly: "#2a6f97" };
-const pct = (x: number | null | undefined, d = 1) => (x == null || !Number.isFinite(x) ? "–" : `${(100 * x).toFixed(d)}%`);
+const pct = (x: number | null | undefined, d = 1) => (x == null || !Number.isFinite(x) ? "n/a" : `${(100 * x).toFixed(d)}%`);
 const row = (label: string, s: Split) => { const sh = shares(s); return { label, ...s, sh }; };
 
 /** MODIS-only / VIIRS-only / both fire-cell-days for the selected area and period. */

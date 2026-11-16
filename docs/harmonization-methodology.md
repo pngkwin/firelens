@@ -16,7 +16,7 @@ NASA distinguishes independently generated VIIRS 750 m and 375 m active-fire pro
 
 No linear multiplier based on nominal pixel areas is justified by these facts. More pixels, different overpasses, event duration, cloud/smoke, scan geometry and contextual detection thresholds can each change record counts. Neither instrument is ground truth. FRP, brightness, counts, burned area and unique events have different units and targets; they must not be substituted for one another.
 
-## Candidate A — common spatial and temporal representation
+## Candidate A: common spatial and temporal representation
 
 **Proposed MVP:** keep a paired sensor/platform historical detection calendar on the same geography and UTC time bins. The implemented H3 pipeline is this representation. It is a foundation for comparison, **not a completed cross-sensor harmonization**.
 
@@ -36,7 +36,7 @@ Representation: retained detection counts and occupied cells by UTC day/month/ye
 
 **Challenge suitability / time.** This is the recommended immediate public deliverable: a transparent linked historical activity calendar with parallel sources, provenance and disclosed limits. It answers where the sources agree or differ and prepares defensible inputs for later calibration. It must be labeled “sensor-specific observations,” not “harmonized fire activity.” Engineering implemented now; scientific equivalence remains open.
 
-## Candidate B — empirical calibration on overlapping observations
+## Candidate B: empirical calibration on overlapping observations
 
 **Research proposal only.** Define the intended output before fitting. One possible target is a MODIS-reference-scale expected detection count per common cell/month conditional on a defined observation regime. That is a reference measurement scale, not true fire count or burned area. A second possible target is probability of observed activity per eligible bin; this requires defensible negative/exposure observations. Choose one target and unit explicitly rather than blending them.
 

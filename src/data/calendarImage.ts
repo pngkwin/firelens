@@ -52,7 +52,7 @@ export async function calendarImage(
     sensor +
       " raw detection records · " +
       dates.start +
-      " — " +
+      " to " +
       dates.end +
       " UTC",
     40,
@@ -102,7 +102,7 @@ export async function calendarImage(
       c.fillRect(x0 + i * w, y, w - 6, 36);
       text(
         value === null
-          ? "—"
+          ? "n/a"
           : value.toLocaleString() +
               (status === "partial-record-interval" ? "*" : ""),
         x0 + i * w + 15,

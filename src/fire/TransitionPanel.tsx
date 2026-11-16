@@ -68,7 +68,7 @@ export function TransitionPanel({ months, focus, from, to, onFocus }: Props) {
                   <tr key={r.label} className={r.comparable ? "" : "fc-noncomparable"}>
                     <td>{r.label}{!r.comparable && <span className="fc-badge warn small">not comparable</span>}</td>
                     <td className="num">{fmt(r.value)}</td>
-                    <td className="num">{r.stats?.pctOfMedian == null ? "–" : `${fmt(r.stats.pctOfMedian)}%`}</td>
+                    <td className="num">{r.stats?.pctOfMedian == null ? "n/a" : `${fmt(r.stats.pctOfMedian)}%`}</td>
                     <td className="num">{fmt(r.stats?.percentile)}</td>
                     <td>{readingVerdict(r)}</td>
                     <td className="fc-dim">{r.note}</td>

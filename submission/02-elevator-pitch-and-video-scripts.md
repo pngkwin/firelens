@@ -11,10 +11,10 @@ When NASA's fire record switches from MODIS to the more sensitive VIIRS sensors,
 | Time | On screen | Voice-over |
 |---|---|---|
 | 0–5 s | Calendar for the whole US; scale selector | "NASA fire hot spots come from two generations of satellites." |
-| 5–13 s | Tab 3 "Why harmonization matters", US: naive +72% per decade next to harmonized ≈ 0 | "Join them naively and US fire looks like it grew 72% per decade. Harmonize them and the trend disappears. The rise came from the sensor, not from more fire." |
+| 5–13 s | Tab 3 "Why harmonization matters", US: naive +72% per decade next to harmonized ≈ 0 | "Join them naively and US fire looks like it grew 72% per decade. Harmonize them and the trend is about zero. The extra detections came from the newer sensor." |
 | 13–21 s | Open the Texas case: season profile, March peak, "no change survives" | "FireLens shows when an area burns and whether its season has changed. In Texas, the March peak has held steady for twenty years." |
 | 21–27 s | Evidence lab, then Documented fires (Smokehouse Creek) | "Every estimate is validated on held-out years and placed next to independent fire records." |
-| 27–30 s | Regional brief, Download HTML | "FireLens: one honest fire record, ready to download." |
+| 27–30 s | Regional brief, Download HTML | "FireLens. Twenty-six years of NASA fire data on one scale, with a brief you can download." |
 
 ---
 

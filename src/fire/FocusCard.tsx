@@ -38,7 +38,7 @@ export function FocusCard({ months, days, focus, scale, dataEnd, provisionalFrom
           <div className="fc-focus-grid">
             <div className="fc-stat big">
               <span className="fc-stat-label">{SCALES[scale].short} {SCALES[scale].unit}</span>
-              <strong>{c.status.available ? fmt(c.value) : "–"}</strong>
+              <strong>{c.status.available ? fmt(c.value) : "n/a"}</strong>
               {c.interval && <span className="fc-stat-note">90% interval {fmt(c.interval[0])}–{fmt(c.interval[1])}</span>}
               <span className={`fc-badge${c.estimated ? " est" : ""}`}>{!c.status.available ? "Not observed" : SCALES[scale].harmonized ? (c.estimated ? ESTIMATE_LABEL[r.method] : "Observed MODIS") : "Raw observation"}</span>
               {c.status.reduced && <span className="fc-badge warn">Reduced satellite coverage</span>}
@@ -52,11 +52,11 @@ export function FocusCard({ months, days, focus, scale, dataEnd, provisionalFrom
             </div>
             <div className="fc-stat filled" style={{ background: fill, color: textOn(fill) }}>
               <span className="fc-stat-label">% of median</span>
-              <strong>{s?.pctOfMedian == null ? "–" : `${fmt(s.pctOfMedian)}%`}</strong>
+              <strong>{s?.pctOfMedian == null ? "n/a" : `${fmt(s.pctOfMedian)}%`}</strong>
             </div>
             <div className="fc-stat filled" style={{ background: fillMean, color: textOn(fillMean) }}>
               <span className="fc-stat-label">% of multi-year average</span>
-              <strong>{s?.pctOfMean == null ? "–" : `${fmt(s.pctOfMean)}%`}</strong>
+              <strong>{s?.pctOfMean == null ? "n/a" : `${fmt(s.pctOfMean)}%`}</strong>
               <span className="fc-stat-note">{s ? `${s.diffFromMean >= 0 ? "+" : ""}${fmt(s.diffFromMean)} vs average` : ""}</span>
             </div>
             <div className="fc-stat">
@@ -66,7 +66,7 @@ export function FocusCard({ months, days, focus, scale, dataEnd, provisionalFrom
             </div>
             <div className="fc-stat">
               <span className="fc-stat-label">Anomaly (z-score)</span>
-              <strong>{s?.z == null ? "–" : (s.z >= 0 ? "+" : "") + fmt(s.z, 2)}</strong>
+              <strong>{s?.z == null ? "n/a" : (s.z >= 0 ? "+" : "") + fmt(s.z, 2)}</strong>
             </div>
             </>)}
           </div>

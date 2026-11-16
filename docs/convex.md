@@ -52,7 +52,7 @@ GET {VITE_CONVEX_SITE_URL}/hotspots.csv?bbox=west,south,east,north&start=YYYY-MM
 | Export share of that budget | `EXPORT_TX_PER_10MIN` (default 1,000): exports can never take the last 500, so the daily pull (72 US / 18 Iberia) always gets its budget | 429 + `Retry-After` |
 | Per-client limit | `EXPORT_TX_PER_CLIENT_HOUR` (default 1,000, rolling hour), keyed by a SHA-256 hash of the first `X-Forwarded-For` address (the address itself is never stored) | 429 + `Retry-After` |
 | Daily export budget | `EXPORT_TX_PER_DAY` (default 10,000, rolling 24 h) | 429 + `Retry-After` (24 h) |
-| Key missing or FIRMS error | — | 502 with a key-redacted message (≤ 300 characters) |
+| Key missing or FIRMS error | n/a | 502 with a key-redacted message (≤ 300 characters) |
 
 Responses are built inside the 64 MB default runtime: 1-day windows (same transaction cost), at most 3 responses in memory, line-by-line conversion. Measured: a 3-day California NRT export (1,855 rows) and a one-day Iberia export with all four 2025 SP products (3,473 rows) return in about 1 s; a CONUS-wide 10-day request returns 413 in about 1 s.
 

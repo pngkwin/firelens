@@ -91,7 +91,7 @@ Since then, presets load a single precomputed file (`aoi/<id>.json.gz`; Texas 60
 - Calendar e2e (`tests/calendar.spec.ts`) 5/5.
 - Existing e2e 7/7, after renaming the nav button to "CSV workspace" and pointing the specs at `/#workspace`.
 
-## Fourth session (2026-11-15): investigation workflow — read this first
+## Fourth session (2026-11-15): investigation workflow (read this first)
 
 Uncommitted on `wip/phase5-snapshot`. Added below the calendar (one section, tabs synced to `?tab=`, map layer `?map=`): research casebook (`src/data/v2/casebook.ts`), sensor disagreement atlas (`disagreement.ts`, `DisagreementAtlas.tsx`, map layer in `AoiMap.tsx`), sensor-transition investigator (`transition.ts`, `TransitionPanel.tsx`), evidence lab (`EvidenceLab.tsx`, data from `calibration.json` `validation`), regional brief (`brief.ts`, `RegionalBrief.tsx`).
 - `fit.mjs` now also publishes held-out records, the small-area interval factor (`aoiInterval`: US 1.65, out-of-sample zone coverage 79.9 % → 90.2 %; Iberia 1.05), outage-detection sensitivity runs, and the documented notices. Both regions refitted.

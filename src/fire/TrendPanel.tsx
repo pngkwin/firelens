@@ -65,7 +65,7 @@ export function TrendPanel({ months, scale, from, to }: Props) {
               <tr key={a.year}>
                 <td>{a.year}</td>
                 <td className="num">{fmt(a.value)}</td>
-                <td className="num">{a.hi !== a.lo ? `${fmt(a.lo)}–${fmt(a.hi)}` : "–"}</td>
+                <td className="num">{a.hi !== a.lo ? `${fmt(a.lo)}–${fmt(a.hi)}` : "n/a"}</td>
                 <td>{[a.partial ? "partial year" : "", why.get(a.year) ?? "", a.reducedMonths ? `${a.reducedMonths} month${a.reducedMonths === 1 ? "" : "s"} with reduced satellite coverage` : ""].filter(Boolean).join("; ")}</td>
               </tr>
             ))}

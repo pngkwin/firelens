@@ -61,8 +61,12 @@ export function buildBrief(b: BriefInput) {
   };
 }
 
-const f = (v: number | null | undefined, d = 0) => (v == null || !Number.isFinite(v) ? "–" : v.toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d }));
-const p = (v: number | null | undefined) => (v == null ? "–" : `${(100 * v).toFixed(0)}%`);
+const f = (v: number | null | undefined, d = 0) => {
+  if (v == null || !Number.isFinite(v)) return "n/a";
+  const s = v.toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d });
+  return /^-0(\.0+)?$/.test(s) ? s.slice(1) : s;
+};
+const p = (v: number | null | undefined) => (v == null ? "n/a" : `${(100 * v).toFixed(0)}%`);
 const ym = (m: string) => `${MONTHS[+m.slice(5, 7) - 1]} ${m.slice(0, 4)}`;
 
 /** Markdown version of the brief (download). */
@@ -70,7 +74,7 @@ export function briefMarkdown(br: Brief): string {
   const L: string[] = [];
   L.push(`# ${br.title}`, "", `${br.area.region} · ${br.area.name} · ${ym(br.period.from)} – ${ym(br.period.to)} · data through ${br.period.dataEnd} · generated ${br.generated}`, "");
   L.push("Historical monitoring summary of satellite fire detections on the harmonized MODIS-equivalent scale (fire-cell-days: ~0.74 km² cells with at least one detection on a UTC day). It is not burned area, a count of individual fires, or a fire-risk forecast. A zero means no matching records, not that no fire occurred.", "");
-  L.push("## Peak burning months", ...br.peaks.map((t, i) => `${i + 1}. ${ym(t.key)}: ${f(t.value)}${t.lo != null ? ` (90% interval ${f(t.lo)}–${f(t.hi)}, estimated)` : " (observed MODIS)"}${t.reduced ? " — reduced satellite coverage, lower bound" : ""}`), "");
+  L.push("## Peak burning months", ...br.peaks.map((t, i) => `${i + 1}. ${ym(t.key)}: ${f(t.value)}${t.lo != null ? ` (90% interval ${f(t.lo)}–${f(t.hi)}, estimated)` : " (observed MODIS)"}${t.reduced ? "; reduced satellite coverage, lower bound" : ""}`), "");
   if (br.years.length) L.push("Peak complete years: " + br.years.map((y) => `${y.year} (${f(y.value)})`).join(", ") + ".", "");
   L.push("## Seasonal pattern", `Typical year (median by month): ${br.season.map((s) => `${s.month} ${f(s.median)} (${p(s.share)} of the typical annual total)`).join("; ")}.`, "");
   if (br.planning) L.push("## Planning context (historical pattern, not a forecast)", `In ${br.planning.period} (observed MODIS), ${p(br.planning.share)} of a typical year's detected burning fell in ${br.planning.busiest}, peaking in ${br.planning.peak}; the quietest month was ${br.planning.quiet}. This describes when satellites have historically detected burning in this area; it is not a fire-danger rating or a forecast, and local conditions, fuels and weather decide actual risk.`, "");

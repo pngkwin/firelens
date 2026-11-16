@@ -52,7 +52,12 @@ export function textOn(fill: string) {
   return contrast(fill, "#000000") >= contrast(fill, "#ffffff") ? "#000000" : "#ffffff";
 }
 
-export const fmt = (v: number | null | undefined, digits = 0) => (v == null || !Number.isFinite(v) ? "–" : v.toLocaleString("en-US", { maximumFractionDigits: digits, minimumFractionDigits: digits }));
+export const fmt = (v: number | null | undefined, digits = 0) => {
+  if (v == null || !Number.isFinite(v)) return "n/a";
+  const s = v.toLocaleString("en-US", { maximumFractionDigits: digits, minimumFractionDigits: digits });
+  // A value that rounds to zero must not read as "-0" (e.g. a -0.3% trend shown with no decimals).
+  return /^-0(\.0+)?$/.test(s) ? s.slice(1) : s;
+};
 export const MONTH_ABBR = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 export const monthLabel = (m: string) => `${MONTH_ABBR[+m.slice(5, 7) - 1]} ${m.slice(0, 4)}`;
 

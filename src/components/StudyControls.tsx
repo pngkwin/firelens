@@ -153,7 +153,7 @@ export function StudyControls() {
         <span>
           Dates in UTC ·{" "}
           {extent.start
-            ? `Loaded record extent ${extent.start} — ${extent.end}`
+            ? `Loaded records span ${extent.start} to ${extent.end}`
             : "Import records to establish the available dates"}
         </span>
         {filters.bounds && (

@@ -148,7 +148,7 @@ export function DoyHeatmap({ days, scale, obs, from, to, progress, coverStart, d
             <summary>Peak day and active days per year (table)</summary>
             <table className="fc-table">
               <thead><tr><th scope="col">Year</th><th scope="col">Peak day</th><th scope="col">Peak value</th><th scope="col">Days with fire</th></tr></thead>
-              <tbody>{summary.map((s) => <tr key={s.year}><td>{s.year}</td><td>{s.peakDay ?? "–"}</td><td className="num">{fmt(s.peak, 1)}</td><td className="num">{s.activeDays}</td></tr>)}</tbody>
+              <tbody>{summary.map((s) => <tr key={s.year}><td>{s.year}</td><td>{s.peakDay ?? "n/a"}</td><td className="num">{fmt(s.peak, 1)}</td><td className="num">{s.activeDays}</td></tr>)}</tbody>
             </table>
           </details>
         </>

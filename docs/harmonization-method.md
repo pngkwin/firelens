@@ -6,9 +6,9 @@ This supersedes `harmonization-methodology.md` (the earlier research plan for th
 
 **What FireLens does, in three layers.** It is worth keeping these apart:
 
-1. **Shared format** — FIRMS MODIS and VIIRS records (archive and near-real-time) parsed into one schema with hashes. This alone removes no bias.
-2. **Shared spatial and temporal aggregation** — every detection mapped to an H3 res-8 cell on its UTC day; a cell-day counts once whichever satellites saw it. This removes most pixel-count inflation (several 375 m VIIRS pixels on one fire become one cell-day) but **not** VIIRS's higher sensitivity to small and cool fires: raw VIIRS still records about 2.1× the MODIS cell-days.
-3. **Cross-calibration** — empirical VIIRS→MODIS and Terra→Terra∪Aqua relationships fitted on overlap years and validated on held-out years, applied only where MODIS cannot be used as observed.
+1. **Shared format**: FIRMS MODIS and VIIRS records (archive and near-real-time) parsed into one schema with hashes. This alone removes no bias.
+2. **Shared spatial and temporal aggregation**: every detection mapped to an H3 res-8 cell on its UTC day; a cell-day counts once whichever satellites saw it. This removes most pixel-count inflation (several 375 m VIIRS pixels on one fire become one cell-day) but **not** VIIRS's higher sensitivity to small and cool fires: raw VIIRS still records about 2.1× the MODIS cell-days.
+3. **Cross-calibration**: empirical VIIRS→MODIS and Terra→Terra∪Aqua relationships fitted on overlap years and validated on held-out years, applied only where MODIS cannot be used as observed.
 
 **v3 changes from v2** (prompted by the scientific audit): (1) an observation-coverage audit flags satellite-days without observations from cross-satellite evidence and labels them confirmed/suspected with documented notices; (2) the VIIRS reference skips a satellite with flagged days in the month; (3) months whose MODIS target or VIIRS reference lost a material share of observations are marked reduced coverage, excluded from fitting, validation, baselines, anomaly statistics and trends; (4) every learned parameter (ratios, quantile map, overlap factor ρ, VIIRS cross-calibration) is refitted inside each held-out fold; (5) a nested leave-one-year-out score of the method choice is reported; (6) raw scales have no value before a sensor was in orbit and are compared only across periods observed by the same satellites.
 

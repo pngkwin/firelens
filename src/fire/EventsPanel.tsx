@@ -11,7 +11,7 @@
   const SUFFIX: Record<string, string> = { one: "st", two: "nd", few: "rd", other: "th" };
   /** "1st percentile", "22nd percentile", "11th percentile" (rounded to a whole number first). */
   export const ord = (p: number) => {
-    if (!Number.isFinite(p)) return "–";
+    if (!Number.isFinite(p)) return "n/a";
     const n = Math.round(p);
     return `${fmt(n)}${SUFFIX[ORDINAL.select(n)]} percentile`;
   };

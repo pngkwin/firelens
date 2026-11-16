@@ -19,3 +19,9 @@ data/raw/firms-archive/
 
 # Archives at the repo root (gpt_zip.zip once committed raw FIRMS CSVs; review SEC-6)
 /*.zip
+
+# Video build intermediates (captures, frames, stems)
+submission/video/work/*.png
+submission/video/work/*.wav
+submission/video/work/*.jpg
+

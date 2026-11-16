@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>FireLens 30s</title>
+<style>
+  @font-face { font-family: "Serif"; src: url("fonts/source-serif-4-latin-opsz-normal.woff2") format("woff2"); font-weight: 200 900; }
+  @font-face { font-family: "Sans"; src: url("fonts/source-sans-3-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Sans"; src: url("fonts/source-sans-3-latin-600-normal.woff2") format("woff2"); font-weight: 600; }
+  @font-face { font-family: "Sans"; src: url("fonts/source-sans-3-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+  :root { --forest: #173e36; --deep: #0f2a24; --ember: #eda673; --fire: #b54c20; --paper: #f4f7f5; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--deep); }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--deep); font-family: "Sans", sans-serif; }
+  .shot { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; opacity: 0; will-change: transform, opacity; }
+  .shot img { width: 1920px; height: 1080px; display: block; }
+  #veil { position: absolute; inset: 0; background: var(--deep); opacity: 0; }
+  .hl { position: absolute; border: 3px solid var(--ember); border-radius: 8px; box-shadow: 0 0 0 9999px rgba(15, 42, 36, 0.38); opacity: 0; }
+  #cursor { position: absolute; width: 34px; height: 34px; opacity: 0; filter: drop-shadow(0 3px 5px rgba(0,0,0,.35)); }
+  #ripple { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 3px solid var(--ember); opacity: 0; }
+  #cap { position: absolute; left: 72px; bottom: 72px; max-width: 1180px; padding: 26px 36px 28px; background: rgba(23, 62, 54, 0.95); color: #fff; border-radius: 6px;
+         font-family: "Serif", serif; font-weight: 560; font-size: 50px; line-height: 1.16; letter-spacing: -0.01em; opacity: 0; font-variation-settings: "opsz" 40; }
+  #cap b { color: var(--ember); font-weight: 650; }
+  .card { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 150px; color: #fff; opacity: 0; }
+  .card .big { font-family: "Serif", serif; font-weight: 600; letter-spacing: -0.02em; font-variation-settings: "opsz" 60; line-height: 1; }
+  .card .sub { font-size: 46px; line-height: 1.3; color: #d8e6dd; margin-top: 34px; max-width: 1350px; }
+  #hook .big { font-size: 250px; color: var(--ember); }
+  #reveal { background: rgba(15, 42, 36, 0.82); }
+  #reveal .big, #end .big { font-size: 170px; }
+  #end .url { font-size: 52px; color: var(--ember); font-weight: 600; margin-top: 40px; }
+  #end .sub { font-size: 36px; margin-top: 18px; color: #b9cfc3; }
+  .mark { display: inline-block; vertical-align: -0.06em; margin-right: 34px; }
+  #toast { position: absolute; right: 72px; top: 72px; padding: 18px 26px; background: #fff; color: var(--forest); border: 1px solid #d9e2dc; border-radius: 6px;
+           font-size: 30px; font-weight: 600; opacity: 0; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="shots"></div>
+  <div id="veil"></div>
+  <div id="hl" class="hl"></div>
+  <div id="hl2" class="hl"></div>
+  <div id="ripple"></div>
+  <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2.5 L4 19.5 L8.6 15.4 L11.6 22 L14.6 20.7 L11.7 14.2 L18 14.2 Z" fill="#fff" stroke="#0f2a24" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  <div id="hook" class="card"><div class="big">+72%</div><div class="sub">per decade. That is the US fire trend when NASA's two satellite records are joined naively.</div></div>
+  <div id="reveal" class="card"><div class="big"><svg class="mark" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#f2a16f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>FireLens</div><div class="sub">NASA fire detections since 2000, on one consistent scale.</div></div>
+  <div id="end" class="card"><div class="big"><svg class="mark" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#f2a16f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>FireLens</div><div class="url">firelens-iota.vercel.app</div><div class="sub">Built on NASA FIRMS. United States and Iberian Peninsula, November 2000 to today.</div></div>
+  <div id="cap"></div>
+  <div id="toast">Downloaded firelens_brief_texas.html</div>
+</div>
+<script>
+// META (click targets and highlight boxes, CSS px on a 1920x1080 page) is injected before render().
+window.META = window.META || {};
+const W = 1920, H = 1080;
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ease = (x) => 1 - Math.pow(1 - clamp(x, 0, 1), 3);            // decelerate
+const inout = (x) => { x = clamp(x, 0, 1); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const lerp = (a, b, k) => a + (b - a) * k;
+const prog = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+const center = (b) => b ? { x: b.x + b.w / 2, y: b.y + b.h / 2 } : { x: W / 2, y: H / 2 };
+
+// Shot layers.
+const SHOTS = ["01-calendar", "02-heatmap", "03a-tabs", "03b-transition", "04a-cases", "04b-texas", "05b-evidence", "06b-fires", "07-brief"];
+const layers = {};
+for (const s of SHOTS) {
+  const d = document.createElement("div"); d.className = "shot";
+  const img = document.createElement("img"); img.src = s + ".png"; d.appendChild(img);
+  $("shots").appendChild(d); layers[s] = d;
+}
+
+// Camera: centre (cx, cy) in page px and scale s; clamped so the frame never shows past the page edge.
+function camXY(c) {
+  const s = c.s, cx = clamp(c.x, W / 2 / s, W - W / 2 / s), cy = clamp(c.y, H / 2 / s, H - H / 2 / s);
+  return { s, tx: W / 2 - cx * s, ty: H / 2 - cy * s };
+}
+const toScreen = (cam, p) => ({ x: p.x * cam.s + cam.tx, y: p.y * cam.s + cam.ty });
+const mix = (a, b, k) => ({ x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k), s: lerp(a.s, b.s, k) });
+
+// Scene list: each shot visible over [a, b] with a camera path; swaps inside a scene use a short crossfade.
+function scenes() {
+  const M = window.META, f = (n, k) => (M[n] || {})[k];
+  const c = (b, s) => ({ ...center(b), s });
+  return [
+    { shot: "01-calendar", a: 3.0, b: 8.6, cam: (t) => mix({ x: 960, y: 540, s: 1.0 }, c(f("01-calendar", "focus"), 1.12), inout(prog(t, 6.0, 8.6))), blur: (t) => t < 6 ? 14 : lerp(14, 0, ease(prog(t, 6.0, 6.5))) },
+    { shot: "02-heatmap", a: 8.6, b: 11.0, cam: (t) => mix(c(f("02-heatmap", "panel"), 1.0), c(f("02-heatmap", "panel"), 1.1), inout(prog(t, 8.6, 11))) },
+    { shot: "03a-tabs", a: 11.0, b: 12.0, cam: () => ({ x: 960, y: 540, s: 1.0 }) },
+    { shot: "03b-transition", a: 12.0, b: 16.0, cam: (t) => { const n = f("03b-transition", "naive"), h = f("03b-transition", "harmonized");
+        const both = n && h ? { x: (n.x + h.x + h.w) / 2, y: n.y + n.h / 2 + 120, s: 1.12 } : { x: 960, y: 400, s: 1.12 };
+        return mix({ x: 960, y: 540, s: 1.0 }, both, inout(prog(t, 12.2, 13.2))); } },
+    { shot: "04a-cases", a: 16.0, b: 16.9, cam: () => ({ x: 960, y: 540, s: 1.0 }) },
+    { shot: "04b-texas", a: 16.9, b: 20.0, cam: (t) => { const g = f("04b-texas", "finding");
+        return mix({ x: 960, y: 540, s: 1.0 }, g ? { x: 960, y: g.y + 260, s: 1.18 } : { x: 960, y: 300, s: 1.3 }, inout(prog(t, 17.1, 18.1))); } },
+    { shot: "05b-evidence", a: 20.0, b: 21.8, cam: (t) => mix({ x: 960, y: 520, s: 1.04 }, { x: 960, y: 480, s: 1.14 }, inout(prog(t, 20, 21.8))) },
+    { shot: "06b-fires", a: 21.8, b: 24.0, cam: (t) => { const k = f("06b-fires", "card");
+        return mix({ x: 960, y: 540, s: 1.0 }, k ? c(k, 1.35) : { x: 960, y: 540, s: 1.2 }, inout(prog(t, 21.9, 22.9))); } },
+    { shot: "07-brief", a: 24.0, b: 27.0, cam: (t) => mix({ x: 960, y: 540, s: 1.0 }, { x: 960, y: 420, s: 1.12 }, inout(prog(t, 25.8, 27))) },
+  ];
+}
+
+// Cursor paths: move to a target, press, release. Times in seconds.
+function cursorAt(t, sc, cam) {
+  const M = window.META;
+  const paths = [
+    { a: 11.0, click: 11.85, b: 12.15, from: { x: 1400, y: 900 }, to: center((M["03a-tabs"] || {}).target), on: ["03a-tabs", "03b-transition"] },
+    { a: 16.0, click: 16.75, b: 17.05, from: { x: 1500, y: 950 }, to: center((M["04a-cases"] || {}).target), on: ["04a-cases", "04b-texas"] },
+    { a: 24.3, click: 25.25, b: 26.2, from: { x: 1500, y: 950 }, to: center((M["07-brief"] || {}).target), on: ["07-brief"] },
+  ];
+  for (const p of paths) {
+    if (t < p.a || t > p.b || !p.on.includes(sc.shot)) continue;
+    const k = inout(prog(t, p.a, p.click - 0.12));
+    const pos = { x: lerp(p.from.x, p.to.x, k), y: lerp(p.from.y, p.to.y, k) };
+    const scr = toScreen(cam, pos);
+    const press = t >= p.click && t < p.click + 0.12;
+    const fade = Math.min(prog(t, p.a, p.a + 0.15), 1 - prog(t, p.b - 0.2, p.b));
+    return { ...scr, press, fade, click: p.click };
+  }
+  return null;
+}
+
+// Captions: [start, end, html]. Each stays fully settled for ~0.3 s per word.
+const CAPS = [
+  [6.4, 10.8, "Every month since November 2000, for the United States and Iberia."],
+  [12.3, 15.8, "Joined naively: <b>+72%</b> per decade. Harmonized: <b>0%</b>."],
+  [17.2, 19.85, "Texas: the March peak holds across both decades."],
+  [20.3, 23.85, "Validated on held-out years and against documented fires."],
+  [24.3, 26.85, "A regional brief, ready to download and print."],
+];
+
+// Highlights: [shotName, metaKey, start, end, which layer].
+const HLS = [
+  ["03b-transition", "naive", 13.2, 15.9, "hl"],
+  ["03b-transition", "harmonized", 13.9, 15.9, "hl2"],
+  ["04b-texas", "finding", 18.0, 19.9, "hl"],
+  ["06b-fires", "card", 22.9, 23.95, "hl"],
+];
+
+function render(t) {
+  const list = scenes();
+  for (const s of SHOTS) layers[s].style.opacity = 0;
+  let active = null, cam = null;
+  for (const sc of list) {
+    if (t < sc.a - 0.15 || t > sc.b + 0.15) continue;
+    const c = camXY(sc.cam(t));
+    const el = layers[sc.shot];
+    el.style.transform = `translate(${c.tx}px, ${c.ty}px) scale(${c.s})`;
+    // In-scene swaps (shots that follow each other within a scene) crossfade over 0.15 s.
+    const op = Math.min(prog(t, sc.a - 0.15, sc.a), 1 - prog(t, sc.b, sc.b + 0.15));
+    el.style.opacity = op;
+    el.style.filter = sc.blur ? `blur(${sc.blur(t)}px) brightness(${t < 6 ? 0.55 : 1})` : "none";
+    if (t >= sc.a && t < sc.b) { active = sc; cam = c; }
+  }
+  // Dip through the background at hard cuts between beats.
+  const cuts = [6, 11, 16, 20, 24, 27];
+  let veil = 0;
+  for (const cu of cuts) veil = Math.max(veil, 1 - Math.abs(t - cu) / 0.18);
+  if (t < 3) veil = 1;
+  if (t >= 27) veil = 1;
+  $("veil").style.opacity = clamp(veil, 0, 1);
+
+  // Cards.
+  const hookIn = ease(prog(t, 0.15, 0.7)), hookOut = prog(t, 2.75, 3.0);
+  const hook = $("hook");
+  hook.style.opacity = hookIn * (1 - hookOut);
+  hook.querySelector(".big").style.transform = `translateY(${(1 - hookIn) * 24}px) scale(${lerp(1, 1.04, prog(t, 0.3, 3))})`;
+  hook.querySelector(".sub").style.opacity = ease(prog(t, 0.55, 1.0));
+  const rv = $("reveal"), rin = ease(prog(t, 3.0, 3.5)), rout = prog(t, 5.8, 6.0);
+  rv.style.opacity = t >= 3 && t < 6.05 ? rin * (1 - rout) : 0;
+  rv.querySelector(".big").style.transform = `translateY(${(1 - rin) * 20}px)`;
+  rv.querySelector(".sub").style.opacity = ease(prog(t, 3.35, 3.8));
+  const en = $("end"), ein = ease(prog(t, 27.05, 27.6));
+  en.style.opacity = t >= 27 ? ein : 0;
+  en.querySelector(".big").style.transform = `translateY(${(1 - ein) * 20}px)`;
+  en.querySelector(".url").style.opacity = ease(prog(t, 27.4, 27.9));
+  en.querySelector(".sub").style.opacity = ease(prog(t, 27.7, 28.2));
+
+  // Caption.
+  const cap = $("cap"); cap.style.opacity = 0;
+  for (const [a, b, html] of CAPS) {
+    if (t < a || t > b) continue;
+    if (cap.dataset.html !== html) { cap.innerHTML = html; cap.dataset.html = html; }
+    const k = ease(prog(t, a, a + 0.35)), out = prog(t, b - 0.15, b);
+    cap.style.opacity = k * (1 - out);
+    cap.style.transform = `translateY(${(1 - k) * 14}px)`;
+  }
+
+  // Highlights follow the camera.
+  for (const id of ["hl", "hl2"]) $(id).style.opacity = 0;
+  if (active) for (const [shot, key, a, b, id] of HLS) {
+    if (active.shot !== shot || t < a || t > b) continue;
+    const bx = (window.META[shot] || {})[key]; if (!bx) continue;
+    const p = toScreen(cam, { x: bx.x - 8, y: bx.y - 8 });
+    const el = $(id), k = ease(prog(t, a, a + 0.3)), out = prog(t, b - 0.15, b);
+    el.style.left = p.x + "px"; el.style.top = p.y + "px";
+    el.style.width = (bx.w + 16) * cam.s + "px"; el.style.height = (bx.h + 16) * cam.s + "px";
+    el.style.opacity = k * (1 - out);
+    // Only the first highlight of a pair dims the page; the second is a plain outline.
+    el.style.boxShadow = id === "hl" && !HLS.some((h) => h[4] === "hl2" && h[0] === shot && t >= h[2] && t <= h[3]) ? "" : "none";
+  }
+
+  // Cursor and click ripple.
+  const cur = active && cam ? cursorAt(t, active, cam) : null;
+  const cel = $("cursor"), rip = $("ripple");
+  cel.style.opacity = 0; rip.style.opacity = 0;
+  if (cur) {
+    cel.style.opacity = cur.fade;
+    cel.style.left = cur.x - 6 + "px"; cel.style.top = cur.y - 3 + "px";
+    cel.style.transform = cur.press ? "scale(0.88)" : "none";
+    const r = prog(t, cur.click, cur.click + 0.45);
+    if (r > 0 && r < 1) {
+      rip.style.opacity = (1 - r) * 0.9;
+      rip.style.left = cur.x + "px"; rip.style.top = cur.y + "px";
+      rip.style.transform = `scale(${1 + r * 3.2})`;
+    }
+  }
+
+  // Download toast after the brief click.
+  const ti = ease(prog(t, 25.55, 25.9)), to = prog(t, 26.75, 26.95);
+  $("toast").style.opacity = ti * (1 - to);
+  $("toast").style.transform = `translateY(${(1 - ti) * -12}px)`;
+}
+window.render = render;
+window.ready = async () => {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map((i) => i.decode().catch(() => {})));
+  return true;
+};
+</script>
+</body>
+</html>

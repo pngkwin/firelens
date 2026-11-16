@@ -176,7 +176,7 @@ export function AoiMap({ polys, overview, points, layer = "activity", fromYear, 
         <span role="status">{error || hint}</span>
         {!error && !hint && (layer === "activity"
           ? `Hexagons: raw fire-cell-days, any sensor, ${fromYear}–${toYear} (max ${fmt(hexes.max)} per ~12,000 km² cell).`
-          : `Hexagons: ${layer === "viirs-only" ? "VIIRS-only" : layer === "modis-only" ? "MODIS-only" : "both-sensor"} share of each ~12,000 km² cell's fire-cell-days, ${Math.max(2012, fromYear)}–${toYear} (dark 0% → yellow 100%; cells under 20 cell-days hidden). Map resolution is annual: whole calendar years per cell, so outage months cannot be removed here; the monthly, day/night and seasonal comparisons in the atlas panel exclude them.`)}
+          : `Hexagons: ${layer === "viirs-only" ? "VIIRS-only" : layer === "modis-only" ? "MODIS-only" : "both-sensor"} share of each ~12,000 km² cell's fire-cell-days, ${Math.max(2012, fromYear)}–${toYear} (dark 0% to yellow 100%; cells under 20 cell-days hidden). The map counts whole calendar years, so it cannot drop outage months. The monthly, day/night and seasonal comparisons in the atlas panel do exclude them.`)}
         {!error && !hint && points && points.length > 0 && ` Ringed dots: published origin points of ${points.map((p) => p.label).join(", ")} (CAL FIRE); not perimeters.`}
       </p>
     </div>

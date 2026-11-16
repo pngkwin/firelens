@@ -7,7 +7,7 @@ import { download } from "./png";
 
 type Props = { cal: Calibration; calSha: string; region: RegionId; onFocus: (m: string) => void };
 const METHOD_NAME: Record<string, string> = { stratified: "Stratified ratio (zone × month × day/night)", qm: "Quantile mapping", global: "Single global ratio", raw: "Raw S-NPP, no calibration" };
-const pct = (x: number | null | undefined, d = 1) => (x == null || !Number.isFinite(x) ? "–" : `${(100 * x).toFixed(d)}%`);
+const pct = (x: number | null | undefined, d = 1) => (x == null || !Number.isFinite(x) ? "n/a" : `${(100 * x).toFixed(d)}%`);
 
 /** Held-out validation of the harmonization, from calibration.json (written by scripts/harmonize/fit.mjs). */
 export function EvidenceLab({ cal, calSha, region, onFocus }: Props) {

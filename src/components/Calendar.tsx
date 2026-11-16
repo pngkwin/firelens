@@ -167,7 +167,7 @@ export function Calendar() {
                           })
                         }
                       >
-                        {unavailable ? "—" : count.toLocaleString()}
+                        {unavailable ? "n/a" : count.toLocaleString()}
                         {partial && !unavailable && (
                           <sup aria-hidden="true">*</sup>
                         )}
@@ -252,7 +252,7 @@ export function Calendar() {
           </span>
         ))}
         <span>
-          <i className="unknown" />— Outside record/study extent
+          <i className="unknown" />n/a: outside record or study extent
         </span>
       </div>
       <div className="calendar-note">

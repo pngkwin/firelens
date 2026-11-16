@@ -173,7 +173,9 @@ A cool green foundation supports warm activity encodings and a clear blue instru
 
 ## Typography
 
-**Display and Body Font:** Source Sans 3 with sans-serif fallback. Locally bundled Latin weights are 400, 500, 600, and 700. No separate display face is used.
+**Body Font:** Source Sans 3 with sans-serif fallback. Locally bundled Latin weights are 400, 500, 600, and 700.
+
+**Display Font:** Source Serif 4 (variable, optical size axis, self-hosted via `@fontsource-variable/source-serif-4`). It is used only for the workspace heading (h1) and the brand wordmark, like the title on an atlas plate. Everything else stays in Source Sans 3. See "Hybrid layer" below.
 
 **Label/Mono Font:** the same humanist sans for labels; `ui-monospace, monospace` for provenance hashes only.
 
@@ -236,6 +238,19 @@ The project has no generic card component. White contiguous regions use fine bor
 Monthly heat cells display numeric counts, with an ordered five-step warm scale. A selected cell has a forest outline. Zero is pale with a border and a numeric zero; outside the loaded record extent is a muted dash and a disabled cell. The timeline leaves unavailable sensor periods as gaps and labels unavailable values explicitly. Tooltips, sensor legends, and available data tables reinforce meaning without relying on color alone.
 
 Map markers and timeline lines retain the same instrument identities. Selection exposes an in-flow inspector with a two-column definition list. No authored raster illustration is required: the shipped visual language is CSS, SVG marks, measured data, and remote map tiles.
+
+## Hybrid layer (2026-11-15 polish pass)
+
+The analytical surfaces keep everything above. The page frame gets a little more character. The rules live at the end of `src/styles.css`.
+
+- **Heading as an atlas plate title:** serif h1 in forest, `clamp(1.7rem, 1.15rem + 1.5vw, 2.45rem)`, balanced wrapping, subtitle capped at 64ch. No eyebrow labels, no accent bars.
+- **One authored motion moment:** the h1 and subtitle rise 8px and fade in once on load (480ms, 80ms apart, `cubic-bezier(0.2, 0, 0, 1)`). Nothing else animates on entry. `prefers-reduced-motion: reduce` turns it off.
+- **Press feedback:** enabled buttons move down 1px on `:active`; secondary buttons take the selection wash; heat cells darken slightly instead of moving.
+- **Radius scale:** controls 5px, analytical panels 6px (`--r-control`, `--r-panel`), heat cells 3px. Workspace regions in the CSV view stay square.
+- **No coloured side stripes:** emphasis comes from a tonal fill and a full 1px border.
+- **Loading:** the calendar column shows skeleton panels shaped like the focus card and month grid while data loads, so the layout does not jump. Suspense fallbacks reserve their final height.
+- **Missing values** read "n/a" everywhere (tables, cards, exports). Numbers that round to zero never show as "-0".
+- **Phone header:** destinations stay on one line and scroll sideways.
 
 ## Do's and Don'ts
 

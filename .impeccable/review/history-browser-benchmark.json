@@ -1,7 +1,7 @@
 {
-  "datasetReadyMs": 2257,
-  "fullYearAggregateQueryMs": 307,
-  "platformQueryIncludingControlMs": 327,
+  "datasetReadyMs": 1095,
+  "fullYearAggregateQueryMs": 148,
+  "platformQueryIncludingControlMs": 143,
   "viewport": "1440x1000 then 390x844",
   "records": 54191
 }
