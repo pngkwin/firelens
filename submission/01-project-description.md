@@ -1,7 +1,7 @@
 # FireLens: one consistent fire record across MODIS and VIIRS
 
 **Challenge:** NASA Space Apps Challenge 2026, *Harmonization of MODIS and VIIRS Hot Spots*
-**Public app:** see `06-submission-checklist.md` (public URL)
+**Public app:** https://firelens-iota.vercel.app
 **Supported regions:** United States (contiguous, Alaska, Hawaii) and Iberian Peninsula, complete from November 2000 to 14 November 2026 (313 monthly periods). FireLens is not a global database.
 
 ## The problem

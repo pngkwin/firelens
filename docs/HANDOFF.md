@@ -252,3 +252,4 @@ The environment is Windows with Git Bash and PowerShell. Shell heredocs and back
 - Evidence lab states exactly how the 90.2 % small-area coverage was evaluated and its limits.
 - Not done: fire perimeters (MTBS/NIFC) are not integrated; Texas and Iberia incidents have no map points (no published coordinates were used).
 - Submission material: `submission/`.
+- Deployed: https://firelens-iota.vercel.app (Vercel project `firelens`, account yeshwinkothamasu-6371, static copy of dist + vercel.json via `npx vercel@65.9.0 deploy --prod` from a scratch folder; no Git integration, no env vars).

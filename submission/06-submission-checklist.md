@@ -1,6 +1,6 @@
 # Final submission checklist
 
-**Public website:** PUBLIC_URL_PENDING (filled in after deployment)
+**Public website:** https://firelens-iota.vercel.app (Vercel production, static; deployed and browser-tested 2026-11-16)
 **Repository branch:** `wip/phase5-snapshot`, local commit only; the GitHub repository is not published.
 
 ## Done by the team and Claude (verified)
@@ -11,6 +11,7 @@
 - [x] Tests: `npm test` (vitest), `npx tsc -b`, `npm run build` (with data, history and ingest verification), `npm run test:e2e` (Playwright).
 - [x] Provenance audit: raw rows reconciled to published cell-days; 19,270 recent records identical to fresh NASA FIRMS files.
 - [x] Submission texts in this folder.
+- [x] Deployed to Vercel production (static build; no keys, no backend); public site checked in a browser: calendar, Texas/Iberia/California cases, all six steps, direct links and reload, phone width (no horizontal scroll), downloads (monthly CSV, calendar PNG, provenance JSON, season CSV, validation CSV, brief Markdown and HTML).
 
 ## Actions only you can do
 
