@@ -5,9 +5,17 @@ import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 const BASE = "https://firms.modaps.eosdis.nasa.gov";
+// FIRMS keys are 32 hexadecimal characters; any standalone token of that shape is redacted too.
+const KEY_LIKE = /(?<![0-9a-f])[0-9a-f]{32}(?![0-9a-f])/gi;
+export const redactKey = (s, key) => String(s ?? "").split(key).join("<MAP_KEY>").replace(KEY_LIKE, "<MAP_KEY>");
+
+function checkKey(key) {
+  if (!/^[0-9a-f]{32}$/i.test(key)) throw Error("FIRMS_MAP_KEY is not 32 hexadecimal characters (the value is not printed).");
+  return key;
+}
 
 export function loadKey(root = process.cwd()) {
-  if (process.env.FIRMS_MAP_KEY) return process.env.FIRMS_MAP_KEY.trim();
+  if (process.env.FIRMS_MAP_KEY) return checkKey(process.env.FIRMS_MAP_KEY.trim());
   const file = resolve(root, ".env.local");
   if (!existsSync(file))
     throw Error("FIRMS_MAP_KEY missing: add it to .env.local (gitignored).");
@@ -16,11 +24,11 @@ export function loadKey(root = process.cwd()) {
     .find((l) => /^\s*FIRMS_MAP_KEY\s*=/.test(l));
   const key = line?.split("=").slice(1).join("=").trim().replace(/^["']|["']$/g, "");
   if (!key) throw Error("FIRMS_MAP_KEY is empty in .env.local.");
-  return key;
+  return checkKey(key);
 }
 
 export function makeClient(key, { timeoutMs = 120_000 } = {}) {
-  const redact = (s) => String(s).split(key).join("<MAP_KEY>");
+  const redact = (s) => redactKey(s, key);
   async function get(path) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);

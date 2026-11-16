@@ -20,6 +20,17 @@ const cors = (req: Request): Record<string, string> => {
 const json = (req: Request, status: number, body: unknown, extra: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", ...cors(req), ...extra } });
 
+/**
+ * Stable, non-reversible id for the caller, for the per-client export limit.
+ * Uses the first X-Forwarded-For address (set by Convex's edge); only a
+ * SHA-256 hash is stored, never the address.
+ */
+export async function clientId(req: Request): Promise<string> {
+  const addr = (req.headers.get("X-Forwarded-For") ?? req.headers.get("X-Real-IP") ?? "unknown").split(",")[0].trim();
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`firelens-export:${addr}`));
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
 const exportCsv = httpAction(async (ctx, req) => {
   const url = new URL(req.url);
   const today = new Date().toISOString().slice(0, 10);
@@ -36,7 +47,7 @@ const exportCsv = httpAction(async (ctx, req) => {
     const jobs = planRange({ sources: SOURCES, availability, boxes: [{ id: "bbox", bbox }], from: start, to: end, sensors, size: 1 }); // 1-day windows keep each response small (same transaction cost)
     const tx = txCost(jobs);
     if (tx) {
-      const budget = await ctx.runMutation(internal.ledger.reserve, { tx, purpose: "export" });
+      const budget = await ctx.runMutation(internal.ledger.reserve, { tx, purpose: "export", client: await clientId(req) });
       if (!budget.ok) return json(req, 429, { error: budget.reason }, { "Retry-After": String(Math.ceil(budget.retryAfterMs / 1000)) });
     }
     // The default runtime has 64 MB: count each response before converting it,

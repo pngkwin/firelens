@@ -27,7 +27,8 @@ export default defineSchema({
   meta: defineTable({ key: v.string(), value: v.string(), updatedAt: v.number() }).index("by_key", ["key"]),
 
   // Every FIRMS area-API transaction spent from Convex (2 per day of window).
-  firmsLedger: defineTable({ at: v.number(), tx: v.number(), purpose: v.string() }).index("by_at", ["at"]),
+  // client: SHA-256 of the export caller's address (exports only; per-client hourly limit).
+  firmsLedger: defineTable({ at: v.number(), tx: v.number(), purpose: v.string(), client: v.optional(v.string()) }).index("by_at", ["at"]),
 
   // One row per pull (status page and debugging). Errors are key-redacted.
   runs: defineTable({

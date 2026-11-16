@@ -38,7 +38,59 @@ Severity: **high** = breaks a core flow or a WCAG 2.2 Level A criterion in a com
 
 Verified as fine (no action) and doc corrections made are listed at the end.
 
+## Resolution status (2026-11-15, second session)
+
+Every finding was addressed in the working tree of `wip/phase5-snapshot` (not committed yet). The tests named in the last column pass, as does the Phase 6 gate: `npm test` 186/186 three times in a row, `npx tsc -b`, `ingest:test` 14/14, `history:test` 2 + 1 skipped (original 2024 CSVs absent), `npm run build`, and `npm run test:e2e` 21/21.
+
+| ID | Status | What changed | Test |
+|---|---|---|---|
+| DATA-1, REPO-1 | fixed (first session) | `.gitattributes` `* -text`; gitlink untracked, `.claude/worktrees/` ignored | — |
+| A11Y-1 | fixed | tab stop = arrowed or focus month only if in range, else last in range; focus month clamped to From–To | `a11y.spec.ts` A11Y-1/8 |
+| A11Y-2 | fixed | `textOn()` picks black or white by higher contrast (≥ 4.58:1 on any fill); no opacity on coloured tiles | `colors.test.ts` (1,001 samples per ramp) |
+| A11Y-3 | fixed | markers drawn in `--mark` = `textOn(fill)` (screen and PNG); two-tone focus ring (white + `#132a24`) | `colors.test.ts`; checked visually in Chrome |
+| A11Y-4 | fixed | "Polygon vertices" form (one lon,lat per line) | `fixes.test.ts`, `a11y.spec.ts` A11Y-4/12 |
+| A11Y-5 | fixed | day-of-year canvas focusable; arrows ±1 day/year, PageUp/Down ±30 days, Home/End; polite announcements only while navigating by keyboard | `a11y.spec.ts` A11Y-5 |
+| A11Y-6 | fixed | skip link moves focus to `<main tabindex=-1>` without touching the hash; renamed "Skip to main content" | `a11y.spec.ts` A11Y-6 |
+| A11Y-7 | fixed | cell names start with the visible text ("16k, Aug 2020: …") | `a11y.spec.ts` A11Y-7, `calendar.spec.ts` |
+| A11Y-8 | fixed | native table with buttons (no `role=grid`), so year totals and empty cells are readable with table commands; `aria-pressed` on the focus month | `a11y.spec.ts` A11Y-1/8 |
+| A11Y-9 | fixed | no whole-panel live regions; one concise sr-only focus summary; timing text outside the status; map legend no longer announced | `a11y.spec.ts` A11Y-9/10 |
+| A11Y-10 | fixed | Legend, `2026*` partial-year tick, `accessibilityLayer={false}` inside `role=img`, "Annual totals" table | `a11y.spec.ts` A11Y-9/10 |
+| A11Y-11 | fixed | out-of-period days hatched (`#5f7069`, ≥ 3:1 vs zero fill and white) with a legend key | `colors.test.ts` |
+| A11Y-12 | fixed | `aria-invalid` + `aria-describedby` on the failing form only; radius limit in the label; key handler scoped to the map area (Enter finishes only from the map); `role=group`; label on the MapLibre canvas | `a11y.spec.ts` A11Y-4/12 |
+| SEC-1 | fixed, partly by design | exports capped at `EXPORT_TX_PER_10MIN` (1,000 of 1,500) so the pull keeps 500; per-client `EXPORT_TX_PER_CLIENT_HOUR` (1,000) keyed by a SHA-256 of the address. **Not done:** a flat per-request cap of ~100, because a legitimate 31-day, both-sensor export costs about 190–250 transactions; the per-client limit covers the abuse case. `ALLOWED_ORIGINS` still needs setting at deploy time. **Needs `npm run convex:push`** (schema adds optional `firmsLedger.client`) | `functions.test.ts` "export abuse limits" |
+| SEC-2 | fixed | `live:status` returns an error class; full text stays in `runs` | `functions.test.ts` |
+| SEC-3 | fixed | `redact()` matches the key in any case plus any standalone 32-hex token (SHA-256 untouched); key format validated in `firmsKey()` / `loadKey()` without printing it | `functions.test.ts` (export, availability, case echo) |
+| SEC-4 | fixed | CSP, nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy in `vercel.json`; `vite preview` serves the same headers | `a11y.spec.ts` SEC-4 (no CSP violations with map, workers, fonts) |
+| SEC-5 | fixed | `guardFormula()` in backend CSV and browser exports (numbers such as `-120.5` untouched) | `exportsV2.test.ts`, `functions.test.ts` |
+| SEC-6 | partly | `gpt_zip.zip` untracked (`git rm --cached`, file kept on disk), `/*.zip` ignored. History rewrite is the owner's decision. Also noted: `.agents/skills/impeccable/scripts/bin/windows-x64/impeccable.exe` (22 MB) is tracked | — |
+| SEC-7 | info, no change | the FIRMS API requires the key in the URL; keep fetch debug logging off | — |
+| BUG-1 | fixed | `exportBoxes()` splits antimeridian areas into two boxes; the point export fetches both | `fixes.test.ts` (Alaska us-02) |
+| BUG-2 | fixed | `copyText()` reports failure; status says "Copy failed: copy the address from the address bar." | `a11y.spec.ts` BUG-2 |
+| BUG-3 | fixed | `pngSubtitle(scale)` uses the scale's unit | `fixes.test.ts` |
+| BUG-4 | fixed | `fit.mjs` reads `endOfProduction` from the manifest; refit of both regions is byte-identical | rerun of `fit.mjs` (no git diff) |
+| BUG-5 | fixed | `Intl.PluralRules` ordinals | `fixes.test.ts` |
+| TEST-1 | fixed | timing assertions moved to `npm run test:perf` (FIRELENS_PERF=1, one file at a time); `npm test` deterministic | 3 consecutive green `npm test` runs |
+
+Also fixed in passing: the fire-episode tables overflowed the page at narrow widths (now scroll inside the panel).
+
+**Performance note (Phase 6 "< 1 s"):** on this machine `npm run test:perf` passes every case except a *drawn* Texas-sized polygon: 1.01–1.06 s in three runs (whole US ~130 ms, California ~400–490 ms, Alaska ~450–610 ms, CONUS box ~150 ms, 50 km circle ~140 ms; California episode clustering 1.2–1.5 s < 3 s). The time is decoding 4 large boundary shards (≈ 510 ms load, ≈ 265 ms aggregation; the point-in-polygon test already runs once per cell). The Texas *preset*, which loads a precomputed `aoi/us-48.json.gz`, takes 0.38 s in the app. Getting a drawn area that large under 1 s would need a smaller shard format or a Web Worker.
+
 ---
+
+## Scientific audit (2026-11-15, third session)
+
+Found by auditing the method, data and analyses against the challenge; fixed in method `fcd-harmonize-v3` (details in [harmonization-validation.md](harmonization-validation.md)).
+
+| ID | Severity | Finding | Status / test |
+|---|---|---|---|
+| SCI-1 | high | VIIRS reference chosen from service dates, not daily observation: S-NPP outages read as low fire (US July 2024 7,697 vs 15,582 observed MODIS, shown as a significant low anomaly; Aug 2022, Jul 2025, Iberia Jul 2024 / Aug 2022). Outage days shown as zero | fixed: coverage audit, reference skips flagged satellites, reduced-coverage months withheld from claims; `coverage.test.ts`, `tests/coverage.spec.ts` |
+| SCI-2 | high | Raw scales counted pre-launch years as zeros: raw-VIIRS July baselines included 11 zero years and the trend showed "+121 %/decade, significant" | fixed: no value before launch, same-satellite baselines, rankings and trends; `coverage.test.ts`, `tests/coverage.spec.ts` |
+| SCI-3 | high | In-app Methods page and `harmonization-methodology.md` said harmonization was not implemented | fixed: Methods page rewritten, old doc marked superseded |
+| SCI-4 | medium | "Pre-registered" selection rule was set after v1 Iberia results; selection and evaluation used the same held-out errors | fixed: wording corrected; nested LOYO score reported (same choice in all folds) |
+| SCI-5 | medium | ρ and VIIRS cross-calibration fitted on all years, leaking into held-out scores; cross-calibration biased by S-NPP outages | fixed: refitted per fold; outage months excluded (NOAA-20 0.957 → 0.976) |
+| SCI-6 | medium | Small-area interval coverage never measured | measured, disclosed (US zones 76–83 % for nominal 90 %); not fixed |
+| SCI-7 | low | US near-real-time MODIS Sep–Nov 2026 22–39 % below the VIIRS estimate | disclosed; cause open |
+| SCI-8 | low | Early-warning windows and daily climatology summed pre-launch and outage days as zeros | fixed: windows with unobserved days or other satellites are skipped |
 
 ## Data integrity and build
 

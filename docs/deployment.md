@@ -40,7 +40,7 @@ The static bundle requires no backend or secret. Basemap tiles remain a network 
 
 Import additional official CSVs in the application without altering the bundled demo or interface. Dataset identities, UTC handling, filters and monthly availability are shared. To change the default demonstration, prepare a new explicit bundle version from inspected originals, retain source hashes/provenance, and update the manifest URL and verification expectations together. Do not silently overwrite a published version's geographic or temporal scope.
 
-All comparisons are raw descriptive counts. No validated harmonized fire activity index, correction coefficient, prediction, or historical anomaly values are included. Pure baseline utilities are prepared but the single loaded year remains insufficient history.
+This section covers the v1 CSV workspace (`#workspace`): its comparisons are raw descriptive counts of the 2024 sample, with no harmonization, correction coefficient, prediction or anomaly values. The harmonized calendar (the default view) is a separate product with its own bundle (`public/data/v2`), method and validation: see [harmonization-method.md](harmonization-method.md) and [harmonization-validation.md](harmonization-validation.md).
 
 ## Historical aggregate assets
 

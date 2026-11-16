@@ -3,6 +3,7 @@
 // that transparently decompress .gz are handled: raw gzip bytes are checked
 // against `sha256`, already-decoded JSON against `decodedSha256`.
 import type { V2Partition } from "./codec";
+import type { Coverage } from "./coverage";
 
 export type ManifestFile = { path: string; bytes: number; sha256: string; decodedSha256: string; rows: number };
 export type MonthInfo = { status: string; detections: number | null; excludedStatic: number | null; outsideRegion: number | null; origins: string[] | null; fineCellDays: number | null; detectionsBySource: Record<string, number> | null };
@@ -23,9 +24,10 @@ export type Calibration = {
   region: string;
   inputManifestSha256: string;
   trainingYears: [number, number];
+  trainingYearsWithData: number[];
   periods: { aquaStart: string; driftStart: string };
   periodRule: Record<string, string>;
-  selection: { selected: "stratified" | "qm"; rule: string; looMonthlyMae: Record<string, number> };
+  selection: { selected: "stratified" | "qm"; rule: string; looMonthlyMae: Record<string, number>; nested?: { mae: number; chosen: Record<string, string> } };
   viirsCover: Partial<Record<"S-NPP" | "NOAA-20" | "NOAA-21", [string, string] | null>>;
   crossCalibration: Record<string, { k: number | null; months: number }>;
   rho: Record<string, number | null>;
@@ -35,7 +37,28 @@ export type Calibration = {
   interval90: Interval | null;
   terraInterval90: Interval | null;
   viirsLevel: { basis: string; modisToViirsByMoy: Record<string, number | null> };
-  regionSeries: Record<string, { cls: string; value: number | null; lo: number | null; hi: number | null; viirsLevel: number | null; viirsObserved: boolean }>;
+  regionSeries: Record<string, { cls: string; value: number | null; lo: number | null; hi: number | null; viirsLevel: number | null; viirsObserved: boolean; reduced?: boolean; reference?: string | null }>;
+  /** Observation-coverage audit (v3): flagged satellite-days, monthly loss shares, documented events. */
+  coverage: Coverage;
+  /** Months left out of fitting and validation, and why. */
+  excludedMonths?: Record<string, string>;
+  /** Small-area interval recalibration (overdispersion factor on the sampling term), validated out-of-sample on zone-months. */
+  aoiInterval?: { factor: number; perHeldOutYear: Record<string, number>; outOfSample: { before: IntervalCheck; after: IntervalCheck }; note: string } | null;
+  coverageSensitivity?: Array<{ name: string; thresholds: Record<string, number>; flaggedDays: number; runs: number; confirmedRuns: number; documentedRecovered: number; documented: number; materialSatelliteMonths: number }>;
+  validation?: ValidationBlock;
+};
+export type IntervalCheck = { all: number; byPredictedSize: Record<string, { zoneMonths: number; coverage: number | null }> };
+export type Metric = { n: number; mae: number; rmse: number; bias: number; r: number; ratio: number };
+export type ValidationBlock = {
+  target: string;
+  heldOutMonths: Array<{ month: string; year: number; observed: number; stratified: number; qm: number; global: number; rawSnpp: number }>;
+  metrics: Record<"stratified" | "qm" | "global" | "raw", Metric>;
+  nested: { n: number; mae: number; rmse: number; r: number; chosen: Record<string, string> } | null;
+  annual: Record<"stratified" | "qm", Array<{ year: number; observed: number; estimated: number; ratio: number | null }>>;
+  intervalByMethod: Record<string, { lo: number; hi: number; coverage: number; n: number } | null>;
+  zone: { zoneYears: number; zoneYearsWithAtLeast500: number; annualAbsRelErrorMedian: Record<string, number | null>; annualAbsRelErrorP90: Record<string, number | null> };
+  terraOnly: { n: number; mae: number; rmse: number; r: number; bias: number } | null;
+  drift: Array<{ year: number; months: number; monthsSkippedForCoverage: number; modisObserved: number; viirsEstimated: number; observedOverEstimated: number | null }>;
 };
 
 const hex = (buf: ArrayBuffer) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -96,6 +119,7 @@ export function createBundle(region: string, opts: { base?: string; fetchImpl?: 
     const cal = JSON.parse(text) as Calibration;
     if (cal.inputManifestSha256 !== (await manifestSha())) throw Error(`${region}: calibration was fitted on a different manifest`);
     if (!cal.selection) throw Error(`${region}: calibration predates method v2`);
+    if (!cal.coverage) throw Error(`${region}: calibration predates the observation-coverage audit (method v3); refit with scripts/harmonize/fit.mjs`);
     return { cal, sha256: await sha256(text) };
   });
 

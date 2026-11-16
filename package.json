@@ -11,6 +11,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run",
+    "test:perf": "node scripts/run-perf.mjs",
     "test:e2e": "playwright test",
     "data:prepare": "node scripts/prepare-data.mjs",
     "history:prepare": "node scripts/history/prepare.mjs",

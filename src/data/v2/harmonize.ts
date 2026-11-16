@@ -2,7 +2,9 @@
 // Pure functions shared by the Node fitting/validation scripts and the
 // browser. See docs/harmonization-method.md for the scientific rationale.
 
-export const METHOD_VERSION = "fcd-harmonize-v2";
+import { flaggedDays, materialLoss, monthLossOf, type Coverage } from "./coverage.ts";
+
+export const METHOD_VERSION = "fcd-harmonize-v3";
 
 export type Overpass = "day" | "night";
 export type RatioFit = { k: number | null; m: number; v: number; n: number };
@@ -113,11 +115,18 @@ const monthBounds = (month: string) => {
   return [`${month}-01`, last] as const;
 };
 
+export type ReferenceChoice = { value: number | null; platform: ViirsPlatform | null; loss: number; reduced: boolean };
 /**
  * Single continuous VIIRS reference series on the S-NPP scale. A platform is
  * used only for months it covers completely; NOAA-20/21 are scaled by their
  * cross-calibration factors to S-NPP. Using one platform at a time avoids
  * artificial jumps when the number of VIIRS platforms changes.
+ *
+ * Coverage (v3): a platform with any flagged observation gap in the month
+ * (src/data/v2/coverage.ts) is passed over for the next one in preference
+ * order that observed every day. If none did, the platform that lost the
+ * smallest share of the month is used and the month is `reduced` when that
+ * share is material. Nothing is scaled up to replace missing days.
  */
 export function referenceViirs(
   month: string,
@@ -125,17 +134,24 @@ export function referenceViirs(
   cover: Partial<Record<ViirsPlatform, readonly [string, string]>>,
   cross: Partial<Record<ViirsPlatform, number>>,
   dataEnd?: string, // last loaded day: a current, partial month counts as covered up to here
-): { value: number | null; platform: ViirsPlatform | null } {
+  cov?: Coverage,
+): ReferenceChoice {
   const [first, monthLast] = monthBounds(month);
   const last = dataEnd && dataEnd < monthLast ? dataEnd : monthLast;
+  const eligible: Array<{ p: ViirsPlatform; scale: number }> = [];
   for (const p of ["S-NPP", "NOAA-20", "NOAA-21"] as const) {
     const c = cover[p];
     if (!c || c[0] > first || c[1] < last) continue;
     const scale = p === "S-NPP" ? 1 : cross[p];
     if (scale == null) continue;
-    return { value: values[p] * scale, platform: p };
+    eligible.push({ p, scale });
   }
-  return { value: null, platform: null };
+  if (!eligible.length) return { value: null, platform: null, loss: 0, reduced: false };
+  const clean = eligible.find((e) => flaggedDays(cov, e.p, first, last) === 0);
+  if (clean) return { value: values[clean.p] * clean.scale, platform: clean.p, loss: 0, reduced: false };
+  let best = eligible[0], bestLoss = monthLossOf(cov, best.p, month);
+  for (const e of eligible.slice(1)) { const l = monthLossOf(cov, e.p, month); if (l < bestLoss) { best = e; bestLoss = l; } }
+  return { value: values[best.p] * best.scale, platform: best.p, loss: bestLoss, reduced: materialLoss(cov, best.p, month) };
 }
 
 export type PeriodClass = "terra-only-estimated" | "modis-observed" | "viirs-estimated";
@@ -176,9 +192,13 @@ export function metrics(obs: number[], pred: number[]) {
 
 export type MethodId = "stratified" | "qm";
 /**
- * Pre-registered selection rule (v2): quantile mapping is used for a region
- * only if its leave-one-year-out monthly MAE is strictly lower than the
- * stratified ratio's; otherwise the stratified ratio is kept.
+ * Selection rule: quantile mapping is used for a region only if its
+ * leave-one-year-out monthly MAE is strictly lower than the stratified
+ * ratio's; otherwise the stratified ratio is kept. The rule was written down
+ * before the v2 fits but after the v1 Iberia results had been seen, so it is
+ * not pre-registered in the strict sense. Because the same held-out errors
+ * choose the method and describe it, fit.mjs also reports a nested
+ * leave-one-year-out score of the whole select-then-fit procedure.
  */
 export function selectMethod(mae: { stratified: number; qm: number }): MethodId {
   return Number.isFinite(mae.qm) && mae.qm < mae.stratified ? "qm" : "stratified";

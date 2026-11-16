@@ -1,11 +1,12 @@
 // FIRMS HTTP helpers for Convex actions. The MAP_KEY comes only from the
 // FIRMS_MAP_KEY deployment environment variable; every error string passes
 // through redact() before it can reach a log, a table or a response.
-import { FIRMS_BASE, areaPath, csvHeader, redact, type Availability, type Job } from "./lib/nrtCore";
+import { FIRMS_BASE, MAP_KEY_FORMAT, areaPath, csvHeader, redact, type Availability, type Job } from "./lib/nrtCore";
 
 export function firmsKey(): string {
   const key = process.env.FIRMS_MAP_KEY?.trim();
   if (!key) throw Error("FIRMS_MAP_KEY is not set on this Convex deployment");
+  if (!MAP_KEY_FORMAT.test(key)) throw Error("FIRMS_MAP_KEY on this Convex deployment is not 32 hexadecimal characters");
   return key;
 }
 

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { MonthResult } from "../data/v2/series";
-import { annualTotals, climatology, rankMonths, SCALES, type Scale } from "../data/v2/analysis";
+import { annualTotals, climatology, latestConfig, rankMonths, SCALES, SCALE_PLATFORMS, TREND_MAX_LOSS, type Scale } from "../data/v2/analysis";
 import { fmt, MONTH_ABBR, monthLabel } from "./colors";
 
 type Props = { months: MonthResult[]; scale: Scale; from: string; to: string; onFocus: (m: string) => void };
@@ -8,7 +8,9 @@ type Props = { months: MonthResult[]; scale: Scale; from: string; to: string; on
 export function Rankings({ months, scale, from, to, onFocus }: Props) {
   const inRange = useMemo(() => months.filter((r) => r.month >= from && r.month <= to), [months, from, to]);
   const topMonths = useMemo(() => rankMonths(inRange, scale, 10), [inRange, scale]);
-  const topYears = useMemo(() => annualTotals(inRange, scale).filter((a) => !a.partial).sort((a, b) => b.value - a.value).slice(0, 10), [inRange, scale]);
+  const config = useMemo(() => latestConfig(inRange, scale), [inRange, scale]);
+  // Complete years without material outage; raw scales: only years with the latest satellites.
+  const topYears = useMemo(() => annualTotals(inRange, scale).filter((a) => !a.partial && a.missingShare <= TREND_MAX_LOSS && (!SCALE_PLATFORMS[scale] || a.config === config)).sort((a, b) => b.value - a.value).slice(0, 10), [inRange, scale, config]);
   const clim = useMemo(() => climatology(inRange, scale), [inRange, scale]);
   const peak = Math.max(1, ...clim.map((c) => c.median ?? 0));
   return (
@@ -25,7 +27,7 @@ export function Rankings({ months, scale, from, to, onFocus }: Props) {
             {topMonths.map((t, i) => (
               <tr key={t.key}>
                 <td>{i + 1}</td>
-                <td><button type="button" className="text-button" onClick={() => onFocus(t.key)}>{monthLabel(t.key)}</button>{t.estimated && <span className="fc-badge est small">est.</span>}{t.partial && <span className="fc-badge small">partial</span>}</td>
+                <td><button type="button" className="text-button" onClick={() => onFocus(t.key)}>{monthLabel(t.key)}</button>{t.estimated && <span className="fc-badge est small">est.</span>}{t.partial && <span className="fc-badge small">partial</span>}{t.reduced && <span className="fc-badge warn small">reduced coverage</span>}</td>
                 <td className="num">{fmt(t.value)}</td>
                 <td className="num">{t.lo == null ? "observed" : `${fmt(t.lo)}–${fmt(t.hi)}`}</td>
               </tr>
@@ -61,7 +63,8 @@ export function Rankings({ months, scale, from, to, onFocus }: Props) {
           </tbody>
         </table>
       </div>
-      <p className="fc-note">Year ranks: differences under about 7% (US) or 25% (Iberia) between estimated years are within the validated error and should not be read as a ranking.</p>
+      {SCALE_PLATFORMS[scale] && <p className="fc-note">Raw scale: rankings and the typical year use only {config ? `periods observed by ${config.replaceAll("+", ", ")}` : "one set of satellites"}, because raw counts change when satellites are added or lost.</p>}
+      <p className="fc-note">Months with reduced satellite coverage are lower bounds; years with outages that may miss more than 2% of the total are not ranked. Year ranks: differences under about 7% (US) or 25% (Iberia) between estimated years are within the validated error and should not be read as a ranking.</p>
     </section>
   );
 }

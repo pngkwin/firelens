@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { encodeAoi, makeAoiTest, polysBbox, type Aoi } from "../data/v2/aoi";
+import { encodeAoi, exportBoxes, makeAoiTest, type Aoi } from "../data/v2/aoi";
 import { monthlyCsv, provenance, filterPointsCsv } from "../data/v2/exportsV2";
 import { hotspotsCsvUrl, liveConfigured, EXPORT_MAX_DAYS } from "../data/v2/live";
 import { monthAnomalies, SCALES, type Scale } from "../data/v2/analysis";
@@ -25,7 +25,7 @@ export function ExportPanel({ data, region, aoi, aoiName, from, to, scale }: Pro
     aoi: { encoded: encodeAoi(aoi), label: aoiName, cellRule: "H3 res-5 cells whose centre lies inside the area; region totals clipped to the region boundary", geometry: data.polys },
     range: { from, to }, scale,
     manifestSha256: data.manifestSha!, manifestUrl: `/data/v2/${region}/manifest.json`, planEnd: data.manifest!.planEnd,
-    calibrationSha256: data.calSha!, selection: data.cal!.selection, interval90: data.cal!.interval90, terraInterval90: data.cal!.terraInterval90,
+    calibrationSha256: data.calSha!, selection: data.cal!.selection, interval90: data.cal!.interval90, terraInterval90: data.cal!.terraInterval90, coverage: data.cal!.coverage,
     filesUsed: data.filesUsed,
     live: { configured: data.live.status.configured, days: data.live.days.map((d) => ({ day: d.day, fetchedAt: d.fetchedAt, provisional: d.provisional, sources: d.sources })) },
     zeroMeaning: data.manifest!.product.zeroMeaning, areaCaveat: data.manifest!.product.areaCaveat,
@@ -40,21 +40,29 @@ export function ExportPanel({ data, region, aoi, aoiName, from, to, scale }: Pro
     if (pts.start > pts.end) return setMsg({ text: "Start must not be after end.", error: true });
     const span = Math.round((Date.parse(pts.end) - Date.parse(pts.start)) / 86_400_000) + 1;
     if (span > EXPORT_MAX_DAYS) return setMsg({ text: `At most ${EXPORT_MAX_DAYS} days per point export.`, error: true });
-    const bb = data.polys ? polysBbox(data.polys) : (data.manifest!.region.boxes[0].bbox as [number, number, number, number]);
+    // Areas across the antimeridian (Alaska's Aleutians) are requested as two boxes.
+    const boxes = data.polys ? exportBoxes(data.polys) : [data.manifest!.region.boxes[0].bbox as [number, number, number, number]];
     if (!data.polys && data.manifest!.region.boxes.length > 1) return setMsg({ text: "Choose a smaller area (state, box, circle or polygon) for point exports.", error: true });
-    const url = hotspotsCsvUrl({ bbox: bb, start: pts.start, end: pts.end, sensors });
-    if (!url) return setMsg({ text: "Point export needs the live backend (VITE_CONVEX_SITE_URL is not configured).", error: true });
+    const urls = boxes.map((bbox) => hotspotsCsvUrl({ bbox, start: pts.start, end: pts.end, sensors }));
+    if (urls.some((u) => !u)) return setMsg({ text: "Point export needs the live backend (VITE_CONVEX_SITE_URL is not configured).", error: true });
     setBusy(true);
     try {
-      const res = await fetch(url);
-      if (!res.ok) {
-        const body = (await res.json().catch(() => ({}))) as { error?: string };
-        throw Error(body.error ?? `HTTP ${res.status}`);
+      let csv = "", rows = 0;
+      const sources = new Set<string>();
+      for (const url of urls as string[]) {
+        const res = await fetch(url);
+        if (!res.ok) {
+          const body = (await res.json().catch(() => ({}))) as { error?: string };
+          throw Error(body.error ?? `HTTP ${res.status}`);
+        }
+        const text = await res.text();
+        csv += csv ? text.slice(text.indexOf("\n") + 1) : text; // one header
+        rows += Number(res.headers.get("X-FireLens-Rows") ?? 0);
+        res.headers.get("X-FireLens-Sources")?.split(",").filter(Boolean).forEach((s) => sources.add(s));
       }
-      const csv = await res.text();
-      const out = data.polys ? filterPointsCsv(csv, makeAoiTest(data.polys)) : { csv, kept: Number(res.headers.get("X-FireLens-Rows") ?? 0), total: Number(res.headers.get("X-FireLens-Rows") ?? 0) };
+      const out = data.polys ? filterPointsCsv(csv, makeAoiTest(data.polys)) : { csv, kept: rows, total: rows };
       download(`firelens_points_${region}_${slug(aoiName)}_${pts.start}_${pts.end}.csv`, out.csv, "text/csv");
-      setMsg({ text: `Downloaded ${fmt(out.kept)} detections inside the area (${fmt(out.total)} in its bounding box; sources ${res.headers.get("X-FireLens-Sources") ?? "?"}). Raw FIRMS records, not static-masked.` });
+      setMsg({ text: `Downloaded ${fmt(out.kept)} detections inside the area (${fmt(out.total)} in its bounding box${boxes.length > 1 ? "es on both sides of 180°" : ""}; sources ${sources.size ? [...sources].join(",") : "?"}). Raw FIRMS records, not static-masked.` });
     } catch (err) {
       setMsg({ text: `Point export failed: ${err instanceof Error ? err.message : String(err)}`, error: true });
     } finally {

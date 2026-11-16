@@ -7,8 +7,10 @@ export const REGIONS = { us: "United States", iberia: "Iberian Peninsula" } as c
 export type RegionId = keyof typeof REGIONS;
 export const isRegion = (s: unknown): s is RegionId => typeof s === "string" && s in REGIONS;
 
-export type ViewState = { region: RegionId; aoi: Aoi; from: string | null; to: string | null; scale: Scale; focus: string | null };
-export const DEFAULT_STATE: ViewState = { region: "us", aoi: { kind: "region" }, from: null, to: null, scale: "modis-eq", focus: null };
+export const TAB_IDS = ["season", "atlas", "transition", "evidence", "context", "brief"] as const;
+export const MAP_LAYERS = ["activity", "viirs-only", "both", "modis-only"] as const;
+export type ViewState = { region: RegionId; aoi: Aoi; from: string | null; to: string | null; scale: Scale; focus: string | null; tab: (typeof TAB_IDS)[number]; map: (typeof MAP_LAYERS)[number] };
+export const DEFAULT_STATE: ViewState = { region: "us", aoi: { kind: "region" }, from: null, to: null, scale: "modis-eq", focus: null, tab: "season", map: "activity" };
 
 const MONTH = /^(19|20)\d\d-(0[1-9]|1[0-2])$/;
 
@@ -28,6 +30,10 @@ export function parseState(search: string): { state: ViewState; errors: string[]
   if (state.from && state.to && state.from > state.to) { errors.push("from must not be after to."); state.from = state.to = null; }
   const s = q.get("scale");
   if (s != null) { if (isScale(s)) state.scale = s; else errors.push(`Unknown scale "${s}".`); }
+  const t = q.get("tab");
+  if (t != null) { if ((TAB_IDS as readonly string[]).includes(t)) state.tab = t as ViewState["tab"]; else errors.push(`Unknown tab "${t}".`); }
+  const m = q.get("map");
+  if (m != null) { if ((MAP_LAYERS as readonly string[]).includes(m)) state.map = m as ViewState["map"]; else errors.push(`Unknown map layer "${m}".`); }
   return { state, errors };
 }
 
@@ -39,5 +45,7 @@ export function serializeState(s: ViewState): string {
   if (s.to) q.set("to", s.to);
   if (s.scale !== DEFAULT_STATE.scale) q.set("scale", s.scale);
   if (s.focus) q.set("focus", s.focus);
+  if (s.tab !== DEFAULT_STATE.tab) q.set("tab", s.tab);
+  if (s.map !== DEFAULT_STATE.map) q.set("map", s.map);
   return `?${q.toString().replaceAll("%3A", ":").replaceAll("%2C", ",").replaceAll("%3B", ";")}`;
 }

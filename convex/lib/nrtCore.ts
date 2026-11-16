@@ -214,11 +214,36 @@ export function exportRow(source: string, header: string[], f: string[]): string
   ];
 }
 
-const csvCell = (v: string) => (/[",\r\n]/.test(v) ? `"${v.replaceAll('"', '""')}"` : v);
+/**
+ * Spreadsheet formula-injection guard: a non-numeric value starting with
+ * = + - @ tab or CR gets a leading apostrophe. Numbers (including negative
+ * longitudes such as -120.5) are left unchanged.
+ */
+export const guardFormula = (s: string) => (/^[=+\-@\t\r]/.test(s) && !Number.isFinite(Number(s)) ? `'${s}` : s);
+const csvCell = (raw: string) => {
+  const v = guardFormula(raw);
+  return /[",\r\n]/.test(v) ? `"${v.replaceAll('"', '""')}"` : v;
+};
 export const toCsv = (rows: string[][]) => [EXPORT_COLUMNS.join(","), ...rows.map((r) => r.map(csvCell).join(","))].join("\n") + "\n";
 
-/** Remove any occurrence of the key from text that might reach a response or log. */
-export const redact = (text: string, key: string | undefined) => (key ? String(text).split(key).join("<MAP_KEY>") : String(text));
+/** FIRMS MAP_KEYs are 32 hexadecimal characters. */
+export const MAP_KEY_FORMAT = /^[0-9a-f]{32}$/i;
+/** A standalone 32-hex token (not part of a longer hex string such as a SHA-256). */
+const KEY_LIKE = /(?<![0-9a-f])[0-9a-f]{32}(?![0-9a-f])/gi;
+/**
+ * Remove the key from text that might reach a response, table or log: the exact
+ * key in any letter case and, as a fallback, any key-shaped token.
+ */
+export const redact = (text: string, key: string | undefined) => {
+  let s = String(text);
+  if (key) {
+    const lower = s.toLowerCase(), k = key.toLowerCase();
+    let out = "", i = 0;
+    for (let j = lower.indexOf(k); j >= 0 && k; j = lower.indexOf(k, i)) { out += s.slice(i, j) + "<MAP_KEY>"; i = j + k.length; }
+    s = out + s.slice(i);
+  }
+  return s.replace(KEY_LIKE, "<MAP_KEY>");
+};
 
 export const CSV_HEADER = EXPORT_COLUMNS.join(",") + "\n";
 /** One FIRMS response converted to export CSV lines (no header), line by line. */

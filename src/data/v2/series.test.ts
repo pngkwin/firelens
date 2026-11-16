@@ -25,7 +25,7 @@ describe("bundle client", () => {
       const b = createBundle("iberia", { fetchImpl: fileFetch({ decompress }) });
       const p = await b.partition("region-monthly.json.gz");
       expect(p.kind).toBe("monthly");
-      expect((await b.calibration()).cal.method).toBe("fcd-harmonize-v2");
+      expect((await b.calibration()).cal.method).toBe("fcd-harmonize-v3");
     }
     const tampered = createBundle("iberia", {
       fetchImpl: (async (url: string) => {
@@ -76,6 +76,9 @@ describe.each(["us", "iberia"])("whole-region harmonization equals the fit (%s)"
       if (want.viirsLevel == null) expect(r.viirsLevel).toBeNull();
       else expect(rel(r.viirsLevel!, want.viirsLevel)).toBeLessThan(1e-4);
       expect(!r.viirsLevelEstimated).toBe(want.viirsObserved);
+      // Same coverage decision and reference satellite as the fit.
+      expect(r.reduced).toBe(want.reduced);
+      if (r.cls === "viirs-estimated") expect(r.viirsPlatform).toBe(want.reference);
     }
   });
 });

@@ -1,5 +1,7 @@
 # Harmonization methodology: research plan, not a validated index
 
+> **Superseded (2026-11-15).** This is the research plan written for the 2024 sample in the CSV workspace, before the multi-decade v2 bundle existed. Its statements that harmonization, calibration, uncertainty intervals and anomalies are "not implemented" no longer describe FireLens. The implemented method is [harmonization-method.md](harmonization-method.md) (`fcd-harmonize-v3`) and its results are in [harmonization-validation.md](harmonization-validation.md). The text below is kept unchanged as a record of the original plan; it still describes the CSV workspace, which applies no harmonization.
+
 2026-11-15. **Status:** reproducible common-grid preprocessing and descriptive comparisons implemented; empirical calibration, exposure correction, validated harmonization and historical anomaly findings are not implemented. The current calendar remains sensor-specific raw detection counts.
 
 ## Scientific question and evidence

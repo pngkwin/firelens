@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { annualTotals, annualTrend, climatology, compareFocus, monthInterval, monthValue, rankMonths } from "./analysis";
 import type { DayResult, MonthResult, PVals } from "./series";
+import { okMonth } from "./testFixtures";
 
 const pv = (n: number): PVals => ({ M: n, Terra: n, Aqua: 0, "S-NPP": n * 2, "NOAA-20": 0, "NOAA-21": 0, V: n * 2, ALL: n * 2 });
 const days = (m: string) => new Date(Date.UTC(+m.slice(0, 4), +m.slice(5, 7), 0)).getUTCDate();
@@ -10,7 +11,7 @@ function month(m: string, value: number, o: Partial<MonthResult> = {}): MonthRes
     month: m, cls: est ? "viirs-estimated" : "modis-observed", method: est ? "stratified" : "observed",
     value, lo: est ? value * 0.9 : value, hi: est ? value * 1.1 : value, viirsLevel: value * 2, viirsLevelEstimated: m < "2012-01",
     reference: "M", viirsPlatform: null, raw: { any: pv(value), day: pv(value), night: pv(0) }, det: [0, 0, 0, 0, 0], frp: [0, 0, 0, 0, 0],
-    daysCovered: days(m), daysInMonth: days(m), ...o,
+    daysCovered: days(m), daysInMonth: days(m), ...okMonth(m), ...o,
   };
 }
 
@@ -48,7 +49,7 @@ describe("rankings and annual totals", () => {
     const full = [];
     for (let y = 2003; y <= 2020; y++) for (let m = 1; m <= 12; m++) full.push(month(`${y}-${String(m).padStart(2, "0")}`, 10 + (y - 2003)));
     full.push(month("2021-01", 1e6)); // partial year: ignored
-    const t = annualTrend(annualTotals(full, "modis-eq"), 2000, 2030)!;
+    const t = annualTrend(annualTotals(full, "modis-eq"), 2000, 2030).trend!;
     expect(t.n).toBe(18);
     expect(t.slope).toBeCloseTo(12, 6);
   });
@@ -71,7 +72,7 @@ describe("focus month vs history", () => {
     const cur = month("2026-11", 60, { daysCovered: 10 });
     const dayRows: DayResult[] = [];
     for (const y of [2019, 2020, 2021]) for (let d = 1; d <= 30; d++)
-      dayRows.push({ day: `${y}-11-${String(d).padStart(2, "0")}`, value: d <= 10 ? 5 : 1, viirsLevel: null, raw: { ...pv(1), det: [0, 0, 0, 0, 0] }, cls: "modis-observed" });
+      dayRows.push({ day: `${y}-11-${String(d).padStart(2, "0")}`, value: d <= 10 ? 5 : 1, viirsLevel: null, raw: { ...pv(1), det: [0, 0, 0, 0, 0] }, cls: "modis-observed", flagged: [] });
     expect(compareFocus([...hist, cur], null, "2026-11", "modis-eq")).toBeNull(); // needs daily data
     const f = compareFocus([...hist, cur], dayRows, "2026-11", "modis-eq")!;
     expect(f.mode).toBe("month-to-date");
@@ -85,19 +86,25 @@ describe("focus month vs history", () => {
 describe("per-month anomalies", () => {
   it("compares every month with the same month in all other complete years (median and multi-year average)", async () => {
     const { monthAnomalies } = await import("./analysis");
-    const rs = [month("2019-08", 100), month("2020-08", 200), month("2021-08", 600), month("2021-09", 50)];
+    const rs = [month("2018-08", 150), month("2019-08", 100), month("2020-08", 200), month("2021-08", 600), month("2021-09", 50)];
     const a = monthAnomalies(rs, "modis-eq");
-    expect(a.get("2021-08")).toMatchObject({ median: 150, mean: 150, pctOfMedian: 400, pctOfMean: 400, n: 2 });
+    expect(a.get("2021-08")).toMatchObject({ median: 150, mean: 150, pctOfMedian: 400, pctOfMean: 400, n: 3 });
     expect(a.get("2021-09")).toBeNull(); // no other September
+  });
+  it("needs at least MIN_HISTORY comparable years", async () => {
+    const { monthAnomalies, MIN_HISTORY } = await import("./analysis");
+    expect(MIN_HISTORY).toBe(3);
+    const a = monthAnomalies([month("2019-08", 100), month("2020-08", 200), month("2021-08", 600)], "modis-eq");
+    expect(a.get("2021-08")).toBeNull(); // only 2 other years
   });
   it("adds anomaly columns to the monthly CSV", async () => {
     const { monthAnomalies } = await import("./analysis");
     const { monthlyCsv } = await import("./exportsV2");
-    const rs = [month("2019-08", 100), month("2020-08", 300)];
+    const rs = [month("2019-08", 100), month("2016-08", 300), month("2017-08", 300), month("2018-08", 300)];
     const [head, row] = monthlyCsv(rs, monthAnomalies(rs, "modis-eq")).trim().split("\n");
     const cols = head.split(",");
     expect(cols.slice(-7)).toEqual(["same_month_years", "same_month_median", "same_month_mean", "pct_of_median", "pct_of_mean", "z_score", "percentile"]);
-    expect(row.split(",").slice(-7)).toEqual(["1", "300.0", "300.0", "33.3", "33.3", "", "0.0"]);
+    expect(row.split(",").slice(-7)).toEqual(["3", "300.0", "300.0", "33.3", "33.3", "", "0.0"]);
   });
 });
 
@@ -109,7 +116,7 @@ describe("hotspot-count scales", () => {
     expect(monthValue(r, "hotspots-viirs")).toBe(90);
     expect(SCALES["hotspots-viirs"].unit).toBe("hotspots");
     expect(SCALES["modis-eq"].label).toMatch(/MODIS-equivalent hotspots/);
-    const d = { day: "2024-08-01", value: 1, viirsLevel: 2, cls: "viirs-estimated" as const, raw: { ...pv(1), det: [1, 0, 2, 2, 2] } };
+    const d = { day: "2024-08-01", value: 1, viirsLevel: 2, cls: "viirs-estimated" as const, raw: { ...pv(1), det: [1, 0, 2, 2, 2] }, flagged: [] };
     expect(dayValue(d, "hotspots-modis")).toBe(1);
     expect(dayValue(d, "hotspots-viirs")).toBe(6);
   });

@@ -16,3 +16,6 @@ data/raw/firms-archive/
 
 # agent worktrees
 .claude/worktrees/
+
+# Archives at the repo root (gpt_zip.zip once committed raw FIRMS CSVs; review SEC-6)
+/*.zip

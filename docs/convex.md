@@ -40,7 +40,7 @@ GET {VITE_CONVEX_SITE_URL}/hotspots.csv?bbox=west,south,east,north&start=YYYY-MM
 - Science-quality (SP) products where available, NRT after, by the same stitch rule, so no date is fetched from both.
 - Columns: `source, platform, instrument, latitude, longitude, acq_date, acq_time, daynight, confidence, frp, bright_mir_k, bright_tir_k, scan, track, version, type`. MODIS and VIIRS keep their own confidence scales (numeric vs l/n/h); `type` is empty for NRT.
 - Rows are FIRMS records **as published**: not region-clipped and not static-masked (the aggregate products are).
-- Response headers: `X-FireLens-Rows`, `X-FireLens-Sources`, `X-FireLens-Transactions`. CORS: `ALLOWED_ORIGINS` env var (comma list), default `*`; a request from an unlisted origin gets the first listed origin back. CORS only restrains browsers: the endpoint has no authentication, so anyone with the URL can spend the export budget (see `docs/review-findings.md`).
+- Response headers: `X-FireLens-Rows`, `X-FireLens-Sources`, `X-FireLens-Transactions`. CORS: `ALLOWED_ORIGINS` env var (comma list), default `*`; a request from an unlisted origin gets the first listed origin back. CORS only restrains browsers: the endpoint has no authentication, so its spending is limited by the ledger instead (per-client hourly limit, an export share of the 10-minute budget that always leaves room for the pull, and a daily cap; see the limits table).
 
 | Limit | Value | Response |
 |---|---|---|
@@ -49,6 +49,8 @@ GET {VITE_CONVEX_SITE_URL}/hotspots.csv?bbox=west,south,east,north&start=YYYY-MM
 | Sensors | `modis`, `viirs` or both (default both) | 400 |
 | Rows | ≤ 50,000 (counted before conversion). Transactions for the whole request are reserved before fetching, so a 413 still counts against both budgets. | 413 |
 | FIRMS budget | `FIRMS_TX_PER_10MIN` (default 1,500 of FIRMS's 5,000), shared with the daily pull | 429 + `Retry-After` |
+| Export share of that budget | `EXPORT_TX_PER_10MIN` (default 1,000): exports can never take the last 500, so the daily pull (72 US / 18 Iberia) always gets its budget | 429 + `Retry-After` |
+| Per-client limit | `EXPORT_TX_PER_CLIENT_HOUR` (default 1,000, rolling hour), keyed by a SHA-256 hash of the first `X-Forwarded-For` address (the address itself is never stored) | 429 + `Retry-After` |
 | Daily export budget | `EXPORT_TX_PER_DAY` (default 10,000, rolling 24 h) | 429 + `Retry-After` (24 h) |
 | Key missing or FIRMS error | — | 502 with a key-redacted message (≤ 300 characters) |
 
@@ -57,8 +59,10 @@ Responses are built inside the 64 MB default runtime: 1-day windows (same transa
 ## Key handling
 
 - Set with `npm run convex:set-key` (add `-- --prod` for the production deployment). It reads the key like the ingest scripts (`FIRMS_MAP_KEY` from the shell environment if set, otherwise `.env.local`) and pipes it to `npx convex env set FIRMS_MAP_KEY` over stdin; CLI output is redacted. The key is never on a command line, in code, in a table or in a response.
-- Every error string from FIRMS passes `redact()` (exact-string replacement with `<MAP_KEY>`); `convex/functions.test.ts` asserts the key cannot appear in an export error.
-- Public functions (`live:status`, `live:dayTotals`, `live:dayCells`) validate their arguments (known region, `YYYY-MM-DD` dates, at most 16 days per `dayCells` call, at most 400 rows per `dayTotals` result) and only read aggregates. `live:status` also returns each region's last run, including its key-redacted error text. Everything that spends FIRMS transactions is internal, except the HTTP export, which is public and limited only by the ledger.
+- `firmsKey()` and the scripts' `loadKey()` reject a key that is not 32 hexadecimal characters (without printing it).
+- Every error string from FIRMS passes `redact()`: the exact key in any letter case, plus any standalone 32-hex token, becomes `<MAP_KEY>` (64-hex SHA-256 values are left alone). `convex/functions.test.ts` asserts this for export errors, availability errors and case-changed echoes.
+- CSV cells that start with `= + - @`, tab or CR and are not numbers get a leading `'` (spreadsheet formula guard); negative coordinates are unchanged.
+- Public functions (`live:status`, `live:dayTotals`, `live:dayCells`) validate their arguments (known region, `YYYY-MM-DD` dates, at most 16 days per `dayCells` call, at most 400 rows per `dayTotals` result) and only read aggregates. `live:status` also returns each region's last run with a short error class only ("FIRMS unavailable", "FIRMS transaction budget reached", "backend not configured", "pull failed"); the full key-redacted text stays in the internal `runs` table. Everything that spends FIRMS transactions is internal, except the HTTP export, which is public and limited only by the ledger.
 - Recorded 2026-11-15 (the scan needs the key, so rerun it before each release): a scan of all 15,537 repo files (including `dist/`, logs and decompressed `.gz` archives, excluding `node_modules` and `.env.local`) found the key in 0 files.
 
 ## Operations

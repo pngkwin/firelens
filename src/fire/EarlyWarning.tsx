@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import type { DayResult } from "../data/v2/series";
 import { SCALES, type Scale } from "../data/v2/analysis";
-import { doyIndex, doyLabel, historicalOutlook, inPeriod, recentWindow, type Period, type WindowComparison } from "../data/v2/earlyWarning";
+import { doyIndex, doyLabel, historicalOutlook, inPeriod, recentWindow, type DayCheck, type Period, type WindowComparison } from "../data/v2/earlyWarning";
 import { diverging, fmt, textOn } from "./colors";
 
-type Props = { days: DayResult[] | null; scale: Scale; coverStart: string; dataEnd: string; periods: Period[]; climYears: number; provisionalFrom: string | null };
+type Props = { days: DayResult[] | null; scale: Scale; obs?: DayCheck; coverStart: string; dataEnd: string; periods: Period[]; climYears: number; provisionalFrom: string | null };
 
 function WindowTile({ w, unit, title }: { w: WindowComparison; unit: string; title: string }) {
   const s = w.stats, fill = diverging(s?.pctOfMedian ?? null);
@@ -18,25 +18,25 @@ function WindowTile({ w, unit, title }: { w: WindowComparison; unit: string; tit
           <span className="fc-ew-chip" style={{ background: fill, color: textOn(fill) }}>{s.pctOfMedian == null ? "median 0" : `${fmt(s.pctOfMedian)}% of median`}</span>
           <span className="fc-stat-note">{s.pctOfMean == null ? "" : `${fmt(s.pctOfMean)}% of ${s.n}-year average · `}rank {s.rank} of {s.of}{s.z == null ? "" : ` · z ${s.z >= 0 ? "+" : ""}${fmt(s.z, 1)}`}</span>
         </>
-      ) : <span className="fc-stat-note">No earlier years cover this window.</span>}
+      ) : <span className="fc-stat-note">{w.blocked ?? "No earlier years cover this window."}</span>}
     </div>
   );
 }
 
-export function EarlyWarning({ days, scale, coverStart, dataEnd, periods, climYears, provisionalFrom }: Props) {
+export function EarlyWarning({ days, scale, obs, coverStart, dataEnd, periods, climYears, provisionalFrom }: Props) {
   const unit = SCALES[scale].unit;
-  const w7 = useMemo(() => (days ? recentWindow(days, dataEnd, 7, scale, coverStart) : null), [days, dataEnd, scale, coverStart]);
-  const w30 = useMemo(() => (days ? recentWindow(days, dataEnd, 30, scale, coverStart) : null), [days, dataEnd, scale, coverStart]);
-  const outlook = useMemo(() => (days ? historicalOutlook(days, dataEnd, 28, scale, coverStart, dataEnd) : null), [days, dataEnd, scale, coverStart]);
+  const w7 = useMemo(() => (days ? recentWindow(days, dataEnd, 7, scale, coverStart, obs) : null), [days, dataEnd, scale, coverStart, obs]);
+  const w30 = useMemo(() => (days ? recentWindow(days, dataEnd, 30, scale, coverStart, obs) : null), [days, dataEnd, scale, coverStart, obs]);
+  const outlook = useMemo(() => (days ? historicalOutlook(days, dataEnd, 28, scale, coverStart, dataEnd, obs) : null), [days, dataEnd, scale, coverStart, obs]);
   const today = doyIndex(dataEnd);
   const current = periods.find((p) => inPeriod(p, today));
   const upcoming = periods.find((p) => !inPeriod(p, today) && Array.from({ length: 28 }, (_, k) => (today + 1 + k) % 365).some((i) => inPeriod(p, i)));
   const flag = !w7?.stats ? null : w7.stats.percentile >= 90 || w30?.stats && w30.stats.percentile >= 90 ? "high" : w7.stats.percentile >= 75 ? "elevated" : null;
   return (
-    <section className="fc-panel fc-ew" aria-labelledby="fc-ew-title" aria-live="polite">
+    <section className="fc-panel fc-ew" aria-labelledby="fc-ew-title">
       <div className="fc-panel-head">
         <h2 id="fc-ew-title">Early warning: recent activity and critical periods</h2>
-        <p className="fc-sub">{SCALES[scale].label}. Recent windows end on {dataEnd}{provisionalFrom && dataEnd >= provisionalFrom ? " (latest days provisional)" : ""} and are compared with the same calendar days in every earlier year.</p>
+        <p className="fc-sub">{SCALES[scale].label}. Recent windows end on {dataEnd}{provisionalFrom && dataEnd >= provisionalFrom ? " (latest days provisional)" : ""} and are compared with the same calendar days in every earlier year that the satellites observed in full (raw scales: by the same satellites).</p>
       </div>
       {!days ? (
         <p className="fc-loading" role="status">Loading daily data…</p>

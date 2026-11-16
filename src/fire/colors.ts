@@ -5,6 +5,8 @@ export const VIRIDIS = ["#440154", "#482878", "#3e4989", "#31688e", "#26828e", "
 export const PUOR = ["#542788", "#8073ac", "#b2abd2", "#d8daeb", "#f7f7f7", "#fee0b6", "#fdb863", "#e08214", "#b35806"];
 export const ZERO_FILL = "#e9eeeb";
 export const MISSING_FILL = "transparent";
+/** Hatch for days outside the loaded period; >= 3:1 against ZERO_FILL and white. */
+export const OUT_OF_PERIOD_HATCH = "#5f7069";
 
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 const toHex = (c: number[]) => `#${c.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")}`;
@@ -30,13 +32,29 @@ export function diverging(pctOfMedian: number | null) {
   return interpolate(PUOR, t); // below median = purple, above = orange
 }
 
-/** Readable text colour on a fill (WCAG relative luminance). */
+/** WCAG relative luminance of a #rrggbb colour. */
+export function luminance(color: string) {
+  const [r, g, b] = hex(color).map((v) => { const c = v / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+/** WCAG contrast ratio between two #rrggbb colours. */
+export function contrast(a: string, b: string) {
+  const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p);
+  return (x + 0.05) / (y + 0.05);
+}
+/**
+ * Readable text (and marker) colour on a fill: black or white, whichever has
+ * the higher contrast. This guarantees at least 4.58:1 on any opaque fill
+ * (a dark green such as #132a24 can only guarantee about 3.9:1).
+ */
 export function textOn(fill: string) {
   if (!fill.startsWith("#")) return "#203c34";
-  const [r, g, b] = hex(fill).map((v) => { const c = v / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.32 ? "#132a24" : "#ffffff";
+  return contrast(fill, "#000000") >= contrast(fill, "#ffffff") ? "#000000" : "#ffffff";
 }
 
 export const fmt = (v: number | null | undefined, digits = 0) => (v == null || !Number.isFinite(v) ? "–" : v.toLocaleString("en-US", { maximumFractionDigits: digits, minimumFractionDigits: digits }));
 export const MONTH_ABBR = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 export const monthLabel = (m: string) => `${MONTH_ABBR[+m.slice(5, 7) - 1]} ${m.slice(0, 4)}`;
+
+/** Linear viridis for shares in [0, 1] (sensor-disagreement map). */
+export const shareColor = (v: number) => interpolate(VIRIDIS, Math.max(0, Math.min(1, v)));

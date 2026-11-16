@@ -160,7 +160,7 @@ export function useFireData(region: RegionId, aoi: Aoi): FireData {
         return p;
       }));
       for (const p of liveParts) addDaily(dayVals, p, keep);
-      const days = harmonizeDays(dayVals, monthly);
+      const days = harmonizeDays(dayVals, monthly, cal.coverage);
       filesUsed.push(...dailyFiles.map((p) => ({ path: p, sha256: shaOf(p) })));
       timing.dailyMs = performance.now() - t1;
       update({ days, progress: polys ? "Grouping fire episodes…" : "", filesUsed: [...filesUsed], timing: { ...timing } });

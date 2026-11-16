@@ -7,7 +7,7 @@ const mk = (from: string, to: string, f: (d: string) => number) => {
   const out: DayResult[] = [];
   for (let t = Date.parse(`${from}T00:00:00Z`); t <= Date.parse(`${to}T00:00:00Z`); t += 86_400_000) {
     const day = new Date(t).toISOString().slice(0, 10);
-    out.push({ day, value: f(day), viirsLevel: null, raw: { ...pv0, det: [0, 0, 0, 0, 0] }, cls: "modis-observed" });
+    out.push({ day, value: f(day), viirsLevel: null, raw: { ...pv0, det: [0, 0, 0, 0, 0] }, cls: "modis-observed", flagged: [] });
   }
   return out;
 };

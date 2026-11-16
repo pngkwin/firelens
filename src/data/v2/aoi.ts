@@ -65,6 +65,20 @@ export function polysBbox(polys: Polys): Bbox {
   return [w, s, e, n];
 }
 
+/**
+ * Bounding boxes for a backend export. Areas that cross the antimeridian (the
+ * Aleutians in the Alaska preset) would get a world-wide box from polysBbox;
+ * when measuring longitudes on 0–360° gives a narrower span, the area is
+ * returned as two boxes, one on each side of 180°.
+ */
+export function exportBoxes(polys: Polys): Bbox[] {
+  const plain = polysBbox(polys);
+  let w = 360, e = 0;
+  for (const p of polys) for (const ring of p) for (const [x] of ring) { const u = x < 0 ? x + 360 : x; if (u < w) w = u; if (u > e) e = u; }
+  if (e - w >= plain[2] - plain[0] || w > 180 || e < 180) return [plain];
+  return [[w, plain[1], 180, plain[3]], [-180, plain[1], e - 360, plain[3]]];
+}
+
 /** Even-odd point-in-polygon over every ring of every polygon. */
 export function inPolys(lon: number, lat: number, polys: Polys): boolean {
   let inside = false;

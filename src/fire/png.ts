@@ -1,7 +1,10 @@
 // PNG of the years x months calendar with legend and provenance footnote.
 import type { MonthResult } from "../data/v2/series";
 import { isEstimated, isPartial, monthValue, SCALES, type Scale } from "../data/v2/analysis";
-import { fmt, MONTH_ABBR, sequential, sequentialTicks } from "./colors";
+import { fmt, MONTH_ABBR, sequential, sequentialTicks, textOn } from "./colors";
+
+/** Subtitle line under the PNG title; the unit follows the scale (hotspots vs fire-cell-days). */
+export const pngSubtitle = (scale: Scale) => `${SCALES[scale].label}, ${SCALES[scale].unit} per month. Dotted outline = estimated; ◢ = partial month.`;
 
 export function calendarPng(o: { months: MonthResult[]; scale: Scale; from: string; to: string; title: string; footer: string[] }): Promise<Blob> {
   const rows = o.months.filter((r) => r.month >= o.from && r.month <= o.to);
@@ -15,7 +18,7 @@ export function calendarPng(o: { months: MonthResult[]; scale: Scale; from: stri
   const max = Math.max(1, ...rows.map((r) => monthValue(r, o.scale) ?? 0)), color = sequential(max);
   g.fillStyle = "#173e36"; g.font = "600 16px 'Source Sans 3', sans-serif"; g.fillText(o.title, 16, 24);
   g.font = "12px 'Source Sans 3', sans-serif"; g.fillStyle = "#586c64";
-  g.fillText(`${SCALES[o.scale].label}, fire-cell-days per month. Dotted outline = estimated; ◢ = partial month.`, 16, 42);
+  g.fillText(pngSubtitle(o.scale), 16, 42);
   MONTH_ABBR.forEach((m, i) => g.fillText(m, LEFT + i * CW + 16, TOP - 8));
   const by = new Map(rows.map((r) => [r.month, r]));
   for (let y = y0; y <= y1; y++) {
@@ -26,8 +29,8 @@ export function calendarPng(o: { months: MonthResult[]; scale: Scale; from: stri
       if (!r) continue;
       const x = LEFT + (m - 1) * CW, yy = TOP + row * CH;
       g.fillStyle = color(monthValue(r, o.scale)); g.fillRect(x, yy, CW - 2, CH - 2);
-      if (isEstimated(r, o.scale)) { g.setLineDash([2, 2]); g.strokeStyle = "#132a24"; g.strokeRect(x + 1, yy + 1, CW - 4, CH - 4); g.setLineDash([]); }
-      if (isPartial(r)) { g.fillStyle = "#132a24"; g.beginPath(); g.moveTo(x + CW - 2, yy + CH - 9); g.lineTo(x + CW - 2, yy + CH - 2); g.lineTo(x + CW - 9, yy + CH - 2); g.fill(); }
+      if (isEstimated(r, o.scale)) { g.setLineDash([2, 2]); g.strokeStyle = textOn(color(monthValue(r, o.scale))); g.strokeRect(x + 1, yy + 1, CW - 4, CH - 4); g.setLineDash([]); }
+      if (isPartial(r)) { g.fillStyle = textOn(color(monthValue(r, o.scale))); g.beginPath(); g.moveTo(x + CW - 2, yy + CH - 9); g.lineTo(x + CW - 2, yy + CH - 2); g.lineTo(x + CW - 9, yy + CH - 2); g.fill(); }
     }
   }
   let lx = 16; const ly = TOP + years * CH + 18;

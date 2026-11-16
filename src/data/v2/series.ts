@@ -10,6 +10,7 @@ import { cellToLatLng, cellToParent } from "h3-js";
 import { union, BIT, MODIS, VIIRS, ALL, PLATFORMS, type V2Partition, type FlatHist } from "./codec";
 import { referenceViirs, periodClass, combineOverpass, qmEstimate, type PeriodClass } from "./harmonize";
 import type { Calibration, Interval } from "./bundle";
+import { COV_PLATFORMS, dayFlag, flaggedDays, materialLoss, monthLossOf, operatingIn, type Coverage, type CovPlatform } from "./coverage";
 
 export type PKey = "M" | "Terra" | "Aqua" | "S-NPP" | "NOAA-20" | "NOAA-21" | "V" | "ALL";
 export type PVals = Record<PKey, number>;
@@ -110,7 +111,30 @@ export type MonthResult = {
   frp: number[];
   daysCovered: number;
   daysInMonth: number;
+  /** Observation coverage of every satellite in this month (through the last loaded day). */
+  coverage: MonthCoverage;
+  /** MODIS-equivalent value rests on a satellite that lost a material share of the month (or, July 2002, Aqua started mid-month). */
+  reduced: boolean;
+  /** Same for the VIIRS-level scale. */
+  viirsReduced: boolean;
 };
+export type MonthCoverage = {
+  operating: Record<CovPlatform, "full" | "partial" | "none">;
+  flaggedDays: Record<CovPlatform, number>;
+  loss: Record<CovPlatform, number>; // share of expected detections lost
+  material: Record<CovPlatform, boolean>;
+};
+
+export function monthCoverage(cov: Coverage | undefined, month: string, last: string): MonthCoverage {
+  const first = `${month}-01`;
+  const rec = <T,>(f: (p: CovPlatform) => T) => Object.fromEntries(COV_PLATFORMS.map((p) => [p, f(p)])) as Record<CovPlatform, T>;
+  return {
+    operating: rec((p) => operatingIn(cov, p, first, last)),
+    flaggedDays: rec((p) => flaggedDays(cov, p, first, last)),
+    loss: rec((p) => monthLossOf(cov, p, month)),
+    material: rec((p) => materialLoss(cov, p, month)),
+  };
+}
 
 const lastOfMonth = (m: string) => { const [y, mo] = m.split("-").map(Number); return new Date(Date.UTC(y, mo, 0)).toISOString().slice(0, 10); };
 const moy = (m: string) => +m.slice(5, 7);
@@ -140,7 +164,7 @@ export function harmonize(months: MonthZones, cal: Calibration, o: HarmonizeOpti
     const zones = months.get(month)!;
     const mo = moy(month);
     const cls = periodClass(month, cal.periods);
-    const vstar = (v: PVals) => referenceViirs(month, { "S-NPP": v["S-NPP"], "NOAA-20": v["NOAA-20"], "NOAA-21": v["NOAA-21"] }, cover, cross, o.dataEnd);
+    const vstar = (v: PVals) => referenceViirs(month, { "S-NPP": v["S-NPP"], "NOAA-20": v["NOAA-20"], "NOAA-21": v["NOAA-21"] }, cover, cross, o.dataEnd, cal.coverage);
     const raw = { any: ZERO(), day: ZERO(), night: ZERO() };
     const det = [0, 0, 0, 0, 0], frp = [0, 0, 0, 0, 0];
     for (const zv of zones.values()) {
@@ -149,6 +173,7 @@ export function harmonize(months: MonthZones, cal: Calibration, o: HarmonizeOpti
     }
     const end = lastOfMonth(month) < o.dataEnd ? lastOfMonth(month) : o.dataEnd;
     const daysInMonth = +lastOfMonth(month).slice(8), daysCovered = +end.slice(8);
+    const coverage = monthCoverage(cal.coverage, month, end);
     const rho = cal.rho[String(mo)] ?? null;
     let value: number | null = null, method: Method = "observed", iv: Interval | null = null, reference: PKey | null = null;
     const vsAny = vstar(raw.any);
@@ -187,12 +212,18 @@ export function harmonize(months: MonthZones, cal: Calibration, o: HarmonizeOpti
     let lo = value, hi = value;
     if (value != null && iv) {
       lo = value * iv.lo; hi = value * iv.hi;
-      if (o.aoiNoise) { lo -= z * Math.sqrt(value); hi += z * Math.sqrt(value); }
+      // Small areas: sampling term widened by the validated overdispersion factor (calibration.aoiInterval).
+      if (o.aoiNoise) { const s = z * (cal.aoiInterval?.factor ?? 1) * Math.sqrt(value); lo -= s; hi += s; }
       lo = Math.max(0, lo);
     }
+    const reduced = cls === "modis-observed"
+      ? coverage.material.Terra || coverage.material.Aqua || coverage.operating.Aqua === "partial"
+      : cls === "terra-only-estimated"
+        ? coverage.material.Terra
+        : vsAny.platform == null || vsAny.reduced;
     const ratio = cal.viirsLevel.modisToViirsByMoy[String(mo)];
     const viirsLevel = vsAny.value != null ? vsAny.value : value != null && ratio != null ? value * ratio : null;
-    out.push({ month, cls, method, value, lo, hi, viirsLevel, viirsLevelEstimated: vsAny.value == null, reference, viirsPlatform: vsAny.platform, raw, det, frp, daysCovered, daysInMonth });
+    out.push({ month, cls, method, value, lo, hi, viirsLevel, viirsLevelEstimated: vsAny.value == null, reference, viirsPlatform: vsAny.platform, raw, det, frp, daysCovered, daysInMonth, coverage, reduced, viirsReduced: vsAny.value != null ? vsAny.reduced : reduced });
   }
   return out;
 }
@@ -205,26 +236,36 @@ export function regionReferenceX(regionMonths: MonthZones, cal: Calibration, o: 
   for (const [month, zones] of regionMonths) {
     const day = ZERO(), night = ZERO();
     for (const zv of zones.values()) { addTo(day, zv.day); addTo(night, zv.night); }
-    const vs = (v: PVals) => referenceViirs(month, { "S-NPP": v["S-NPP"], "NOAA-20": v["NOAA-20"], "NOAA-21": v["NOAA-21"] }, cover, cross, o.dataEnd).value;
+    const vs = (v: PVals) => referenceViirs(month, { "S-NPP": v["S-NPP"], "NOAA-20": v["NOAA-20"], "NOAA-21": v["NOAA-21"] }, cover, cross, o.dataEnd, cal.coverage).value;
     const xd = vs(day), xn = vs(night);
     out.set(month, xd == null || xn == null ? null : xd + xn);
   }
   return out;
 }
 
-export type DayResult = { day: string; value: number | null; viirsLevel: number | null; raw: DayAgg; cls: PeriodClass };
+/** `flagged`: satellites with an observation gap or reduced coverage on this day (coverage.ts). */
+export type DayResult = { day: string; value: number | null; viirsLevel: number | null; raw: DayAgg; cls: PeriodClass; flagged: CovPlatform[] };
 
-/** Daily MODIS-equivalent and VIIRS-level values from each month's reference-sensor shape. */
-export function harmonizeDays(days: DayVals, monthly: MonthResult[]): DayResult[] {
+/**
+ * Daily MODIS-equivalent and VIIRS-level values from each month's reference-sensor shape.
+ * A day on which the reference satellite was not observing (flagged gap) has no
+ * value (null = unavailable), never a zero; for observed MODIS that needs both
+ * Terra and Aqua dark (one of them still observes the union).
+ */
+export function harmonizeDays(days: DayVals, monthly: MonthResult[], cov?: Coverage): DayResult[] {
   const byMonth = new Map(monthly.map((m) => [m.month, m]));
   const out: DayResult[] = [];
+  const gap = (p: CovPlatform, d: string) => dayFlag(cov, p, d) === "gap";
+  const dark = (key: PKey | null, d: string) =>
+    key === "M" ? gap("Terra", d) && gap("Aqua", d) : key != null && (COV_PLATFORMS as readonly string[]).includes(key) ? gap(key as CovPlatform, d) : false;
   for (const d of [...days.keys()].sort()) {
     const raw = days.get(d)!;
+    const flagged = COV_PLATFORMS.filter((p) => dayFlag(cov, p, d) != null);
     const m = byMonth.get(d.slice(0, 7));
-    if (!m) { out.push({ day: d, value: null, viirsLevel: null, raw, cls: periodClass(d.slice(0, 7)) }); continue; }
-    const share = (key: PKey | null, total: number | null) => (total == null || key == null ? null : m.raw.any[key] > 0 ? (total * raw[key]) / m.raw.any[key] : 0);
+    if (!m) { out.push({ day: d, value: null, viirsLevel: null, raw, cls: periodClass(d.slice(0, 7)), flagged }); continue; }
+    const share = (key: PKey | null, total: number | null) => (total == null || key == null || dark(key, d) ? null : m.raw.any[key] > 0 ? (total * raw[key]) / m.raw.any[key] : 0);
     const viirsKey = (m.viirsPlatform as PKey | null) ?? null;
-    out.push({ day: d, value: share(m.reference, m.value), viirsLevel: m.viirsLevelEstimated ? share(m.reference, m.viirsLevel) : share(viirsKey, m.viirsLevel), raw, cls: m.cls });
+    out.push({ day: d, value: share(m.reference, m.value), viirsLevel: m.viirsLevelEstimated ? share(m.reference, m.viirsLevel) : share(viirsKey, m.viirsLevel), raw, cls: m.cls, flagged });
   }
   return out;
 }

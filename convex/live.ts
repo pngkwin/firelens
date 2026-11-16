@@ -13,6 +13,18 @@ function checkRegion(region: string) {
   if (!REGIONS[region]) throw Error(`unknown region "${region}" (expected one of ${regionIds.join(", ")})`);
 }
 
+/**
+ * Public, short error class for a failed run. The full (key-redacted) text,
+ * which can include upstream response bodies, stays in the `runs` table.
+ */
+export function errorClass(error: string | undefined | null): string | null {
+  if (!error) return null;
+  if (/budget/i.test(error)) return "FIRMS transaction budget reached";
+  if (/FIRMS_MAP_KEY/.test(error)) return "backend not configured";
+  if (/FIRMS|fetch|abort|timeout|network|Unexpected/i.test(error)) return "FIRMS unavailable";
+  return "pull failed";
+}
+
 export const status = query({
   args: {},
   handler: async (ctx) => {
@@ -24,7 +36,7 @@ export const status = query({
         region: id,
         bundleEnd: REGIONS[id].bundleEnd,
         latestDay: latest?.day ?? null,
-        lastRun: lastRun ? { at: lastRun.finishedAt, ok: lastRun.ok, from: lastRun.from ?? null, to: lastRun.to ?? null, days: lastRun.days, error: lastRun.error ?? null } : null,
+        lastRun: lastRun ? { at: lastRun.finishedAt, ok: lastRun.ok, from: lastRun.from ?? null, to: lastRun.to ?? null, days: lastRun.days, error: errorClass(lastRun.error) } : null,
       });
     }
     return out;

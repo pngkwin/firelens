@@ -170,8 +170,16 @@ export default function App() {
         : "Methods & provenance";
   return (
     <>
-      <a className="skip-link" href="#main">
-        Skip to workspace
+      <a
+        className="skip-link"
+        href="#main"
+        onClick={(e) => {
+          // The hash selects the view, so move focus without changing it.
+          e.preventDefault();
+          document.getElementById("main")?.focus();
+        }}
+      >
+        Skip to main content
       </a>
       <header className="app-header">
         <a
@@ -230,7 +238,7 @@ export default function App() {
           </button>
         </div>
       </header>
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <div className="workspace-heading">
           <div>
             <h1>{title}</h1>

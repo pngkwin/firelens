@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import type { MonthResult } from "../data/v2/series";
-import { annualTotals, isEstimated, isPartial, monthInterval, monthValue, SCALES, type Scale } from "../data/v2/analysis";
+import { annualTotals, isEstimated, isPartial, monthInterval, monthStatus, monthValue, SCALES, type Scale } from "../data/v2/analysis";
 import { fmt, MONTH_ABBR, monthLabel, sequential, sequentialTicks, textOn, ZERO_FILL } from "./colors";
 
 type Props = { months: MonthResult[]; scale: Scale; from: string; to: string; focus: string | null; onFocus: (m: string) => void };
@@ -21,7 +21,8 @@ export function MonthHeatmap({ months, scale, from, to, focus, onFocus }: Props)
   }, [inRange, scale]);
   const [active, setActive] = useState<string | null>(null);
   const grid = useRef<HTMLTableElement>(null);
-  const current = active ?? focus ?? inRange.at(-1)?.month ?? null;
+  // Exactly one tab stop: the arrowed month, else the focus month, else the last month, as long as it is in range.
+  const current = [active, focus].find((m): m is string => !!m && byMonth.has(m)) ?? inRange.at(-1)?.month ?? null;
 
   const move = (e: KeyboardEvent, month: string) => {
     const [y, m] = [+month.slice(0, 4), +month.slice(5, 7)];
@@ -37,12 +38,15 @@ export function MonthHeatmap({ months, scale, from, to, focus, onFocus }: Props)
     grid.current?.querySelector<HTMLButtonElement>(`[data-month="${next}"]`)?.focus();
   };
 
-  const label = (r: MonthResult) => {
-    const v = monthValue(r, scale), iv = monthInterval(r, scale);
-    const parts = [`${monthLabel(r.month)}: ${fmt(v)} ${SCALES[scale].short} ${SCALES[scale].unit}`];
+  const label = (r: MonthResult, shown: string) => {
+    const v = monthValue(r, scale), iv = monthInterval(r, scale), st = monthStatus(r, scale);
+    if (!st.available) return `${monthLabel(r.month)}: not observed (${st.reasons.join("; ")})`;
+    // Starts with the visible text (WCAG 2.5.3 Label in Name).
+    const parts = [`${shown ? `${shown}, ` : ""}${monthLabel(r.month)}: ${fmt(v)} ${SCALES[scale].short} ${SCALES[scale].unit}`];
     if (iv && iv[1] > 0) parts.push(`90% interval ${fmt(iv[0])}–${fmt(iv[1])}`);
     if (isEstimated(r, scale)) parts.push("estimated");
     if (isPartial(r)) parts.push(`partial month through day ${r.daysCovered}`);
+    if (st.reduced) parts.push(`reduced satellite coverage: ${st.reasons.join("; ")}`);
     if (v === 0) parts.push("no matching records in loaded data");
     parts.push(`rank ${ranks.get(r.month)} of ${inRange.length}`);
     return parts.join(", ");
@@ -55,7 +59,7 @@ export function MonthHeatmap({ months, scale, from, to, focus, onFocus }: Props)
         <p className="fc-sub">{SCALES[scale].label}, {SCALES[scale].unit} per month. Select a month to compare it with other years.</p>
       </div>
       <div className="fc-heat-scroll">
-        <table className="fc-heat" ref={grid} role="grid" aria-label={`${SCALES[scale].unit} by year and month, ${SCALES[scale].label}`}>
+        <table className="fc-heat" ref={grid} aria-label={`${SCALES[scale].unit} by year and month, ${SCALES[scale].label}`}>
           <thead>
             <tr>
               <th scope="col">Year</th>
@@ -73,21 +77,23 @@ export function MonthHeatmap({ months, scale, from, to, focus, onFocus }: Props)
                     const m = `${y}-${String(i + 1).padStart(2, "0")}`;
                     const r = byMonth.get(m);
                     if (!r) return <td key={m} className="fc-empty" aria-label={`${monthLabel(m)}: outside the loaded period`} />;
-                    const v = monthValue(r, scale), fill = color(v);
+                    const v = monthValue(r, scale), fill = color(v), st = monthStatus(r, scale);
+                    const shown = shortValue(v), name = label(r, shown);
                     return (
-                      <td key={m} role="gridcell" aria-selected={focus === m}>
+                      <td key={m}>
                         <button
                           type="button"
                           data-month={m}
                           tabIndex={current === m ? 0 : -1}
-                          className={`fc-cell${isEstimated(r, scale) ? " est" : ""}${isPartial(r) ? " partial" : ""}${focus === m ? " focus" : ""}`}
-                          style={{ background: fill, color: textOn(fill) }}
-                          aria-label={label(r)}
-                          title={label(r)}
+                          className={`fc-cell${isEstimated(r, scale) ? " est" : ""}${isPartial(r) ? " partial" : ""}${st.reduced ? " reduced" : ""}${st.available ? "" : " na"}${focus === m ? " focus" : ""}`}
+                          style={{ background: fill, color: textOn(fill), "--mark": textOn(fill) } as CSSProperties}
+                          aria-pressed={focus === m}
+                          aria-label={name}
+                          title={name}
                           onClick={() => { setActive(m); onFocus(m); }}
                           onKeyDown={(e) => move(e, m)}
                         >
-                          {v == null ? "" : v >= 10000 ? `${(v / 1000).toFixed(0)}k` : v >= 1000 ? `${(v / 1000).toFixed(1)}k` : fmt(v)}
+                          {shown}
                         </button>
                       </td>
                     );
@@ -108,8 +114,12 @@ export function MonthHeatmap({ months, scale, from, to, focus, onFocus }: Props)
         ))}
         <span className="fc-tick"><span className="fc-swatch est-key" /> estimated</span>
         <span className="fc-tick"><span className="fc-swatch partial-key" /> partial month</span>
+        <span className="fc-tick"><span className="fc-swatch reduced-key" /> reduced satellite coverage (outage)</span>
+        {inRange.some((r) => !monthStatus(r, scale).available) && <span className="fc-tick"><span className="fc-swatch fc-hatch-key" /> sensor not yet in orbit (no value)</span>}
         <span className="fc-tick">* partial year</span>
       </div>
     </section>
   );
 }
+
+export const shortValue = (v: number | null | undefined) => (v == null ? "" : v >= 10000 ? `${(v / 1000).toFixed(0)}k` : v >= 1000 ? `${(v / 1000).toFixed(1)}k` : fmt(v));

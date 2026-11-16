@@ -3,6 +3,7 @@ import { latLngToCell, gridDisk, gridDistance } from "h3-js";
 import { buildEvents, eventSize, rankEvents } from "./events";
 import type { V2Partition, WireRow } from "./codec";
 import type { MonthResult } from "./series";
+import { okMonth } from "./testFixtures";
 
 const a = latLngToCell(37, -120, 5);
 const nbr = gridDisk(a, 1).find((c) => c !== a)!;
@@ -39,7 +40,7 @@ describe("fire episodes", () => {
     const ev = buildEvents([p], null);
     const month = (m: string, value: number, ref: number): MonthResult => ({
       month: m, cls: "viirs-estimated", method: "stratified", value, lo: value, hi: value, viirsLevel: ref, viirsLevelEstimated: false, reference: "NOAA-20", viirsPlatform: "NOAA-20",
-      raw: { any: { M: 0, Terra: 0, Aqua: 0, "S-NPP": 0, "NOAA-20": ref, "NOAA-21": 0, V: ref, ALL: ref }, day: {} as never, night: {} as never }, det: [0, 0, 0, 0, 0], frp: [0, 0, 0, 0, 0], daysCovered: 31, daysInMonth: 31,
+      raw: { any: { M: 0, Terra: 0, Aqua: 0, "S-NPP": 0, "NOAA-20": ref, "NOAA-21": 0, V: ref, ALL: ref }, day: {} as never, night: {} as never }, det: [0, 0, 0, 0, 0], frp: [0, 0, 0, 0, 0], daysCovered: 31, daysInMonth: 31, ...okMonth(m),
     });
     const months = new Map([["2020-08", month("2020-08", 10, 20)], ["2021-08", month("2021-08", 1, 2)], ["2024-08", month("2024-08", 18, 36)]]);
     expect(eventSize(ev[2], "raw-all", months)).toEqual({ total: 36, peakDay: "2024-08-10", peak: 30 });
@@ -79,6 +80,7 @@ describe("fire episodes on the published bundle", () => {
     const top = rankEvents(ev, "raw-all", new Map(), m.planEnd, 7).largestPast.slice(0, 3);
     console.log(`California: ${ev.length} episodes in ${ms.toFixed(0)} ms; top: ${top.map((e) => `${e.start}..${e.end} (${e.size}, ${e.cells} cells)`).join("; ")}`);
     expect(top.every((e) => e.start.startsWith("2020") || e.start.startsWith("2021"))).toBe(true);
-    expect(ms).toBeLessThan(3000);
+    // Timing is asserted only in `npm run test:perf` (FIRELENS_PERF=1); the ranking above is always checked.
+    if (process.env.FIRELENS_PERF) expect(ms).toBeLessThan(3000);
   });
 });

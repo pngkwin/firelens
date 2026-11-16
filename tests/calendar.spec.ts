@@ -59,7 +59,7 @@ test("state preset AOI: California rankings, raw hotspot scale, early warning", 
   // Hotspot-count scale: units follow the scale
   await page.getByLabel("Scale", { exact: true }).selectOption("hotspots-modis");
   await expect(page).toHaveURL(/scale=hotspots-modis/);
-  await expect(page.locator('[data-month="2020-09"]')).toHaveAttribute("aria-label", /^Sep 2020: [0-9,]+ MODIS hotspots, rank 1 of 313$/);
+  await expect(page.locator('[data-month="2020-09"]')).toHaveAttribute("aria-label", /^[0-9.]+k, Sep 2020: [0-9,]+ MODIS hotspots, rank 1 of 313$/);
   await expect(page.locator("#fc-calendar-title + .fc-sub")).toContainText("hotspots per month");
   await expect(topMonths.locator("thead")).toContainText("Hotspots");
 });
@@ -71,7 +71,7 @@ test("Iberia quantile mapping: Aug 2025 is the record month", async ({ page }) =
   const focus = page.locator(".fc-focus");
   await expect(focus).toContainText("Aug 2025 vs other years");
   await expect(focus).toContainText("quantile mapping");
-  await expect(focus).toContainText("rank 1 of 26");
+  await expect(focus).toContainText("rank 1 of 24"); // Augusts with material MODIS outages (2002 Aqua, 2006 Terra) are not in the baseline
   await expect(page.locator(".fc-method")).toContainText("quantile mapping");
 });
 
@@ -102,7 +102,8 @@ test("exports: harmonized CSV, provenance JSON, calendar PNG and AOI point CSV",
 
   await expect(page.locator(".fc-status")).not.toContainText("Loading daily", { timeout: 60000 });
   const prov = JSON.parse((await grab("Provenance JSON")).body.toString());
-  expect(prov.methodVersion).toBe("fcd-harmonize-v2");
+  expect(prov.methodVersion).toBe("fcd-harmonize-v3");
+  expect(prov.observationCoverage.outages.some((o: { platform: string; start: string; status: string }) => o.platform === "S-NPP" && o.start === "2024-07-24" && o.status === "confirmed")).toBe(true);
   expect(prov.selection.selected).toBe("stratified");
   expect(prov.aoi.encoded).toBe("circle:-121.6,39.76,50");
   expect(prov.manifestSha256).toMatch(/^[0-9a-f]{64}$/);

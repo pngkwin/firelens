@@ -40,6 +40,8 @@ If `node_modules` was installed on another OS (for example Linux in a VM), delet
 
 Fire calendar scales: MODIS-equivalent (harmonized, primary), VIIRS-level (harmonized, S-NPP scale), raw fire-cell-days (any sensor, MODIS, VIIRS) and raw hotspot counts (MODIS, VIIRS). Areas: whole region, a state (US) or country (Iberia) preset, a bounding box, a point and radius, or a polygon drawn on the map. Panels: focus month vs other years, early warning (last 7/30 days and critical periods), month calendar, rankings, annual trend, fire episodes (current vs past, grouped in the browser for areas up to about 2 million km²), day-of-year calendar. Exports: harmonized monthly CSV, provenance JSON, calendar PNG, and (with the backend) a capped hotspot point CSV.
 
+Investigation workflow (below the calendar, `?tab=` in the URL): a research casebook (California September 2020; Texas April 2011; Iberia August 2025), then six linked steps: **fire season evolution** (`season.ts`: each year normalized to its own annual total; period profiles 2003–2012 vs 2013–2021, both observed MODIS, with exact year-level permutation tests and Holm correction; 2022–2025 VIIRS-estimated shown descriptively; raw MODIS vs raw S-NPP check of the measurement system; CSV), **sensor disagreement atlas** (MODIS-only / VIIRS-only / both fire-cell-days, exact and reconciling with the union, day/night and seasonal, linked map layer `?map=`), **why harmonization matters** (naive MODIS→VIIRS splice vs MODIS alone vs harmonized, for a month and for the long-term trend), **evidence lab** (held-out validation, baselines, nested score, interval coverage incl. the small-area recalibration, drift, reference-satellite switches, outage notices and detection sensitivity, CSV/JSON downloads) **documented fires** (`incidents.ts`: CAL FIRE, Texas A&M Forest Service / State Climatologist / TPWD and Copernicus EMS records quoted with links, CAL FIRE origin points on the map, next to the satellite record of the same months; not a fire inventory, no perimeters) and a **regional brief** (planning context from the historical seasonal pattern, season evolution, documented fires, uncertainty, provenance; Markdown and self-contained HTML download, print). FireLens covers two supported regions completely from November 2000; it is not a global database. All numbers come from the bundle and `calibration.json`; casebook numbers are checked by `src/data/v2/investigate.test.ts`.
+
 ## npm scripts
 
 ### App and checks
@@ -51,6 +53,7 @@ Fire calendar scales: MODIS-equivalent (harmonized, primary), VIIRS-level (harmo
 | `npm run preview` | serve `dist/` on 127.0.0.1:4173 |
 | `npm test` | vitest: `src/**/*.test.ts` and `convex/**/*.test.ts` |
 | `npm run test:e2e` | Playwright (`tests/*.spec.ts`); builds first, uses installed Microsoft Edge (`playwright.config.ts`) |
+| `npm run test:perf` | Wall-clock tests only (AOI query < 1 s, episode clustering < 3 s), run alone with `FIRELENS_PERF=1` |
 | `npm run build:clean` | builds from a temporary source-only copy and verifies the output |
 
 ### v1 demo and history preview (CSV workspace)
@@ -81,7 +84,7 @@ Other scripts (no npm alias):
 | `node scripts/build-presets.mjs` | writes `public/data/presets/<region>.json` (US states + DC from us-atlas; Spain and Portugal from world-atlas). `ingest:publish` reads it to build `aoi/<preset>.json.gz`. |
 | `node scripts/ingest/import-archive.mjs --region <id>` | optional: splits FIRMS Archive Download CSVs (`data/raw/firms-archive/<region>/DL_FIRE_*`) into the downloader's window layout so `aggregate` uses them for science-quality sources |
 | `node scripts/ingest/compare-archive.mjs --region <id>` | optional: checks archive rows against API windows on overlapping dates |
-| `node scripts/harmonize/fit.mjs --region <id> [--train 2012-2021] [--kappa 20]` | fits and validates the harmonization; writes `public/data/v2/<region>/calibration.json` and `data/processed/harmonize/<region>-validation.json` |
+| `node scripts/harmonize/fit.mjs --region <id> [--train 2012-2021] [--kappa 20]` | runs the observation-coverage audit (satellite outages, from every published region's `region-daily.json.gz` plus `config/observation-events.json`), then fits and validates the harmonization; writes `public/data/v2/<region>/calibration.json` and `data/processed/harmonize/<region>-validation.json` |
 
 ### Convex backend
 
@@ -101,7 +104,7 @@ See [docs/convex.md](docs/convex.md) for tables, limits and the export endpoint.
 3. `npm run ingest:aggregate -- --region <id>`
 4. `npm run ingest:publish -- --region <id>`
 5. `npm run ingest:verify`
-6. `node scripts/harmonize/fit.mjs --region <id>`. Always refit after publishing: publish deletes the old `calibration.json`, and the app rejects a calibration whose `inputManifestSha256` does not match the manifest.
+6. `node scripts/harmonize/fit.mjs --region <id>` for **every** region. Always refit after publishing: publish deletes the old `calibration.json`, and the app rejects a calibration whose `inputManifestSha256` does not match the manifest. The outage audit pools all regions' daily detections (outages are spacecraft-wide), so publishing one region changes the evidence for the others; `calibration.json` records the input hashes under `coverage.inputs`.
 7. `npm run convex:region-data`, then `npm run convex:push`, so the backend's `bundleEnd`, clip and mask match the new bundle.
 
 Steps 2–4 and 7 need `data/raw` and `data/processed`, which are not in Git.
@@ -113,7 +116,7 @@ Steps 2–4 and 7 need `data/raw` and `data/processed`, which are not in Git.
 | File | Contents |
 |---|---|
 | `manifest.json` | region and boxes, product definition (unit, platform bits, static mask, clip rule, zero meaning), sources with availability, `planEnd`, archive provenance, per-month status and tallies, code hashes, and every file with `bytes`, `sha256` (gzip), `decodedSha256` (JSON) and `rows` |
-| `calibration.json` | harmonization coefficients, method selection, intervals and the fit's own `regionSeries` (written by `fit.mjs`; bound to the manifest by `inputManifestSha256`) |
+| `calibration.json` | harmonization coefficients, method selection (with the nested score), intervals, the observation-coverage audit (`coverage`: flagged satellite-days, monthly loss shares, confirmed/suspected outage runs), training months excluded for coverage, and the fit's own `regionSeries` (written by `fit.mjs`; bound to the manifest by `inputManifestSha256`) |
 | `region-monthly.json.gz` | whole-region totals per month |
 | `region-daily.json.gz` | whole-region totals per UTC day |
 | `zone-monthly.json.gz` | res-1 zone × month totals (the calibration's spatial unit) |

@@ -79,7 +79,7 @@ describe("VIIRS reference series", () => {
   const cover = { "S-NPP": ["2012-01-20", "2026-11-02"], "NOAA-20": ["2018-04-01", "2026-11-14"], "NOAA-21": ["2023-03-01", "2026-11-14"] } as const;
   it("uses S-NPP while it covers the full month", () => {
     const r = referenceViirs("2020-05", { "S-NPP": 100, "NOAA-20": 120, "NOAA-21": 0 }, cover, { "NOAA-20": 0.8, "NOAA-21": 0.75 });
-    expect(r).toEqual({ value: 100, platform: "S-NPP" });
+    expect(r).toEqual({ value: 100, platform: "S-NPP", loss: 0, reduced: false });
   });
   it("switches to cross-calibrated NOAA-20 when S-NPP covers only part of the month", () => {
     const r = referenceViirs("2026-11", { "S-NPP": 5, "NOAA-20": 120, "NOAA-21": 110 }, cover, { "NOAA-20": 0.8, "NOAA-21": 0.75 }, "2026-11-14");

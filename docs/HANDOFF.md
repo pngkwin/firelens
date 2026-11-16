@@ -20,7 +20,7 @@ Written 2026-11-15 so that a teammate's Claude can pick up where this session st
 | 0 | Install the selected skills (`.claude/skills`, see `SOURCES.md`) | done |
 | 1 | Gap analysis and plan (`docs/gap-analysis.md`) | done |
 | 2 | Resumable FIRMS ingestion, all sources, SP + NRT stitched, aggregated to H3 fire-cell-days | done |
-| 3 | Harmonization to a MODIS-equivalent scale with validation and uncertainty | done (v2) |
+| 3 | Harmonization to a MODIS-equivalent scale with validation and uncertainty | done (v3: observation-coverage audit, third session) |
 | 4 | Convex: daily NRT pull plus a capped point-CSV export | done (dev deployment) |
 | 5 | Product: AOI tools, calendars, comparisons, anomalies, trend, exports, URL state | done; plan additions in progress |
 | 6 | Quality gate: tests, e2e, security, perf < 1 s, accessibility, docs | pending (run once at the end) |
@@ -45,8 +45,8 @@ Written 2026-11-15 so that a teammate's Claude can pick up where this session st
 - **Clip:** H3 res-7 cell-centre-in-polygon, using us-atlas for the US and world-atlas countries 724 and 620 for Iberia.
 - **Static mask:** a persistence rule that drops industrial and volcanic cells (US 5,618 cells, Iberia 575).
 
-**Phase 3: harmonization `fcd-harmonize-v2`.** See `docs/harmonization-method.md` and `-validation.md`.
-- **Method selection:** pre-registered per region by held-out (leave-one-year-out) MAE.
+**Phase 3: harmonization `fcd-harmonize-v2`** (superseded by v3 in the third session; see that section for current numbers). See `docs/harmonization-method.md` and `-validation.md`.
+- **Method selection:** per region by held-out (leave-one-year-out) MAE (written down after the v1 Iberia results, so not pre-registered in the strict sense).
   - **US:** stratified ratio (zone × month-of-year × day/night). MAE 490, against 871 for quantile mapping. 90% interval ×[0.890, 1.133], measured coverage 89.1%.
   - **Iberia:** quantile mapping. MAE 54, against 74 for the stratified ratio. Interval ×[0.763, 1.316], coverage 88.2%. Extreme years are fixed (2017: 0.821 → 1.012).
 - **Periods:**
@@ -91,7 +91,44 @@ Since then, presets load a single precomputed file (`aoi/<id>.json.gz`; Texas 60
 - Calendar e2e (`tests/calendar.spec.ts`) 5/5.
 - Existing e2e 7/7, after renaming the nav button to "CSV workspace" and pointing the specs at `/#workspace`.
 
-## In progress right now
+## Fourth session (2026-11-15): investigation workflow — read this first
+
+Uncommitted on `wip/phase5-snapshot`. Added below the calendar (one section, tabs synced to `?tab=`, map layer `?map=`): research casebook (`src/data/v2/casebook.ts`), sensor disagreement atlas (`disagreement.ts`, `DisagreementAtlas.tsx`, map layer in `AoiMap.tsx`), sensor-transition investigator (`transition.ts`, `TransitionPanel.tsx`), evidence lab (`EvidenceLab.tsx`, data from `calibration.json` `validation`), regional brief (`brief.ts`, `RegionalBrief.tsx`).
+- `fit.mjs` now also publishes held-out records, the small-area interval factor (`aoiInterval`: US 1.65, out-of-sample zone coverage 79.9 % → 90.2 %; Iberia 1.05), outage-detection sensitivity runs, and the documented notices. Both regions refitted.
+- Outage notices re-read at their primary sources; 3 dates corrected (`config/observation-events.json` `verification`).
+- Findings: naive MODIS→VIIRS splice gives +72 %/decade (US, p < 0.001) vs ~0 harmonized (p = 0.98); Iberia +36 % vs −35 %/decade. Since 2012, 71 % (US) / 67 % (Iberia) of union cell-days are VIIRS-only.
+- Gate: vitest 229/229, tsc, build, ingest 14/14, history 2 + 1 skipped, ingest:verify OK, e2e 29/29; test:perf Texas drawn polygon 1.09 s (unchanged known issue).
+
+## Third session (2026-11-15): scientific audit and method v3
+
+A scientific audit found that satellite outages were read as low fire, raw scales counted years before a sensor existed as zeros, and the in-app Methods page said harmonization was "future work". All three are fixed in the working tree (uncommitted, `wip/phase5-snapshot`).
+
+- **Observation coverage** (`src/data/v2/coverage.ts`, `config/observation-events.json`): satellite-days are flagged only from cross-satellite (or, for Terra alone, climatological) evidence; 70 runs flagged, 13 confirmed by NASA/NOAA notices (all 13 notices recovered from the records). The VIIRS reference skips satellites with flagged days; months whose source lost ≥ 5 % of expected detections are "reduced coverage": no anomaly statistics, out of baselines and trends; outage days are "no observation", not zero.
+- **Refit (v3)** of both regions with `fit.mjs`: every parameter refitted per held-out fold (ρ and cross-calibration leaked before), 7 training months excluded for coverage, nested selection score. Held-out scores essentially unchanged (US MAE 490 → 482, Iberia 54 → 55); cross-calibration factors were biased by S-NPP outages (NOAA-20 0.957 → 0.976). US July 2024: 7,697 → 15,270 (observed MODIS 15,582).
+- **Raw scales:** no value before a sensor was in orbit; comparisons, rankings, trends and early-warning baselines only across periods observed by the same satellites. The raw-VIIRS "+121 %/decade" trend is gone.
+- **Docs:** `harmonization-method.md` and `-validation.md` rewritten for v3; `harmonization-methodology.md` marked superseded; Methods & provenance page rewritten.
+- **Refit rule:** the outage audit pools all regions' `region-daily.json.gz`, so refit **every** region after publishing any region.
+- **Gate:** `npm test` 215/215 (twice), `tsc` clean, `ingest:test` 14/14, `history:test` 2 + 1 skipped, `ingest:verify` OK, build OK, e2e 24/24. `test:perf`: the drawn Texas polygon still exceeds 1 s (1.09–1.66 s on this loaded machine; the coverage logic adds ~3 ms).
+- **Open:** small-area intervals under-cover (US zones 76–83 % for nominal 90 %); US near-real-time MODIS Sep–Nov 2026 is 22–39 % below the VIIRS estimate (unexplained); suspected outages have no independent confirmation.
+
+## Second session (2026-11-15, teammate's machine)
+
+- **Setup checked:** `data/raw` (11,636 files) and `data/processed` (1,269 files) match the handoff folder; Windows `node_modules` installed; `.env.local` is the empty template (no FIRMS key, no Convex deployment), so the app runs on the static bundle only.
+- **Items 4 and 5 below were already finished** at 207fa13: `verify-v2` is OK for both regions with `zone-daily.json.gz`, `useFireData` uses zone-daily, and `EventsPanel` is wired in with an e2e test.
+- **Review findings:** all addressed in the working tree (uncommitted). See "Resolution status" in `docs/review-findings.md`.
+- **Phase 6 gate:** green. The one exception is the timing test for a drawn Texas-sized polygon (1.01–1.06 s on this machine; the Texas preset takes 0.38 s). Details are in `docs/review-findings.md`.
+- **Pending owner decisions:**
+  - commit the working tree;
+  - `npm run convex:push` (ledger schema and limits);
+  - set `ALLOWED_ORIGINS` for production;
+  - rewrite history for `gpt_zip.zip`, or not;
+  - set up a FIRMS key and Convex deployment on this machine.
+- **New commands:**
+  - `npm run test:perf`
+  - `npm run test:e2e` without a backend needs placeholder `VITE_CONVEX_URL` / `VITE_CONVEX_SITE_URL` in the shell (see CLAUDE.md). Rebuild without them afterwards.
+- **Port note:** another FireLens copy (`C:\firelens`) may be serving on 5173; use `npx vite --port 5174` for this checkout.
+
+## In progress right now (first session; items 4–5 since verified done)
 
 These are the plan additions in the approved order: `docs/gap-analysis.md`, sections "Plan additions" and "Refinements".
 
@@ -205,3 +242,13 @@ The environment is Windows with Git Bash and PowerShell. Shell heredocs and back
   1. `npx convex dev` (creates their own deployment);
   2. `npm run convex:set-key`.
 - **Conversation (optional):** copy `~/.claude/projects/<this project's folder>`. The project must sit at the same path on the new machine. Same machine with a different account: `claude --continue` / `claude --resume` may work; if not, this note is enough.
+
+## Fifth session (2026-11-15/16): US specialization, deployment, submission
+
+- New investigation steps: **Fire season** (`src/data/v2/season.ts`, `SeasonPanel.tsx`; default tab) and **Documented fires** (`src/data/v2/incidents.ts`, `ContextPanel.tsx`, CAL FIRE origin points on the map via `AoiMap` `points`). Tabs now: season, atlas, transition, evidence, context, brief.
+- Third research case: **Texas, April 2011** (`casebook.ts`, opens on the season step); every number checked by `investigate.test.ts`.
+- Brief: planning context (historical pattern, not a forecast), season evolution, documented fires, incomplete-month note, scope statement; new self-contained HTML download (`briefHtml`).
+- Iberia case text now cites Copernicus EMS EMSR837 (western Spain) and EMSR831 (central Portugal). S-NPP 2022 outage description corrected in `config/observation-events.json`; `fit.mjs` rerun for both regions: only that text and the events-file hash changed (all numbers identical).
+- Evidence lab states exactly how the 90.2 % small-area coverage was evaluated and its limits.
+- Not done: fire perimeters (MTBS/NIFC) are not integrated; Texas and Iberia incidents have no map points (no published coordinates were used).
+- Submission material: `submission/`.
